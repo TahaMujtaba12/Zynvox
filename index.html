@@ -526,6 +526,53 @@
       text-transform: uppercase;
     }
 
+    /* ── PAGECLIP LEAD FORM ── */
+    .zynvox-form {
+      max-width: 480px;
+      margin: 56px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: left;
+    }
+    .zynvox-form input,
+    .zynvox-form textarea {
+      width: 100%;
+      padding: 14px 18px;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      color: #f2f2f2;
+      font-family: var(--font-sans, inherit);
+      font-size: 0.92rem;
+      transition: border-color 0.2s ease;
+    }
+    .zynvox-form input::placeholder,
+    .zynvox-form textarea::placeholder {
+      color: #6b6b6b;
+    }
+    .zynvox-form input:focus,
+    .zynvox-form textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .zynvox-form textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+    .zynvox-form .pageclip-form__submit {
+      width: 100%;
+      cursor: pointer;
+      border: none;
+      margin-top: 4px;
+    }
+    .zynvox-form .pageclip-form__submit.--loading span {
+      opacity: 0.5;
+    }
+    @media (max-width: 600px) {
+      .zynvox-form { padding: 0 24px; }
+    }
+
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
@@ -802,6 +849,17 @@
       <p class="cta-sub reveal">If your business is still running on manual processes, that gap is costing you more than you realize. Let us show you exactly where — and exactly how we fix it.</p>
       <a href="https://chatbase.co/rJz_83C9zbwbHu_eylHr8/help" target="_blank" class="btn-primary reveal">Begin the Conversation</a>
       <p class="cta-note reveal">We review every inquiry personally. We respond within 24 hours.</p>
+
+      <form action="https://send.pageclip.co/2XbXqLOSIKhCLwJFyJm8Q4AmvnujM6gK" class="pageclip-form zynvox-form reveal" method="post">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="text" name="business" placeholder="Business Name" required />
+        <input type="tel" name="phone" placeholder="Phone Number" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <textarea name="message" placeholder="What's slowing down your operations right now?"></textarea>
+        <button type="submit" class="pageclip-form__submit btn-primary">
+          <span>Request Consultation</span>
+        </button>
+      </form>
     </div>
   </section>
 
@@ -843,9 +901,15 @@
     reveals.forEach(el => observer.observe(el));
   </script>
 
+  <!-- Pageclip JS -->
+  <script src="https://s.pageclip.co/v1/pageclip.js" charset="utf-8"></script>
+
   <!-- Zynvox Intelligence — Chatbase widget embed -->
   <script>
   (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="rJz_83C9zbwbHu_eylHr8";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
   </script>
+
+  <!-- Simple Analytics — 100% privacy-first analytics -->
+  <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 </body>
 </html>
