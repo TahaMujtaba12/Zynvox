@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zynvox Intelligence — Product Demonstration</title>
+
+  <!-- Typography Stack: Cinzel, Playfair Display, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #000000; /* PURE BLACK BACKGROUND */
+      --card-bg: #0C0C0C; /* Solid dark container background without glow */
+      --card-featured-bg: rgba(212, 175, 55, 0.08);
+      --card-border: rgba(212, 175, 55, 0.22);
+      --card-border-gold: rgba(212, 175, 55, 0.55);
+      --gold: #D4AF37; /* Warm Amber Gold */
+      --gold-light: #F5E5A3;
+      --gold-italic: #E5BE48;
+      --text-main: #FFFFFF;
+      --text-muted: #8E8E8E;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #000000 !important;
+      background-image: none !important;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px 80px 24px;
+      padding-top: 70px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    body.loaded { opacity: 1; }
+
+    .container { max-width: 1100px; width: 100%; }
+
+    /* CINEMATIC HEADER — FULL WIDTH OVERLAY (CLEANED) */
+    .top-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212,175,55,0.12);
+    }
+
+    .brand-logo {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle-tag {
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .btn-analysis-call {
+      border: 1px solid var(--gold);
+      color: #000;
+      background: var(--gold);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      padding: 10px 22px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: none !important;
+    }
+
+    .btn-analysis-call:hover {
+      background: var(--gold-light);
+    }
+
+    /* STICKY STEP NAVIGATION */
+    .step-nav-wrapper {
+      position: sticky;
+      top: 70px;
+      z-index: 100;
+      background: #000000;
+      padding: 10px 0;
+      margin-bottom: 50px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .step-nav {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .step-item {
+      font-size: 11.5px;
+      padding: 8px 18px;
+      border-radius: 4px;
+      background: #0A0A0A;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: none !important;
+    }
+
+    .step-item.active {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: var(--gold);
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    .step-item.completed {
+      border-color: var(--gold);
+      color: var(--text-main);
+    }
+
+    /* CINEMATIC HERO — FULL BLEED */
+    .hero-cinematic {
+      position: relative;
+      min-height: 85vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      margin: 0 -24px 80px -24px;
+      padding: 80px 80px 60px 80px;
+      overflow: hidden;
+    }
+
+    .hero-cinematic::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 70% 50%, rgba(120, 80, 20, 0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 30% 80%, rgba(80, 50, 10, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(100, 70, 15, 0.10) 0%, transparent 40%);
+      z-index: 0;
+    }
+
+    .hero-cinematic::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(125deg, transparent 40%, rgba(180,120,30,0.06) 50%, transparent 60%),
+        linear-gradient(65deg, transparent 30%, rgba(140,90,20,0.04) 45%, transparent 55%),
+        linear-gradient(155deg, transparent 50%, rgba(200,140,40,0.05) 60%, transparent 70%);
+      z-index: 0;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 80px;
+      line-height: 1.05;
+      color: #FFFFFF;
+      margin-bottom: 28px;
+      font-weight: 700;
+      font-style: italic;
+    }
+
+    .hero-main-title span {
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-description {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.6);
+      max-width: 480px;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .btn-hero-watch {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--gold);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: gap 0.3s ease;
+    }
+
+    .btn-hero-watch:hover { gap: 16px; color: var(--gold-light); }
+
+    .btn-hero-watch .play-circle {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      background: rgba(212,175,55,0.08);
+    }
+
+    /* HERO RIGHT — DASHBOARD MOCKUP */
+    .hero-right {
+      position: relative;
+      z-index: 1;
+    }
+
+    .dashboard-mockup {
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: none !important;
+      transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
+    }
+
+    .mockup-topbar {
+      background: #1a1a1a;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .mockup-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    .mockup-body { padding: 20px; }
+
+    .mockup-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .mockup-title {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      color: #FFF;
+      font-weight: 700;
+    }
+
+    .mockup-badge {
+      font-size: 9px;
+      color: var(--gold);
+      border: 1px solid rgba(212,175,55,0.3);
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 1px;
+    }
+
+    .mockup-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .mockup-stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .mockup-stat-value {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      color: #FFF;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .mockup-stat-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .mockup-chart-area {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .mockup-chart-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .mockup-chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 60px;
+    }
+
+    .mockup-bar {
+      flex: 1;
+      background: rgba(212,175,55,0.15);
+      border-radius: 2px 2px 0 0;
+      border-top: 1px solid rgba(212,175,55,0.4);
+    }
+
+    .mockup-bar.highlight {
+      background: rgba(212,175,55,0.4);
+      border-top-color: var(--gold);
+    }
+
+    .mockup-activity {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mockup-activity-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .mockup-activity-name { color: rgba(255,255,255,0.7); }
+    .mockup-activity-val { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; }
+
+    /* $38,400 FLOATING CARD */
+    .hero-float-card {
+      position: absolute;
+      bottom: -20px;
+      left: -30px;
+      background: #181400;
+      border: 1px solid rgba(212,175,55,0.5);
+      border-radius: 12px;
+      padding: 16px 22px;
+      z-index: 2;
+    }
+
+    .hero-float-card-value {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 32px;
+      color: var(--gold);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .hero-float-card-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(212,175,55,0.7);
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .hero-cinematic { grid-template-columns: 1fr; padding: 60px 24px 40px; min-height: auto; margin-bottom: 40px; }
+      .hero-main-title { font-size: 52px; }
+      .hero-right { display: none; }
+      .top-header { padding: 16px 24px; }
+    }
+
+    /* SECTIONS COMMON STYLING */
+    .part-section {
+      margin-bottom: 90px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .part-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-num-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .section-heading-serif {
+      font-family: 'Cinzel', serif;
+      font-size: 38px;
+      line-height: 1.25;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .quote-italic-gold {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--gold-italic);
+      margin-bottom: 24px;
+      max-width: 820px;
+    }
+
+    .section-body-text {
+      font-size: 15.5px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 840px;
+      margin-bottom: 40px;
+    }
+
+    .sub-section-divider {
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+      padding: 14px 0;
+      margin: 40px 0;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* BORDERLESS COLUMN CARDS (SECTION 01) */
+    .borderless-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-bottom: 50px;
+      align-items: stretch;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .borderless-metrics-grid { grid-template-columns: 1fr; }
+    }
+
+    .borderless-col {
+      padding: 28px 28px;
+      border-right: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+
+    .borderless-col.featured-col {
+      background: var(--card-featured-bg);
+      border-left: 3px solid var(--gold);
+    }
+
+    .borderless-col:last-child {
+      border-right: none;
+    }
+
+    @media (max-width: 768px) {
+      .borderless-col { border-right: none; border-bottom: 1px solid var(--card-border); }
+      .borderless-col:last-child { border-bottom: none; }
+    }
+
+    .col-card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      color: #FFF;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .col-card-gold-highlight {
+      font-size: 13.5px;
+      color: var(--gold-light);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .col-card-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* TABLE ROW COMPARISON (SECTION 01) */
+    .comparison-table {
+      margin-bottom: 40px;
+    }
+
+    .comp-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--card-border);
+      font-size: 14px;
+    }
+
+    .comp-name { color: var(--text-main); font-weight: 500; }
+
+    .comp-delta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    .comp-delta .old-state {
+      color: #666;
+      text-decoration: line-through;
+      background: rgba(255,255,255,0.04);
+      padding: 3px 10px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.08);
+      white-space: nowrap;
+    }
+
+    .comp-delta .arrow {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .comp-delta .new-state {
+      color: var(--gold);
+      font-weight: 700;
+      background: rgba(212,175,55,0.08);
+      padding: 3px 10px;
+      border-radius: 3px;
+      border: 1px solid rgba(212,175,55,0.25);
+      white-space: nowrap;
+    }
+
+    .gold-link-arrow {
+      color: var(--gold-light);
+      font-size: 13.5px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: gap 0.3s ease;
+    }
+
+    .gold-link-arrow:hover { gap: 10px; color: var(--gold); }
+
+    /* SECTION 02: ASYMMETRIC ASSET & CALLOUT GRID */
+    .customer-recovery-split {
+      display: grid;
+      grid-template-columns: 1fr 440px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    @media (max-width: 950px) {
+      .customer-recovery-split { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .phone-container { height: 420px; }
+      .section-heading-serif { font-size: 28px; }
+    }
+
+    .left-callout-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .callout-block {
+      border-left: 2px solid var(--gold);
+      padding-left: 20px;
+    }
+
+    .callout-block-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      color: #FFF;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .callout-block-desc {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+
+    /* PHONE CONTAINER & INSPECTOR PANEL */
+    .phone-container {
+      background: #0A0A0A;
+      border: 1px solid var(--card-border-gold);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: none !important;
+      display: flex;
+      flex-direction: column;
+      height: 560px;
+      max-width: 100%;
+    }
+
+    .phone-header {
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .phone-header .contact-name { font-weight: 700; font-size: 14px; color: #FFF; }
+
+    .chat-stream {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-right: 4px;
+    }
+
+    .chat-stream::-webkit-scrollbar { width: 3px; }
+    .chat-stream::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    .bubble {
+      max-width: 88%;
+      padding: 11px 15px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: bubbleIn 0.3s ease forwards;
+    }
+
+    @keyframes bubbleIn { to { opacity: 1; transform: translateY(0); } }
+
+    .bubble.system {
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      color: #FFFFFF;
+      align-self: flex-start;
+    }
+
+    .bubble.customer {
+      background: #1A1A1A;
+      color: #FFF;
+      align-self: flex-end;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .bubble-tag {
+      font-size: 9px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--gold);
+      margin-bottom: 4px;
+      display: block;
+      letter-spacing: 0.5px;
+    }
+
+    .bubble-status {
+      font-size: 9px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: block;
+      opacity: 0.7;
+    }
+
+    .thinking-state {
+      align-self: flex-start;
+      font-size: 11px;
+      color: var(--gold-light);
+      font-family: 'JetBrains Mono', monospace;
+      padding: 8px 14px;
+      background: rgba(212, 175, 55, 0.08);
+      border-radius: 8px;
+      border: 1px dashed rgba(212, 175, 55, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .typing-dots { display: flex; gap: 4px; align-items: center; }
+    .typing-dots span {
+      width: 5px; height: 5px; background: var(--gold-light); border-radius: 50%;
+      animation: typingBounce 1.4s ease-in-out infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+      30% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    .inspector-panel {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .card-box-header {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .live-status-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .live-status-container .status-item { opacity: 0; transform: translateX(-6px); transition: all 0.4s ease; }
+    .live-status-container .status-item.visible { opacity: 1; transform: translateX(0); }
+    .live-status-container .status-item .check { color: var(--gold); margin-right: 6px; }
+    .live-status-container .status-item .time { color: var(--gold); margin-right: 8px; }
+
+    /* SECTION 03: AUTONOMOUS BUSINESS GRID */
+    .autonomous-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 800px) {
+      .autonomous-grid { grid-template-columns: 1fr; }
+    }
+
+    .ios-notification {
+      background: #111111;
+      border: 1px solid var(--card-border-gold);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: none !important;
+      margin-bottom: 24px;
+    }
+
+    .ios-notif-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--gold);
+      color: #000;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 4px 4px 0 0;
+      margin: -20px -20px 14px -20px;
+      letter-spacing: 1px;
+    }
+
+    .vertical-quote-box {
+      border-left: 2px solid var(--gold);
+      padding-left: 20px;
+      margin-bottom: 24px;
+    }
+
+    .quote-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 17px;
+      color: var(--gold-italic);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .quote-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13px;
+      color: #FFF;
+    }
+
+    .checklist-grid span { color: var(--gold); font-weight: bold; margin-right: 6px; }
+
+    /* EDITORIAL CTA & FOOTER */
+    .cta-editorial-box {
+      background: #0C0C0C;
+      border: 1px solid var(--gold);
+      border-radius: 16px;
+      padding: 48px 36px;
+      text-align: center;
+      margin-bottom: 60px;
+      box-shadow: none !important;
+    }
+
+    .cta-serif-title {
+      font-family: 'Cinzel', serif;
+      font-size: 36px;
+      line-height: 1.25;
+      color: #FFF;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .cta-serif-title span {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--gold-italic);
+      font-weight: 400;
+      display: block;
+    }
+
+    .cta-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 28px auto;
+      line-height: 1.7;
+    }
+
+    .btn-gold-filled {
+      background: var(--gold);
+      color: #000000;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14.5px;
+      letter-spacing: 1px;
+      padding: 18px 42px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: none !important;
+      transition: background 0.3s ease, transform 0.2s ease;
+      text-transform: uppercase;
+    }
+
+    .btn-gold-filled:hover {
+      transform: translateY(-2px);
+      background: var(--gold-italic);
+      box-shadow: none !important;
+    }
+
+    /* CONTACT HANDLES PLACED ONLY ONCE (INSIDE CTA BOX) */
+    .contact-handles {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 24px;
+    }
+
+    .contact-handles a { color: var(--gold-light); text-decoration: none; }
+    .contact-handles a:hover { text-decoration: underline; }
+
+    .manifesto-box {
+      text-align: center;
+      padding: 40px 20px 20px 20px;
+    }
+
+    .manifesto-title {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      color: #FFF;
+      margin-bottom: 6px;
+    }
+
+    .manifesto-italic {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: var(--gold-italic);
+      margin-bottom: 16px;
+    }
+
+    .manifesto-sub {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* FOOTER BAR (CLEAN, NO DUPLICATE CONTACT LINKS) */
+    .footer-bar {
+      border-top: 1px solid var(--card-border);
+      padding-top: 24px;
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 11px;
+      color: var(--text-muted);
+      width: 100%;
+    }
+
+    /* MODAL AUDIT FORM */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-box {
+      background: #111111;
+      border: 1px solid var(--gold);
+      border-radius: 14px;
+      padding: 40px 35px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: none !important;
+      position: relative;
+    }
+
+    .modal-box .close-btn {
+      position: absolute; top: 16px; right: 20px;
+      background: none; border: none; color: var(--text-muted);
+      font-size: 24px; cursor: pointer;
+    }
+
+    .modal-box h2 { font-family: 'Cinzel', serif; font-size: 22px; color: #FFF; margin-bottom: 6px; }
+    .modal-box .modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+
+    .modal-box input, .modal-box select {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 6px;
+      padding: 12px 16px;
+      color: #FFF; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      outline: none; width: 100%; margin-bottom: 12px; display: block;
+    }
+
+    .modal-box input:focus, .modal-box select:focus { border-color: var(--gold); }
+    .modal-box select option { background: #111111; color: #FFF; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- CINEMATIC HEADER — FIXED OVERLAY (CLEANED) -->
+    <header class="top-header">
+      <div class="brand-logo">
+        <div class="brand-title">Zynvox</div>
+        <div class="brand-subtitle-tag">INTELLIGENCE ENGINE</div>
+      </div>
+
+      <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" class="btn-analysis-call">Analysis Call →</a>
+    </header>
+
+    <!-- STICKY STEP NAVIGATION -->
+    <div class="step-nav-wrapper">
+      <nav class="step-nav">
+        <a class="step-item active" id="nav-s1" onclick="goToPart(1)">01 Revenue Opportunity</a>
+        <a class="step-item" id="nav-s2" onclick="goToPart(2)">02 Customer Recovery</a>
+        <a class="step-item" id="nav-s3" onclick="goToPart(3)">03 Autonomous Business</a>
+      </nav>
+    </div>
+
+    <!-- CINEMATIC HERO -->
+    <div class="hero-cinematic">
+
+      <!-- LEFT: Headline + Single Watch Demo Trigger -->
+      <div class="hero-left">
+        <div class="hero-tag">PRODUCT DEMONSTRATION 2026</div>
+        <h1 class="hero-main-title">
+          The Silent
+          <span>Operator.</span>
+        </h1>
+        <p class="hero-description">
+          Zynvox intercepts every missed call, qualifies the customer in 12 seconds, and dispatches technicians while you sleep.
+        </p>
+        <div class="hero-cta-row">
+          <a onclick="goToPart(1)" class="btn-hero-watch" style="cursor:pointer;">
+            <div class="play-circle">▶</div>
+            Watch Demo
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Dashboard Mockup -->
+      <div class="hero-right">
+        <div style="position:relative;">
+          <div class="dashboard-mockup">
+            <div class="mockup-topbar">
+              <div class="mockup-dot" style="background:#ff5f57;"></div>
+              <div class="mockup-dot" style="background:#ffbd2e;"></div>
+              <div class="mockup-dot" style="background:#28c840;"></div>
+              <span style="font-size:10px; color:var(--text-muted); margin-left:8px; font-family:'JetBrains Mono',monospace;">Zynvox Intelligence Dashboard</span>
+            </div>
+            <div class="mockup-body">
+              <div class="mockup-header-row">
+                <div class="mockup-title">Live Dashboard</div>
+                <div class="mockup-badge">● LIVE</div>
+              </div>
+              <div class="mockup-stats-grid">
+                <div class="mockup-stat">
+                  <div class="mockup-stat-value">$77,605</div>
+                  <div class="mockup-stat-label">Revenue Protected</div>
+                </div>
+                <div class="mockup-stat">
+                  <div class="mockup-stat-value">1,447</div>
+                  <div class="mockup-stat-label">Calls Intercepted</div>
+                </div>
+                <div class="mockup-stat">
+                  <div class="mockup-stat-value">97%</div>
+                  <div class="mockup-stat-label">Response Rate</div>
+                </div>
+              </div>
+              <div class="mockup-chart-area">
+                <div class="mockup-chart-label">Daily Revenue Recovery</div>
+                <div class="mockup-chart-bars">
+                  <div class="mockup-bar" style="height:35%;"></div>
+                  <div class="mockup-bar" style="height:50%;"></div>
+                  <div class="mockup-bar" style="height:42%;"></div>
+                  <div class="mockup-bar" style="height:65%;"></div>
+                  <div class="mockup-bar" style="height:55%;"></div>
+                  <div class="mockup-bar highlight" style="height:85%;"></div>
+                  <div class="mockup-bar" style="height:70%;"></div>
+                  <div class="mockup-bar highlight" style="height:90%;"></div>
+                  <div class="mockup-bar" style="height:75%;"></div>
+                  <div class="mockup-bar highlight" style="height:100%;"></div>
+                </div>
+              </div>
+              <div class="mockup-activity">
+                <div class="mockup-activity-row">
+                  <span class="mockup-activity-name">Emergency AC — Sarah M.</span>
+                  <span class="mockup-activity-val">$420</span>
+                </div>
+                <div class="mockup-activity-row">
+                  <span class="mockup-activity-name">Routine Service — James K.</span>
+                  <span class="mockup-activity-val">$280</span>
+                </div>
+                <div class="mockup-activity-row">
+                  <span class="mockup-activity-name">New Installation — Linda R.</span>
+                  <span class="mockup-activity-val">$3,200</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FLOATING $38,400 CARD -->
+          <div class="hero-float-card">
+            <div class="hero-float-card-value">$38,400</div>
+            <div class="hero-float-card-label">Avg. Annual Recovery</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================================================================
+    PART 01: REVENUE OPPORTUNITY
+    ================================================================ -->
+    <section class="part-section visible" id="part1">
+      <div class="section-num-badge">01</div>
+      <h2 class="section-heading-serif">Revenue Opportunity</h2>
+
+      <div class="quote-italic-gold">
+        "Every missed conversation is lost revenue — and lost operational intelligence."
+      </div>
+
+      <!-- INDUSTRY STAT ANCHOR -->
+      <p class="section-body-text">
+        Service businesses miss an average of 27% of after-hours calls. At an average $350 ticket value, uncaptured calls cost the average trade business $94,500/year. Zynvox measures your exact call history, captures missed leads, and continuously improves response time and booking rates.
+      </p>
+
+      <div class="sub-section-divider">
+        EVERY BUSINESS HAS HIDDEN OPERATIONAL LEAKAGE. ZYNVOX MEASURES IT AUTOMATICALLY AFTER CONNECTING TO YOUR BUSINESS.
+      </div>
+
+      <!-- BORDERLESS COLUMN CARDS -->
+      <div class="borderless-metrics-grid">
+        <div class="borderless-col featured-col">
+          <div class="col-card-title" style="font-size:28px; color:var(--gold);">~$38,400</div>
+          <div class="col-card-gold-highlight">Estimated recoverable revenue / year</div>
+          <div class="col-card-desc" style="margin-top:8px;">
+            Based on: <span style="color:var(--text-main);">31 missed calls × $350 avg ticket × 71% competitor capture × 12 months</span><br>
+            <span style="font-size:11px; color:var(--text-muted); margin-top:6px; display:block;">Industry benchmark — HVAC average. Connect your call log for your exact number.</span>
+          </div>
+        </div>
+        <div class="borderless-col">
+          <div class="col-card-title" style="font-size:28px;">~31</div>
+          <div class="col-card-gold-highlight">Missed calls / month (avg. HVAC)</div>
+          <div class="col-card-desc" style="margin-top:8px;">
+            Every one is a customer who needed help tonight.<br>
+            <span style="font-size:11px; color:var(--text-muted); margin-top:6px; display:block;">Source: ServiceTitan 2024 Field Service Benchmark Report</span>
+          </div>
+        </div>
+        <div class="borderless-col">
+          <div class="col-card-title" style="font-size:28px;">71%</div>
+          <div class="col-card-gold-highlight">Call competitors within 3 minutes</div>
+          <div class="col-card-desc" style="margin-top:8px;">
+            No answer means your competitor's answer.<br>
+            <span style="font-size:11px; color:var(--text-muted); margin-top:6px; display:block;">Source: Harvard Business Review — Speed-to-Lead Study</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLE COMPARISON ROWS -->
+      <div class="comparison-table">
+        <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:16px; font-weight:700;">
+          CURRENT STATE VS OPERATIONAL INTELLIGENCE
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">After-Hours Response</div>
+          <div class="comp-delta">
+            <span class="old-state">Manual</span>
+            <span class="arrow">→</span>
+            <span class="new-state">✓ Autonomous</span>
+          </div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">Lead Qualification</div>
+          <div class="comp-delta">
+            <span class="old-state">Delayed</span>
+            <span class="arrow">→</span>
+            <span class="new-state">✓ Instant</span>
+          </div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">Appointment Automation</div>
+          <div class="comp-delta">
+            <span class="old-state">Manual</span>
+            <span class="arrow">→</span>
+            <span class="new-state">✓ Automatic</span>
+          </div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">Technician Dispatch</div>
+          <div class="comp-delta">
+            <span class="old-state">Phone Calls</span>
+            <span class="arrow">→</span>
+            <span class="new-state">✓ Instant Alert</span>
+          </div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">CRM Update</div>
+          <div class="comp-delta">
+            <span class="old-state">Manual Entry</span>
+            <span class="arrow">→</span>
+            <span class="new-state">✓ Auto-Logged</span>
+          </div>
+        </div>
+      </div>
+
+      <a class="gold-link-arrow" onclick="goToPart(2)">See How We Capture Lost Revenue →</a>
+    </section>
+
+    <!-- ================================================================
+    PART 02: CUSTOMER RECOVERY
+    ================================================================ -->
+    <section class="part-section" id="part2">
+      <div class="section-num-badge">02</div>
+      <h2 class="section-heading-serif">Customer Recovery</h2>
+
+      <p class="section-body-text">
+        A missed call at 11:42 PM becomes a recovered customer within 12 seconds. Zynvox intercepts, qualifies, and captures the job before your competitor answers.
+      </p>
+
+      <div class="sub-section-divider" style="display:flex; justify-content:space-between; align-items:center;">
+        <span>AUTONOMOUS CUSTOMER RESPONSE</span>
+        <span style="color:var(--gold); font-family:'JetBrains Mono';">● Live: 11:42 PM</span>
+      </div>
+
+      <p style="font-size:15px; color:var(--text-muted); line-height:1.7; margin-bottom:32px; max-width:680px;">
+        Here's exactly what happens the next time your business misses a call at 11 PM — while you're asleep, with your phone on silent, and a customer's AC failing with two kids in the house.
+      </p>
+
+      <!-- ASYMMETRIC SPLIT LAYOUT -->
+      <div class="customer-recovery-split">
+        
+        <!-- Left Column: Vertical Bar Callouts -->
+        <div class="left-callout-stack">
+          <div class="callout-block">
+            <div class="callout-block-title">Priority Service Flag</div>
+            <div class="callout-block-desc">
+              Based on what you've shared, this has been classified as a high-priority service request.
+            </div>
+          </div>
+
+          <div class="callout-block">
+            <div class="callout-block-title">Zero Latency</div>
+            <div class="callout-block-desc">
+              Responding in 12 seconds stops the customer from calling competitors.
+            </div>
+          </div>
+
+          <div class="callout-block">
+            <div class="callout-block-title">Business Memory Updated</div>
+            <div class="callout-block-desc">
+              Every question teaches the system something about how your business operates.
+            </div>
+          </div>
+
+          <div style="padding-top: 24px; border-top: 1px solid var(--card-border); margin-top: 8px;">
+            <a class="gold-link-arrow" onclick="goToPart(3)">See What Changes For You →</a>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Phone & Inspector -->
+        <div>
+          <div class="phone-container">
+            <div class="phone-header">
+              <span style="font-size:11px; font-family:'JetBrains Mono'; color:var(--text-muted);">11:42 PM</span>
+              <span class="contact-name" id="chatHeaderName">Your Business</span>
+              <span style="font-size:14px; color:var(--text-muted);">•••</span>
+            </div>
+            <div style="font-size:10px; font-family:'JetBrains Mono'; color:var(--gold); text-align:center; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06); margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+              <span>SMS INTERCEPT · 11:42 PM</span>
+              <span style="color:var(--gold);">●</span>
+            </div>
+
+            <div style="padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+              <button id="startSimulation" class="btn-gold-filled" style="width:100%; padding: 10px; font-size:12px;" onclick="startAutoPlay()">
+                ▶ Start Simulation
+              </button>
+            </div>
+
+            <div class="chat-stream" id="chatStream"></div>
+          </div>
+
+          <!-- INSPECTOR PANEL -->
+          <div class="inspector-panel">
+            <div class="card-box">
+              <div class="card-box-header">
+                <span>WHAT YOUR BUSINESS NOW KNOWS</span>
+                <span style="color:var(--gold);">✓ Learned</span>
+              </div>
+              <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:10px;">Every conversation adds to your business's operational knowledge.</div>
+              <div style="font-size:12px; line-height:1.7; color:var(--text-muted);">
+                <strong style="color:var(--text-main);">Why the AI asked about the system:</strong><br>
+                <span style="color:var(--gold-light);">→ Intent classification determines priority, technician type, and pricing tier.</span><br><br>
+                <strong style="color:var(--text-main);">Likely fault diagnosis:</strong><br>
+                • Failed capacitor &nbsp;• Contactor fault &nbsp;• Thermal overload<br><br>
+                <strong style="color:var(--text-main);">Decision made:</strong><br>
+                • <span style="color:var(--gold);">Emergency tier</span> — dispatch tonight, premium rate applied<br>
+                • <span style="color:var(--gold);">Nearest technician</span> — selected by zone + availability
+              </div>
+            </div>
+
+            <div class="card-box">
+              <div class="card-box-header">
+                <span>BUSINESS LEARNED</span>
+                <span style="color:var(--gold); font-size:9px;">LIVE</span>
+              </div>
+              <div id="liveStatusContainer" class="live-status-container">
+                <div style="opacity:0.5; font-size:11px;">⌛ Press Start Simulation to watch your business learn...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================
+    PART 03: AUTONOMOUS BUSINESS
+    ================================================================ -->
+    <section class="part-section" id="part3">
+      <div class="section-num-badge">03</div>
+      <h2 class="section-heading-serif">Autonomous Business</h2>
+
+      <p class="section-body-text">
+        While you were sleeping, Zynvox qualified the customer, dispatched your technician, booked the job, updated your CRM, and protected revenue.
+      </p>
+
+      <div class="autonomous-grid">
+        
+        <!-- Left Column: iOS Notification & Checkmarks -->
+        <div>
+          <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:4px; font-weight:700;">
+            BUSINESS OPERATING AUTOMATICALLY
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">Dispatched and synced using your operational rules</div>
+
+          <div class="ios-notification">
+            <div class="ios-notif-header">
+              <span>ZYNVOX INTELLIGENCE</span>
+              <span>12:01 AM</span>
+            </div>
+            <div style="font-size:14.5px; font-weight:700; color:#FFF; margin-bottom:8px;">🚨 NEW EMERGENCY JOB BOOKED</div>
+            <div style="font-size:13px; color:#CBD5E1; line-height:1.6;">
+              Customer: <strong id="notifCustomer" style="color:#FFF;">Sarah M. — Emergency Service</strong><br>
+              Zone: <span id="notifArea">North Zone (Zone A)</span><br>
+              Status: <strong style="color:var(--gold-light);">Technician Dispatched (ETA 15 min)</strong><br>
+              Pricing: Job priced and confirmed automatically
+            </div>
+            <div style="font-size:10.5px; color:var(--text-muted); margin-top:10px; border-top:1px solid rgba(255,255,255,0.06); padding-top:6px;">
+              Job priced and confirmed automatically
+            </div>
+          </div>
+
+          <div style="background: rgba(12, 12, 12, 0.95); border: 1px solid var(--card-border); border-radius: 12px; padding: 22px; margin-bottom: 24px;">
+            <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); font-weight:700; margin-bottom:14px;">
+              WHILE YOU SLEPT — AUTONOMOUS EXECUTION SUMMARY
+            </div>
+            <div class="checklist-grid">
+              <div><span>✓</span> Customer contacted</div>
+              <div><span>✓</span> AI responded in 12s</div>
+              <div><span>✓</span> Technician dispatched</div>
+              <div><span>✓</span> CRM updated</div>
+              <div><span>✓</span> Calendar synced</div>
+              <div><span>✓</span> Revenue secured</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Quote Box + Stats -->
+        <div>
+          <div style="margin-bottom:28px;">
+            <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; font-weight:700;">Operating System</div>
+            <div style="font-family:'Cinzel', serif; font-size:20px; color:#FFF; font-weight:700; margin-bottom:16px;">Dispatched automatically</div>
+
+            <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; font-weight:700;">Revenue Secured</div>
+            <div style="font-family:'Cinzel', serif; font-size:20px; color:#FFF; font-weight:700; margin-bottom:16px;">Captured automatically</div>
+
+            <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; font-weight:700;">Owner Action Required</div>
+            <div style="font-family:'Cinzel', serif; font-size:22px; color:var(--gold); font-weight:700;">None.</div>
+          </div>
+
+          <div class="vertical-quote-box">
+            <div class="quote-title">"Your best-performing technician was automatically prioritized for this emergency job."</div>
+            <div style="font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--gold); font-weight:700; margin-top:14px; margin-bottom:6px;">Your Business Learns Every Day</div>
+            <div class="quote-body">
+              Every conversation expands your company's operational memory. Tomorrow it responds faster. Next month it dispatches smarter. Next year it understands your business better than anyone.
+            </div>
+          </div>
+
+          <div style="background: rgba(12, 12, 12, 0.95); border: 1px solid var(--card-border); border-radius: 12px; padding: 22px;">
+            <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); font-weight:700; margin-bottom:14px;">
+              ✓ CONVERSATION COMPLETE
+            </div>
+            <div class="checklist-grid">
+              <div><span>✓</span> Conversation Complete</div>
+              <div><span>✓</span> Customer booked</div>
+              <div><span>✓</span> Job captured</div>
+              <div><span>✓</span> Technician assigned</div>
+              <div><span>✓</span> CRM updated</div>
+              <div><span>✓</span> Business Memory updated</div>
+              <div><span>✓</span> Owner notified</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- EDITORIAL CTA BOX -->
+      <div class="cta-editorial-box">
+        <h2 class="cta-serif-title">
+          Your Competitors Are Answering
+          <span>Right Now.</span>
+        </h2>
+
+        <p class="cta-desc">
+          The $38,400 is the HVAC industry average. Your real number depends on your call volume, ticket size, and response rate. In 20 minutes, we'll calculate it precisely — using your actual data.
+        </p>
+
+        <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" class="btn-gold-filled" style="display:inline-block; text-decoration:none; text-align:center;">Book a 20-Minute Analysis Call →</a>
+
+        <div class="contact-handles">
+          <span>📧 <a href="mailto:taha@zynvox.tech">taha@zynvox.tech</a></span>
+          <span>🌐 <a href="https://zynvox.tech" target="_blank">zynvox.tech</a></span>
+        </div>
+      </div>
+
+      <!-- MANIFESTO FOOTER -->
+      <div class="manifesto-box">
+        <div class="manifesto-title">A missed call at 11 PM isn't a missed call.</div>
+        <div class="manifesto-italic">It's a $350 job your competitor just booked.</div>
+        <div class="manifesto-sub" style="margin-top: 20px;">
+          Zynvox makes sure that never happens again.
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER BAR (CLEAN, NO DUPLICATE CONTACT LINKS) -->
+    <footer class="footer-bar">
+      <div><strong style="color:var(--gold);">Zynvox</strong> &nbsp;<span style="letter-spacing:1px; color:var(--text-muted);">INTELLIGENCE ENGINE · PRODUCT DEMONSTRATION</span></div>
+      <div>© 2026 Zynvox. All rights reserved.</div>
+    </footer>
+
+  </div>
+
+  <!-- MODAL AUDIT FORM -->
+  <div class="modal-overlay" id="auditModal">
+    <div class="modal-box">
+      <button class="close-btn" onclick="closeModal()">✕</button>
+
+      <div id="modalForm">
+        <h2>Book Your Analysis Call</h2>
+        <div class="modal-sub">20 minutes. We calculate your real revenue leakage number using your actual call data — no guesswork.</div>
+
+        <input id="modalName" type="text" placeholder="Business Name" />
+        <input id="modalOwner" type="text" placeholder="Owner Name" />
+        <input id="modalPhone" type="tel" placeholder="Phone Number" />
+        <input id="modalEmail" type="email" placeholder="Business Email" />
+        <input id="modalWebsite" type="text" placeholder="Business Website" />
+
+        <select id="modalIndustry">
+          <option value="">Select Industry</option>
+          <option value="HVAC">HVAC</option>
+          <option value="Plumbing">Plumbing</option>
+          <option value="Electrical">Electrical</option>
+          <option value="Roofing">Roofing</option>
+          <option value="Appliance Repair">Appliance Repair</option>
+          <option value="Pest Control">Pest Control</option>
+          <option value="Landscaping">Landscaping</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <button class="btn-gold-filled" style="width:100%; margin-top:8px;" onclick="submitAudit()">Book My 20-Minute Call →</button>
+      </div>
+
+      <div class="loading-state" id="modalLoading" style="display:none; text-align:center; padding:20px 0;">
+        <div style="width:40px; height:40px; border:3px solid rgba(212, 175, 55, 0.2); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 16px auto;"></div>
+        <div style="font-size:13px; color:var(--text-muted);">Analyzing Business Profile & Call Log Leakage...</div>
+      </div>
+
+      <div class="modal-success" id="modalSuccess" style="display:none; text-align:center; padding:20px 0;">
+        <div style="font-size:48px; color:var(--gold); margin-bottom:12px;">✓</div>
+        <h2>Call Request Received</h2>
+        <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:12px;">We'll reach out within a few hours to confirm your 20-minute slot. Come ready with a rough sense of your monthly call volume — we'll handle the rest.</p>
+        <div style="font-family:'JetBrains Mono', monospace; font-size:14px; color:var(--gold-light); margin-bottom:16px;">Reference ID: ZX-2026-<span id="refId">8142</span></div>
+        <button class="btn-gold-filled" style="width:100%;" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+
+  <script>
+    // DOM LOAD SAFE INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('loaded');
+
+      // Pre-render first system bubble cleanly so phone frame is never blank
+      const chat = document.getElementById('chatStream');
+      if (chat && chat.children.length === 0) {
+        const div = document.createElement('div');
+        div.className = 'bubble system';
+        div.innerHTML = `<span class="bubble-tag">ZYNVOX AUTO-INTERCEPT (12S RESPONSE)</span>Hi! We saw we just missed your call. Is your system acting up, or are you looking to schedule routine service?<span class="bubble-status">✓✓ Read</span>`;
+        chat.appendChild(div);
+      }
+
+      // Intersection Observer with DOM Readiness
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.part-section').forEach(section => {
+        observer.observe(section);
+      });
+    });
+
+    // CHAT SIMULATION LOGIC
+    let isPlaying = false;
+
+    // Stream begins cleanly with customer's reply (no double bubble)
+    const chatMessages = [
+      { type: 'customer', text: 'My AC stopped working 🥵 it\'s 88°F inside and I have two kids' },
+      { type: 'system', tag: 'ZYNVOX AI RESPONSE (3s)', text: 'That\'s an emergency — we\'re sending someone tonight. Can you confirm your address so we can dispatch the nearest technician?' },
+      { type: 'customer', text: '4521 Maple Creek Drive' },
+      { type: 'system', tag: 'ZYNVOX AI RESPONSE (2s)', text: 'Got it. Your technician is on the way — ETA 12:15 AM. You\'ll get a text when he\'s 10 minutes out.<br><br>✓ Appointment Created<br>✓ Technician Assigned<br>✓ Confirmation SMS Sent<br>✓ Calendar Updated<br>✓ Owner Notified' },
+      { type: 'customer', text: 'Thank you so much!' },
+      { type: 'system', tag: 'ZYNVOX AI RESPONSE (1s)', text: 'You\'re all set. Stay cool — help is on the way.<br><br>✓ Technician will call before arrival' }
+    ];
+
+    const statusTimeline = [
+      { time: '11:42:08', label: 'Customer Identified' },
+      { time: '11:42:10', label: 'Intent Classified' },
+      { time: '11:42:12', label: 'Technician Search' },
+      { time: '11:42:14', label: 'Calendar Locked' },
+      { time: '11:42:17', label: 'SMS Sent' },
+      { time: '11:42:19', label: 'CRM Updated' },
+      { time: '11:42:22', label: 'Owner Notified' }
+    ];
+
+    function startAutoPlay() {
+      if (isPlaying) return;
+      isPlaying = true;
+
+      const chat = document.getElementById('chatStream');
+      const startBtn = document.getElementById('startSimulation');
+      if (startBtn) startBtn.style.display = 'none';
+
+      let msgIndex = 0;
+      let statusIndex = 0;
+
+      const statusContainer = document.getElementById('liveStatusContainer');
+      if (statusContainer) statusContainer.innerHTML = '';
+
+      function addLiveStatus() {
+        if (statusIndex >= statusTimeline.length) return;
+        const item = statusTimeline[statusIndex];
+        const div = document.createElement('div');
+        div.className = 'status-item';
+        div.innerHTML = `<span class="time">${item.time}</span><span class="check">✓</span><span>${item.label}</span>`;
+        statusContainer.appendChild(div);
+        statusIndex++;
+        setTimeout(() => { div.classList.add('visible'); }, 50);
+      }
+
+      function addMessage(msg) {
+        const div = document.createElement('div');
+        div.className = `bubble ${msg.type}`;
+        if (msg.tag) {
+          div.innerHTML = `<span class="bubble-tag">${msg.tag}</span>${msg.text}`;
+        } else {
+          div.textContent = msg.text;
+        }
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+
+        if (msg.type === 'system') {
+          const status = document.createElement('span');
+          status.className = 'bubble-status';
+          status.textContent = '✓✓ Read';
+          div.appendChild(status);
+        }
+      }
+
+      function addThinking() {
+        const div = document.createElement('div');
+        div.className = 'thinking-state';
+        div.innerHTML = `<span>Processing</span><div class="typing-dots"><span></span><span></span><span></span></div>`;
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+        return div;
+      }
+
+      function nextMessage() {
+        if (msgIndex >= chatMessages.length) {
+          isPlaying = false;
+          const completeBanner = document.createElement('div');
+          completeBanner.className = 'thinking-state';
+          completeBanner.style.cssText = 'border-color:var(--gold); color:var(--gold); margin-top:8px;';
+          completeBanner.innerHTML = '<span>✓ Intercept Complete — Revenue Protected</span>';
+          chat.appendChild(completeBanner);
+          chat.scrollTop = chat.scrollHeight;
+          return;
+        }
+
+        const msg = chatMessages[msgIndex];
+
+        if (msg.type === 'system' && statusIndex < statusTimeline.length) {
+          addLiveStatus();
+        }
+
+        const thinking = addThinking();
+        setTimeout(() => {
+          thinking.remove();
+          addMessage(msg);
+          msgIndex++;
+          setTimeout(nextMessage, 900);
+        }, 1000);
+      }
+
+      setTimeout(nextMessage, 400);
+    }
+
+    // NAVIGATION
+    function goToPart(num) {
+      const target = document.getElementById(`part${num}`);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+
+      for (let i = 1; i <= 3; i++) {
+        const item = document.getElementById(`nav-s${i}`);
+        if (item) {
+          if (i < num) { item.className = 'step-item completed'; }
+          else if (i === num) { item.className = 'step-item active'; }
+          else { item.className = 'step-item'; }
+        }
+      }
+    }
+
+    // MODAL HANDLERS
+    function openModal() {
+      document.getElementById('auditModal').classList.add('active');
+      document.getElementById('modalForm').style.display = 'block';
+      document.getElementById('modalLoading').style.display = 'none';
+      document.getElementById('modalSuccess').style.display = 'none';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('auditModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('auditModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    function submitAudit() {
+      const name = document.getElementById('modalName').value.trim();
+      const owner = document.getElementById('modalOwner').value.trim();
+      const phone = document.getElementById('modalPhone').value.trim();
+      const email = document.getElementById('modalEmail').value.trim();
+      const website = document.getElementById('modalWebsite').value.trim();
+      const industry = document.getElementById('modalIndustry').value;
+
+      if (!name || !owner || !phone || !email || !industry) {
+        let errMsg = document.getElementById('modalValidationError');
+        if (!errMsg) {
+          errMsg = document.createElement('div');
+          errMsg.id = 'modalValidationError';
+          errMsg.style.cssText = 'color:#E5BE48; font-size:12px; font-family:"JetBrains Mono",monospace; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:6px; padding:10px 14px; margin-bottom:12px; text-align:center;';
+          const form = document.getElementById('modalForm');
+          const btn = form.querySelector('button');
+          form.insertBefore(errMsg, btn);
+        }
+        errMsg.textContent = '⚠ Please fill in all required fields.';
+        errMsg.style.display = 'block';
+        return;
+      }
+      const existingErr = document.getElementById('modalValidationError');
+      if (existingErr) existingErr.style.display = 'none';
+
+      document.getElementById('modalForm').style.display = 'none';
+      document.getElementById('modalLoading').style.display = 'block';
+
+      setTimeout(() => {
+        document.getElementById('modalLoading').style.display = 'none';
+        document.getElementById('modalSuccess').style.display = 'block';
+
+        const refId = Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('refId').textContent = refId;
+
+        fetch('https://formspree.io/f/xvzenbbn', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            business_name: name,
+            owner_name: owner,
+            phone: phone,
+            email: email,
+            website: website,
+            industry: industry,
+            reference_id: 'ZX-2026-' + refId
+          })
+        }).catch(err => console.error('Formspree error:', err));
+      }, 2000);
+    }
+
+    // URL PERSONALIZATION ENGINE
+    (function applyURLParams() {
+      const params = new URLSearchParams(window.location.search);
+      const biz = params.get('biz');
+      const city = params.get('city');
+      const owner = params.get('owner');
+      const industry = params.get('industry');
+      const customer = params.get('customer') || 'Sarah M.';
+
+      const notifCustomer = document.getElementById('notifCustomer');
+      if (notifCustomer) notifCustomer.textContent = customer;
+
+      if (biz) {
+        const chatHeaderName = document.getElementById('chatHeaderName');
+        if (chatHeaderName) chatHeaderName.textContent = biz;
+
+        if (city) {
+          const notifArea = document.getElementById('notifArea');
+          if (notifArea) notifArea.textContent = city;
+        }
+
+        const modalName = document.getElementById('modalName');
+        if (modalName) modalName.value = biz;
+
+        if (owner) {
+          const modalOwner = document.getElementById('modalOwner');
+          if (modalOwner) modalOwner.value = owner;
+        }
+
+        if (industry) {
+          const sel = document.getElementById('modalIndustry');
+          if (sel) {
+            for (let opt of sel.options) {
+              if (opt.value.toLowerCase() === industry.toLowerCase()) {
+                opt.selected = true;
+                break;
+              }
+            }
+          }
+        }
+      }
+    })();
+  </script>
+
+</body>
+</html>
