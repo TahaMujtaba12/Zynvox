@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/reveal.css" />
 
   <style>
     :root {
@@ -22,17 +24,19 @@
       --gold-italic: #E5BE48;
       --text-main: #FFFFFF;
       --text-muted: #8E8E8E;
+      --font-serif: 'Cinzel', serif;
+      --font-italic: 'Playfair Display', serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --reveal-offset: 30px;
+      --reveal-duration: 0.6s;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
 
     body {
       background-color: #000000 !important;
       background-image: none !important;
       color: var(--text-main);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: var(--font-body);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -46,6 +50,49 @@
     body.loaded { opacity: 1; }
 
     .container { max-width: 1100px; width: 100%; }
+
+    /* Panels and buttons never carry a glow in this design. */
+    .btn-analysis-call, .step-item, .dashboard-mockup, .phone-container,
+    .ios-notification, .cta-editorial-box, .btn-gold-filled,
+    .btn-gold-filled:hover, .modal-box {
+      box-shadow: none !important;
+    }
+
+    /* Small uppercase eyebrow label repeated above headings and panels. */
+    .label-caps {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .label-caps.gold { color: var(--gold); }
+
+    /* Bordered dark panel used for the execution summaries. */
+    .panel-box {
+      background: rgba(12, 12, 12, 0.95);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    /* Label + value pair in the autonomous-business summary. */
+    .stat-value {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      color: #FFF;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    /* Attribution line under a benchmark figure. */
+    .source-note {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
 
     /* CINEMATIC HEADER — FULL WIDTH OVERLAY (CLEANED) */
     .top-header {
@@ -70,7 +117,7 @@
     }
 
     .brand-title {
-      font-family: 'Cinzel', serif;
+      font-family: var(--font-serif);
       font-size: 18px;
       letter-spacing: 4px;
       color: var(--gold);
@@ -101,7 +148,6 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: none !important;
     }
 
     .btn-analysis-call:hover {
@@ -140,7 +186,6 @@
       align-items: center;
       gap: 6px;
       cursor: pointer;
-      box-shadow: none !important;
     }
 
     .step-item.active {
@@ -216,7 +261,7 @@
     }
 
     .hero-main-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-italic);
       font-size: 80px;
       line-height: 1.05;
       color: #FFFFFF;
@@ -283,7 +328,6 @@
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: none !important;
       transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
     }
 
@@ -308,7 +352,7 @@
     }
 
     .mockup-title {
-      font-family: 'Cinzel', serif;
+      font-family: var(--font-serif);
       font-size: 14px;
       color: #FFF;
       font-weight: 700;
@@ -320,7 +364,7 @@
       border: 1px solid rgba(212,175,55,0.3);
       padding: 3px 8px;
       border-radius: 3px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       letter-spacing: 1px;
     }
 
@@ -339,7 +383,7 @@
     }
 
     .mockup-stat-value {
-      font-family: 'Cinzel', serif;
+      font-family: var(--font-serif);
       font-size: 20px;
       color: #FFF;
       font-weight: 700;
@@ -405,7 +449,7 @@
     }
 
     .mockup-activity-name { color: rgba(255,255,255,0.7); }
-    .mockup-activity-val { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; }
+    .mockup-activity-val { color: var(--gold); font-family: var(--font-mono); font-weight: 700; font-size: 12px; }
 
     /* $38,400 FLOATING CARD */
     .hero-float-card {
@@ -420,7 +464,7 @@
     }
 
     .hero-float-card-value {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-italic);
       font-style: italic;
       font-size: 32px;
       color: var(--gold);
@@ -444,21 +488,13 @@
       .top-header { padding: 16px 24px; }
     }
 
-    /* SECTIONS COMMON STYLING */
+    /* SECTIONS COMMON STYLING (reveal animation: assets/css/reveal.css) */
     .part-section {
       margin-bottom: 90px;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .part-section.visible {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .section-num-badge {
-      font-family: 'Cinzel', serif;
+      font-family: var(--font-serif);
       font-size: 28px;
       color: var(--gold);
       font-weight: 700;
@@ -466,7 +502,7 @@
     }
 
     .section-heading-serif {
-      font-family: 'Cinzel', serif;
+      font-family: var(--font-serif);
       font-size: 38px;
       line-height: 1.25;
       color: #FFFFFF;
@@ -475,7 +511,7 @@
     }
 
     .quote-italic-gold {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-italic);
       font-style: italic;
       font-size: 20px;
       line-height: 1.6;
@@ -543,7 +579,7 @@
     }
 
     .col-card-title {
-      font-family: 'Cinzel', serif;
+      font-family: var(--font-serif);
       font-size: 20px;
       color: #FFF;
       margin-bottom: 10px;
@@ -583,7 +619,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
     }
 
@@ -655,7 +691,7 @@
     }
 
     .callout-block-title {
-      font-family: 'Cinzel', serif;
+      font-family: var(--font-serif);
       font-size: 18px;
       color: #FFF;
       margin-bottom: 8px;
@@ -674,7 +710,6 @@
       border: 1px solid var(--card-border-gold);
       border-radius: 20px;
       padding: 20px;
-      box-shadow: none !important;
       display: flex;
       flex-direction: column;
       height: 560px;
@@ -734,7 +769,7 @@
 
     .bubble-tag {
       font-size: 9px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       color: var(--gold);
       margin-bottom: 4px;
       display: block;
@@ -743,7 +778,7 @@
 
     .bubble-status {
       font-size: 9px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       color: var(--text-muted);
       margin-top: 4px;
       display: block;
@@ -754,7 +789,7 @@
       align-self: flex-start;
       font-size: 11px;
       color: var(--gold-light);
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       padding: 8px 14px;
       background: rgba(212, 175, 55, 0.08);
       border-radius: 8px;
@@ -807,7 +842,7 @@
       flex-direction: column;
       gap: 4px;
       margin-top: 8px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       color: var(--text-muted);
     }
@@ -834,7 +869,6 @@
       border: 1px solid var(--card-border-gold);
       border-radius: 16px;
       padding: 20px;
-      box-shadow: none !important;
       margin-bottom: 24px;
     }
 
@@ -859,7 +893,7 @@
     }
 
     .quote-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-italic);
       font-style: italic;
       font-size: 17px;
       color: var(--gold-italic);
@@ -891,11 +925,10 @@
       padding: 48px 36px;
       text-align: center;
       margin-bottom: 60px;
-      box-shadow: none !important;
     }
 
     .cta-serif-title {
-      font-family: 'Cinzel', serif;
+      font-family: var(--font-serif);
       font-size: 36px;
       line-height: 1.25;
       color: #FFF;
@@ -904,7 +937,7 @@
     }
 
     .cta-serif-title span {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-italic);
       font-style: italic;
       color: var(--gold-italic);
       font-weight: 400;
@@ -922,7 +955,7 @@
     .btn-gold-filled {
       background: var(--gold);
       color: #000000;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: var(--font-body);
       font-weight: 700;
       font-size: 14.5px;
       letter-spacing: 1px;
@@ -930,7 +963,6 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      box-shadow: none !important;
       transition: background 0.3s ease, transform 0.2s ease;
       text-transform: uppercase;
     }
@@ -938,7 +970,6 @@
     .btn-gold-filled:hover {
       transform: translateY(-2px);
       background: var(--gold-italic);
-      box-shadow: none !important;
     }
 
     /* CONTACT HANDLES PLACED ONLY ONCE (INSIDE CTA BOX) */
@@ -960,14 +991,14 @@
     }
 
     .manifesto-title {
-      font-family: 'Cinzel', serif;
+      font-family: var(--font-serif);
       font-size: 22px;
       color: #FFF;
       margin-bottom: 6px;
     }
 
     .manifesto-italic {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-italic);
       font-style: italic;
       font-size: 20px;
       color: var(--gold-italic);
@@ -1017,7 +1048,6 @@
       padding: 40px 35px;
       max-width: 480px;
       width: 100%;
-      box-shadow: none !important;
       position: relative;
     }
 
@@ -1027,7 +1057,7 @@
       font-size: 24px; cursor: pointer;
     }
 
-    .modal-box h2 { font-family: 'Cinzel', serif; font-size: 22px; color: #FFF; margin-bottom: 6px; }
+    .modal-box h2 { font-family: var(--font-serif); font-size: 22px; color: #FFF; margin-bottom: 6px; }
     .modal-box .modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
 
     .modal-box input, .modal-box select {
@@ -1035,7 +1065,7 @@
       border: 1px solid rgba(212, 175, 55, 0.3);
       border-radius: 6px;
       padding: 12px 16px;
-      color: #FFF; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #FFF; font-size: 13px; font-family: var(--font-body);
       outline: none; width: 100%; margin-bottom: 12px; display: block;
     }
 
@@ -1095,7 +1125,7 @@
               <div class="mockup-dot" style="background:#ff5f57;"></div>
               <div class="mockup-dot" style="background:#ffbd2e;"></div>
               <div class="mockup-dot" style="background:#28c840;"></div>
-              <span style="font-size:10px; color:var(--text-muted); margin-left:8px; font-family:'JetBrains Mono',monospace;">Zynvox Intelligence Dashboard</span>
+              <span style="font-size:10px; color:var(--text-muted); margin-left:8px; font-family: var(--font-mono);">Zynvox Intelligence Dashboard</span>
             </div>
             <div class="mockup-body">
               <div class="mockup-header-row">
@@ -1161,7 +1191,7 @@
     <!-- ================================================================
     PART 01: REVENUE OPPORTUNITY
     ================================================================ -->
-    <section class="part-section visible" id="part1">
+    <section class="part-section reveal visible" id="part1">
       <div class="section-num-badge">01</div>
       <h2 class="section-heading-serif">Revenue Opportunity</h2>
 
@@ -1185,7 +1215,7 @@
           <div class="col-card-gold-highlight">Estimated recoverable revenue / year</div>
           <div class="col-card-desc" style="margin-top:8px;">
             Based on: <span style="color:var(--text-main);">31 missed calls × $350 avg ticket × 71% competitor capture × 12 months</span><br>
-            <span style="font-size:11px; color:var(--text-muted); margin-top:6px; display:block;">Industry benchmark — HVAC average. Connect your call log for your exact number.</span>
+            <span class="source-note">Industry benchmark — HVAC average. Connect your call log for your exact number.</span>
           </div>
         </div>
         <div class="borderless-col">
@@ -1193,7 +1223,7 @@
           <div class="col-card-gold-highlight">Missed calls / month (avg. HVAC)</div>
           <div class="col-card-desc" style="margin-top:8px;">
             Every one is a customer who needed help tonight.<br>
-            <span style="font-size:11px; color:var(--text-muted); margin-top:6px; display:block;">Source: ServiceTitan 2024 Field Service Benchmark Report</span>
+            <span class="source-note">Source: ServiceTitan 2024 Field Service Benchmark Report</span>
           </div>
         </div>
         <div class="borderless-col">
@@ -1201,14 +1231,14 @@
           <div class="col-card-gold-highlight">Call competitors within 3 minutes</div>
           <div class="col-card-desc" style="margin-top:8px;">
             No answer means your competitor's answer.<br>
-            <span style="font-size:11px; color:var(--text-muted); margin-top:6px; display:block;">Source: Harvard Business Review — Speed-to-Lead Study</span>
+            <span class="source-note">Source: Harvard Business Review — Speed-to-Lead Study</span>
           </div>
         </div>
       </div>
 
       <!-- TABLE COMPARISON ROWS -->
       <div class="comparison-table">
-        <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:16px; font-weight:700;">
+        <div class="label-caps" style="font-size:11px; margin-bottom:16px;">
           CURRENT STATE VS OPERATIONAL INTELLIGENCE
         </div>
         <div class="comp-row">
@@ -1259,7 +1289,7 @@
     <!-- ================================================================
     PART 02: CUSTOMER RECOVERY
     ================================================================ -->
-    <section class="part-section" id="part2">
+    <section class="part-section reveal" id="part2">
       <div class="section-num-badge">02</div>
       <h2 class="section-heading-serif">Customer Recovery</h2>
 
@@ -1269,7 +1299,7 @@
 
       <div class="sub-section-divider" style="display:flex; justify-content:space-between; align-items:center;">
         <span>AUTONOMOUS CUSTOMER RESPONSE</span>
-        <span style="color:var(--gold); font-family:'JetBrains Mono';">● Live: 11:42 PM</span>
+        <span style="color:var(--gold); font-family: var(--font-mono);">● Live: 11:42 PM</span>
       </div>
 
       <p style="font-size:15px; color:var(--text-muted); line-height:1.7; margin-bottom:32px; max-width:680px;">
@@ -1312,11 +1342,11 @@
         <div>
           <div class="phone-container">
             <div class="phone-header">
-              <span style="font-size:11px; font-family:'JetBrains Mono'; color:var(--text-muted);">11:42 PM</span>
+              <span style="font-size:11px; font-family: var(--font-mono); color:var(--text-muted);">11:42 PM</span>
               <span class="contact-name" id="chatHeaderName">Your Business</span>
               <span style="font-size:14px; color:var(--text-muted);">•••</span>
             </div>
-            <div style="font-size:10px; font-family:'JetBrains Mono'; color:var(--gold); text-align:center; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06); margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-size:10px; font-family: var(--font-mono); color:var(--gold); text-align:center; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06); margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
               <span>SMS INTERCEPT · 11:42 PM</span>
               <span style="color:var(--gold);">●</span>
             </div>
@@ -1367,7 +1397,7 @@
     <!-- ================================================================
     PART 03: AUTONOMOUS BUSINESS
     ================================================================ -->
-    <section class="part-section" id="part3">
+    <section class="part-section reveal" id="part3">
       <div class="section-num-badge">03</div>
       <h2 class="section-heading-serif">Autonomous Business</h2>
 
@@ -1379,7 +1409,7 @@
         
         <!-- Left Column: iOS Notification & Checkmarks -->
         <div>
-          <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:4px; font-weight:700;">
+          <div class="label-caps gold" style="margin-bottom:4px;">
             BUSINESS OPERATING AUTOMATICALLY
           </div>
           <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">Dispatched and synced using your operational rules</div>
@@ -1401,8 +1431,8 @@
             </div>
           </div>
 
-          <div style="background: rgba(12, 12, 12, 0.95); border: 1px solid var(--card-border); border-radius: 12px; padding: 22px; margin-bottom: 24px;">
-            <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); font-weight:700; margin-bottom:14px;">
+          <div class="panel-box" style="margin-bottom: 24px;">
+            <div class="label-caps" style="margin-bottom:14px;">
               WHILE YOU SLEPT — AUTONOMOUS EXECUTION SUMMARY
             </div>
             <div class="checklist-grid">
@@ -1419,26 +1449,26 @@
         <!-- Right Column: Quote Box + Stats -->
         <div>
           <div style="margin-bottom:28px;">
-            <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; font-weight:700;">Operating System</div>
-            <div style="font-family:'Cinzel', serif; font-size:20px; color:#FFF; font-weight:700; margin-bottom:16px;">Dispatched automatically</div>
+            <div class="label-caps" style="margin-bottom:4px;">Operating System</div>
+            <div class="stat-value">Dispatched automatically</div>
 
-            <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; font-weight:700;">Revenue Secured</div>
-            <div style="font-family:'Cinzel', serif; font-size:20px; color:#FFF; font-weight:700; margin-bottom:16px;">Captured automatically</div>
+            <div class="label-caps" style="margin-bottom:4px;">Revenue Secured</div>
+            <div class="stat-value">Captured automatically</div>
 
-            <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; font-weight:700;">Owner Action Required</div>
-            <div style="font-family:'Cinzel', serif; font-size:22px; color:var(--gold); font-weight:700;">None.</div>
+            <div class="label-caps" style="margin-bottom:4px;">Owner Action Required</div>
+            <div class="stat-value" style="font-size:22px; color:var(--gold); margin-bottom:0;">None.</div>
           </div>
 
           <div class="vertical-quote-box">
             <div class="quote-title">"Your best-performing technician was automatically prioritized for this emergency job."</div>
-            <div style="font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--gold); font-weight:700; margin-top:14px; margin-bottom:6px;">Your Business Learns Every Day</div>
+            <div class="label-caps gold" style="font-size:11px; letter-spacing:1px; margin-top:14px; margin-bottom:6px;">Your Business Learns Every Day</div>
             <div class="quote-body">
               Every conversation expands your company's operational memory. Tomorrow it responds faster. Next month it dispatches smarter. Next year it understands your business better than anyone.
             </div>
           </div>
 
-          <div style="background: rgba(12, 12, 12, 0.95); border: 1px solid var(--card-border); border-radius: 12px; padding: 22px;">
-            <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); font-weight:700; margin-bottom:14px;">
+          <div class="panel-box">
+            <div class="label-caps" style="margin-bottom:14px;">
               ✓ CONVERSATION COMPLETE
             </div>
             <div class="checklist-grid">
@@ -1531,7 +1561,7 @@
         <div style="font-size:48px; color:var(--gold); margin-bottom:12px;">✓</div>
         <h2>Call Request Received</h2>
         <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:12px;">We'll reach out within a few hours to confirm your 20-minute slot. Come ready with a rough sense of your monthly call volume — we'll handle the rest.</p>
-        <div style="font-family:'JetBrains Mono', monospace; font-size:14px; color:var(--gold-light); margin-bottom:16px;">Reference ID: ZX-2026-<span id="refId">8142</span></div>
+        <div style="font-family: var(--font-mono); font-size:14px; color:var(--gold-light); margin-bottom:16px;">Reference ID: ZX-2026-<span id="refId">8142</span></div>
         <button class="btn-gold-filled" style="width:100%;" onclick="closeModal()">Close</button>
       </div>
     </div>
@@ -1541,32 +1571,23 @@
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 
+  <script src="assets/js/reveal.js"></script>
+  <script src="assets/js/dom.js"></script>
   <script>
+    const { byId, setText, setValue, setDisplay, fieldValue, createEl } = ZynvoxDOM;
+
     // DOM LOAD SAFE INITIALIZATION
     document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add('loaded');
 
       // Pre-render first system bubble cleanly so phone frame is never blank
-      const chat = document.getElementById('chatStream');
+      const chat = byId('chatStream');
       if (chat && chat.children.length === 0) {
-        const div = document.createElement('div');
-        div.className = 'bubble system';
-        div.innerHTML = `<span class="bubble-tag">ZYNVOX AUTO-INTERCEPT (12S RESPONSE)</span>Hi! We saw we just missed your call. Is your system acting up, or are you looking to schedule routine service?<span class="bubble-status">✓✓ Read</span>`;
-        chat.appendChild(div);
+        chat.appendChild(createEl('div', 'bubble system',
+          `<span class="bubble-tag">ZYNVOX AUTO-INTERCEPT (12S RESPONSE)</span>Hi! We saw we just missed your call. Is your system acting up, or are you looking to schedule routine service?<span class="bubble-status">✓✓ Read</span>`));
       }
 
-      // Intersection Observer with DOM Readiness
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.1 });
-
-      document.querySelectorAll('.part-section').forEach(section => {
-        observer.observe(section);
-      });
+      initScrollReveal({ selector: '.part-section' });
     });
 
     // CHAT SIMULATION LOGIC
@@ -1596,30 +1617,27 @@
       if (isPlaying) return;
       isPlaying = true;
 
-      const chat = document.getElementById('chatStream');
-      const startBtn = document.getElementById('startSimulation');
-      if (startBtn) startBtn.style.display = 'none';
+      const chat = byId('chatStream');
+      setDisplay('startSimulation', 'none');
 
       let msgIndex = 0;
       let statusIndex = 0;
 
-      const statusContainer = document.getElementById('liveStatusContainer');
+      const statusContainer = byId('liveStatusContainer');
       if (statusContainer) statusContainer.innerHTML = '';
 
       function addLiveStatus() {
         if (statusIndex >= statusTimeline.length) return;
         const item = statusTimeline[statusIndex];
-        const div = document.createElement('div');
-        div.className = 'status-item';
-        div.innerHTML = `<span class="time">${item.time}</span><span class="check">✓</span><span>${item.label}</span>`;
+        const div = createEl('div', 'status-item',
+          `<span class="time">${item.time}</span><span class="check">✓</span><span>${item.label}</span>`);
         statusContainer.appendChild(div);
         statusIndex++;
         setTimeout(() => { div.classList.add('visible'); }, 50);
       }
 
       function addMessage(msg) {
-        const div = document.createElement('div');
-        div.className = `bubble ${msg.type}`;
+        const div = createEl('div', `bubble ${msg.type}`);
         if (msg.tag) {
           div.innerHTML = `<span class="bubble-tag">${msg.tag}</span>${msg.text}`;
         } else {
@@ -1629,17 +1647,13 @@
         chat.scrollTop = chat.scrollHeight;
 
         if (msg.type === 'system') {
-          const status = document.createElement('span');
-          status.className = 'bubble-status';
-          status.textContent = '✓✓ Read';
-          div.appendChild(status);
+          div.appendChild(createEl('span', 'bubble-status', '✓✓ Read'));
         }
       }
 
       function addThinking() {
-        const div = document.createElement('div');
-        div.className = 'thinking-state';
-        div.innerHTML = `<span>Processing</span><div class="typing-dots"><span></span><span></span><span></span></div>`;
+        const div = createEl('div', 'thinking-state',
+          `<span>Processing</span><div class="typing-dots"><span></span><span></span><span></span></div>`);
         chat.appendChild(div);
         chat.scrollTop = chat.scrollHeight;
         return div;
@@ -1648,10 +1662,9 @@
       function nextMessage() {
         if (msgIndex >= chatMessages.length) {
           isPlaying = false;
-          const completeBanner = document.createElement('div');
-          completeBanner.className = 'thinking-state';
+          const completeBanner = createEl('div', 'thinking-state',
+            '<span>✓ Intercept Complete — Revenue Protected</span>');
           completeBanner.style.cssText = 'border-color:var(--gold); color:var(--gold); margin-top:8px;';
-          completeBanner.innerHTML = '<span>✓ Intercept Complete — Revenue Protected</span>';
           chat.appendChild(completeBanner);
           chat.scrollTop = chat.scrollHeight;
           return;
@@ -1677,11 +1690,11 @@
 
     // NAVIGATION
     function goToPart(num) {
-      const target = document.getElementById(`part${num}`);
+      const target = byId(`part${num}`);
       if (target) target.scrollIntoView({ behavior: 'smooth' });
 
       for (let i = 1; i <= 3; i++) {
-        const item = document.getElementById(`nav-s${i}`);
+        const item = byId(`nav-s${i}`);
         if (item) {
           if (i < num) { item.className = 'step-item completed'; }
           else if (i === num) { item.className = 'step-item active'; }
@@ -1691,57 +1704,58 @@
     }
 
     // MODAL HANDLERS
+    // Shows exactly one of the modal's three panes.
+    function showModalPane(pane) {
+      setDisplay('modalForm', pane === 'form' ? 'block' : 'none');
+      setDisplay('modalLoading', pane === 'loading' ? 'block' : 'none');
+      setDisplay('modalSuccess', pane === 'success' ? 'block' : 'none');
+    }
+
     function openModal() {
-      document.getElementById('auditModal').classList.add('active');
-      document.getElementById('modalForm').style.display = 'block';
-      document.getElementById('modalLoading').style.display = 'none';
-      document.getElementById('modalSuccess').style.display = 'none';
+      byId('auditModal').classList.add('active');
+      showModalPane('form');
       document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
-      document.getElementById('auditModal').classList.remove('active');
+      byId('auditModal').classList.remove('active');
       document.body.style.overflow = 'auto';
     }
 
-    document.getElementById('auditModal').addEventListener('click', function(e) {
+    byId('auditModal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
     });
 
     function submitAudit() {
-      const name = document.getElementById('modalName').value.trim();
-      const owner = document.getElementById('modalOwner').value.trim();
-      const phone = document.getElementById('modalPhone').value.trim();
-      const email = document.getElementById('modalEmail').value.trim();
-      const website = document.getElementById('modalWebsite').value.trim();
-      const industry = document.getElementById('modalIndustry').value;
+      const name = fieldValue('modalName');
+      const owner = fieldValue('modalOwner');
+      const phone = fieldValue('modalPhone');
+      const email = fieldValue('modalEmail');
+      const website = fieldValue('modalWebsite');
+      const industry = fieldValue('modalIndustry');
 
       if (!name || !owner || !phone || !email || !industry) {
-        let errMsg = document.getElementById('modalValidationError');
+        let errMsg = byId('modalValidationError');
         if (!errMsg) {
-          errMsg = document.createElement('div');
+          errMsg = createEl('div');
           errMsg.id = 'modalValidationError';
           errMsg.style.cssText = 'color:#E5BE48; font-size:12px; font-family:"JetBrains Mono",monospace; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:6px; padding:10px 14px; margin-bottom:12px; text-align:center;';
-          const form = document.getElementById('modalForm');
-          const btn = form.querySelector('button');
-          form.insertBefore(errMsg, btn);
+          const form = byId('modalForm');
+          form.insertBefore(errMsg, form.querySelector('button'));
         }
         errMsg.textContent = '⚠ Please fill in all required fields.';
         errMsg.style.display = 'block';
         return;
       }
-      const existingErr = document.getElementById('modalValidationError');
-      if (existingErr) existingErr.style.display = 'none';
+      setDisplay('modalValidationError', 'none');
 
-      document.getElementById('modalForm').style.display = 'none';
-      document.getElementById('modalLoading').style.display = 'block';
+      showModalPane('loading');
 
       setTimeout(() => {
-        document.getElementById('modalLoading').style.display = 'none';
-        document.getElementById('modalSuccess').style.display = 'block';
+        showModalPane('success');
 
         const refId = Math.floor(1000 + Math.random() * 9000);
-        document.getElementById('refId').textContent = refId;
+        setText('refId', refId);
 
         fetch('https://formspree.io/f/xvzenbbn', {
           method: 'POST',
@@ -1768,28 +1782,16 @@
       const industry = params.get('industry');
       const customer = params.get('customer') || 'Sarah M.';
 
-      const notifCustomer = document.getElementById('notifCustomer');
-      if (notifCustomer) notifCustomer.textContent = customer;
+      setText('notifCustomer', customer);
 
       if (biz) {
-        const chatHeaderName = document.getElementById('chatHeaderName');
-        if (chatHeaderName) chatHeaderName.textContent = biz;
-
-        if (city) {
-          const notifArea = document.getElementById('notifArea');
-          if (notifArea) notifArea.textContent = city;
-        }
-
-        const modalName = document.getElementById('modalName');
-        if (modalName) modalName.value = biz;
-
-        if (owner) {
-          const modalOwner = document.getElementById('modalOwner');
-          if (modalOwner) modalOwner.value = owner;
-        }
+        setText('chatHeaderName', biz);
+        if (city) setText('notifArea', city);
+        setValue('modalName', biz);
+        if (owner) setValue('modalOwner', owner);
 
         if (industry) {
-          const sel = document.getElementById('modalIndustry');
+          const sel = byId('modalIndustry');
           if (sel) {
             for (let opt of sel.options) {
               if (opt.value.toLowerCase() === industry.toLowerCase()) {

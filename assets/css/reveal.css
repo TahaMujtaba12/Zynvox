@@ -1,0 +1,14 @@
+/* Scroll-reveal transition shared by every page, driven by assets/js/reveal.js.
+   Pages tune it with --reveal-offset and --reveal-duration. */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-offset, 32px));
+  transition: opacity var(--reveal-duration, 0.8s) ease,
+              transform var(--reveal-duration, 0.8s) ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
