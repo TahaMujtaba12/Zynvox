@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Zynvox — Engineered AI. Built to Scale.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -686,7 +687,7 @@
       <a href="#standard" class="nav-link">Methodology</a>
       <a href="#proof" class="nav-link">Capabilities</a>
     </div>
-    <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" class="nav-cta">Get Consultation</a>
+    <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" rel="noopener noreferrer" class="nav-cta">Get Consultation</a>
   </nav>
 
   <!-- HERO -->
@@ -704,7 +705,7 @@
       Most businesses do not struggle because of a lack of ambition. They struggle because their operations were never designed to scale. We engineer the infrastructure that changes that — permanently.
     </p>
     <div class="hero-actions">
-      <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" class="btn-primary">Get Consultation</a>
+      <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" rel="noopener noreferrer" class="btn-primary">Get Consultation</a>
       <a href="#services" class="btn-ghost">What We Build</a>
     </div>
     <div class="hero-scroll">Scroll to explore</div>
@@ -821,7 +822,7 @@
       <div class="proof-frame reveal">
         <p>An AI system that understands your business, qualifies your visitors, and directs them toward becoming your clients — operating at full capacity every hour of every day.</p>
       </div>
-      <a href="https://chatbase.co/rJz_83C9zbwbHu_eylHr8/help" target="_blank" class="btn-primary reveal">Experience It Live</a>
+      <a href="https://chatbase.co/rJz_83C9zbwbHu_eylHr8/help" target="_blank" rel="noopener noreferrer" class="btn-primary reveal">Experience It Live</a>
     </div>
   </section>
 
@@ -847,15 +848,15 @@
     <div class="cta-inner">
       <h2 class="cta-heading reveal">Your Operation Should Not<br>Depend on <em>Manual Work.</em></h2>
       <p class="cta-sub reveal">If your business is still running on manual processes, that gap is costing you more than you realize. Let us show you exactly where — and exactly how we fix it.</p>
-      <a href="https://chatbase.co/rJz_83C9zbwbHu_eylHr8/help" target="_blank" class="btn-primary reveal">Begin the Conversation</a>
+      <a href="https://chatbase.co/rJz_83C9zbwbHu_eylHr8/help" target="_blank" rel="noopener noreferrer" class="btn-primary reveal">Begin the Conversation</a>
       <p class="cta-note reveal">We review every inquiry personally. We respond within 24 hours.</p>
 
       <form action="https://send.pageclip.co/2XbXqLOSIKhCLwJFyJm8Q4AmvnujM6gK" class="pageclip-form zynvox-form reveal" method="post">
-        <input type="text" name="name" placeholder="Your Name" required />
-        <input type="text" name="business" placeholder="Business Name" required />
-        <input type="tel" name="phone" placeholder="Phone Number" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <textarea name="message" placeholder="What's slowing down your operations right now?"></textarea>
+        <input type="text" name="name" placeholder="Your Name" maxlength="120" required />
+        <input type="text" name="business" placeholder="Business Name" maxlength="120" required />
+        <input type="tel" name="phone" placeholder="Phone Number" maxlength="25" pattern="[0-9+()\-.\s]{7,25}" required />
+        <input type="email" name="email" placeholder="Email" maxlength="254" required />
+        <textarea name="message" placeholder="What's slowing down your operations right now?" maxlength="2000"></textarea>
         <button type="submit" class="pageclip-form__submit btn-primary">
           <span>Request Consultation</span>
         </button>
@@ -873,9 +874,9 @@
       </div>
     </div>
     <ul class="footer-links">
-      <li><a href="https://cal.com/zynvox/zynvox-consultation" target="_blank">Book a Call</a></li>
-      <li><a href="https://linkedin.com/company/zynvox" target="_blank">LinkedIn</a></li>
-      <li><a href="https://chatbase.co/rJz_83C9zbwbHu_eylHr8/help" target="_blank">AI System</a></li>
+      <li><a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" rel="noopener noreferrer">Book a Call</a></li>
+      <li><a href="https://linkedin.com/company/zynvox" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href="https://chatbase.co/rJz_83C9zbwbHu_eylHr8/help" target="_blank" rel="noopener noreferrer">AI System</a></li>
       <li><a href="mailto:zynvoxofficial@gmail.com">Contact</a></li>
     </ul>
     <div class="footer-copy">&copy; 2026 Zynvox. All rights reserved.</div>
