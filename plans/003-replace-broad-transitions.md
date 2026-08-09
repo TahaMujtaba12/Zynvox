@@ -1,8 +1,8 @@
 # Replace broad transitions with property-specific transitions
 
-**Status:** READY  
-**Severity:** LOW  
-**Category:** Easing and cohesion  
+**Status:** READY
+**Severity:** LOW
+**Category:** Easing and cohesion
 **Baseline commit:** `a226d0f`
 
 ## Finding

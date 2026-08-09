@@ -1,8 +1,8 @@
 # Remove the load opacity gate
 
-**Status:** READY  
-**Severity:** HIGH  
-**Category:** Accessibility and failure behavior  
+**Status:** READY
+**Severity:** HIGH
+**Category:** Accessibility and failure behavior
 **Baseline commit:** `a226d0f`
 
 ## Finding

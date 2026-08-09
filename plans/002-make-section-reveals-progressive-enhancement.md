@@ -1,8 +1,8 @@
 # Make section reveals progressive enhancement
 
-**Status:** READY  
-**Severity:** MEDIUM  
-**Category:** Accessibility and purpose  
+**Status:** READY
+**Severity:** MEDIUM
+**Category:** Accessibility and purpose
 **Baseline commit:** `a226d0f`
 
 ## Finding
