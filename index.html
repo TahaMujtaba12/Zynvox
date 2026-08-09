@@ -883,31 +883,54 @@
   </footer>
 
   <script>
-    // Nav scroll effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    function reportError(context, error) {
+      console.error(`[Zynvox] ${context}:`, error);
+    }
+
+    window.addEventListener('error', (event) => {
+      reportError('uncaught error', event.error || event.message);
     });
 
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
+    window.addEventListener('unhandledrejection', (event) => {
+      reportError('unhandled promise rejection', event.reason);
+    });
+
+    // Nav scroll effect
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 40);
       });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
+    } else {
+      reportError('nav scroll effect', new Error('#navbar is missing'));
+    }
+
+    // Scroll reveal — without the fallback, an unavailable observer would
+    // leave every revealed element permanently hidden.
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 80);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      reveals.forEach(el => observer.observe(el));
+    } else {
+      reportError('scroll reveal', new Error('IntersectionObserver unavailable; revealing all elements'));
+      reveals.forEach(el => el.classList.add('visible'));
+    }
   </script>
 
   <!-- Pageclip JS -->
-  <script src="https://s.pageclip.co/v1/pageclip.js" charset="utf-8"></script>
+  <script src="https://s.pageclip.co/v1/pageclip.js" charset="utf-8"
+    onerror="reportError('Pageclip script', new Error('failed to load https://s.pageclip.co/v1/pageclip.js; lead form falls back to a full-page POST'))"></script>
 
   <!-- Zynvox Intelligence — Chatbase widget embed -->
   <script>
-  (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="rJz_83C9zbwbHu_eylHr8";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+  (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="rJz_83C9zbwbHu_eylHr8";script.domain="www.chatbase.co";script.onerror=function(){reportError("Chatbase widget","failed to load https://www.chatbase.co/embed.min.js")};document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
   </script>
 
   <!-- Simple Analytics — 100% privacy-first analytics -->
