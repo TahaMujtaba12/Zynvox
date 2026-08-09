@@ -408,7 +408,7 @@
     .mockup-activity-name { color: rgba(255,255,255,0.7); }
     .mockup-activity-val { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; }
 
-    /* $38,400 FLOATING CARD */
+    /* BENCHMARK FLOATING CARD */
     .hero-float-card {
       position: absolute;
       bottom: -20px;
@@ -503,6 +503,148 @@
       text-transform: uppercase;
       color: var(--text-muted);
       font-weight: 600;
+    }
+
+    /* REVENUE CALCULATOR */
+    .revenue-calculator {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(340px, 1.08fr);
+      gap: 0;
+      margin: 56px 0 52px;
+      border: 1px solid var(--card-border-gold);
+      background:
+        linear-gradient(135deg, rgba(212,175,55,0.08), transparent 42%),
+        #090909;
+      overflow: hidden;
+    }
+
+    .calculator-intro {
+      padding: 34px 36px 38px;
+      border-right: 1px solid var(--card-border);
+      background-image: linear-gradient(145deg, transparent 68%, rgba(212,175,55,0.08) 68%, transparent 69%);
+    }
+
+    .calculator-kicker {
+      color: var(--gold);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .calculator-title {
+      color: var(--text-main);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.08;
+      margin-bottom: 18px;
+    }
+
+    .calculator-copy {
+      color: var(--text-muted);
+      font-size: 13.5px;
+      line-height: 1.7;
+      max-width: 410px;
+    }
+
+    .calculator-form {
+      display: grid;
+      gap: 24px;
+      padding: 34px 36px 38px;
+    }
+
+    .calculator-field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .calculator-field label {
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .calculator-field input[type="number"] {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 3px;
+      background: rgba(255,255,255,0.035);
+      color: var(--text-main);
+      font: 500 18px 'JetBrains Mono', monospace;
+      padding: 13px 14px;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .calculator-field input[type="number"]:hover,
+    .calculator-field input[type="number"]:focus {
+      background: rgba(212,175,55,0.06);
+      border-color: var(--gold);
+      outline: none;
+    }
+
+    .calculator-field input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    .range-meta {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font: 10px 'JetBrains Mono', monospace;
+    }
+
+    .range-value {
+      color: var(--gold-light);
+      font: 600 13px 'JetBrains Mono', monospace;
+    }
+
+    .calculator-result {
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      margin-top: 4px;
+      padding-top: 22px;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .calculator-result-label {
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .calculator-result-value {
+      color: var(--gold);
+      font: 700 clamp(36px, 5vw, 58px) 'JetBrains Mono', monospace;
+      letter-spacing: -0.08em;
+      line-height: 1;
+    }
+
+    .calculator-result-detail {
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .calculator-result-detail strong { color: var(--text-main); font-weight: 500; }
+
+    @media (max-width: 760px) {
+      .revenue-calculator { grid-template-columns: 1fr; }
+      .calculator-intro { border-right: none; border-bottom: 1px solid var(--card-border); }
+    }
+
+    @media (max-width: 480px) {
+      .calculator-intro, .calculator-form { padding: 28px 22px; }
+      .calculator-result-value { font-size: 38px; }
     }
 
     /* BORDERLESS COLUMN CARDS (SECTION 01) */
@@ -1149,9 +1291,9 @@
             </div>
           </div>
 
-          <!-- FLOATING $38,400 CARD -->
+          <!-- FLOATING BENCHMARK CARD -->
           <div class="hero-float-card">
-            <div class="hero-float-card-value">$38,400</div>
+            <div class="hero-float-card-value">$92,442</div>
             <div class="hero-float-card-label">Avg. Annual Recovery</div>
           </div>
         </div>
@@ -1182,7 +1324,7 @@
       <!-- BORDERLESS COLUMN CARDS -->
       <div class="borderless-metrics-grid">
         <div class="borderless-col featured-col">
-          <div class="col-card-title" style="font-size:28px; color:var(--gold);">~$38,400</div>
+          <div class="col-card-title" style="font-size:28px; color:var(--gold);">~$92,442</div>
           <div class="col-card-gold-highlight">Estimated recoverable revenue / year</div>
           <div class="col-card-desc" style="margin-top:8px;">
             Based on: <span style="color:var(--text-main);">31 missed calls × $350 avg ticket × 71% competitor capture × 12 months</span><br>
@@ -1203,6 +1345,42 @@
           <div class="col-card-desc" style="margin-top:8px;">
             No answer means your competitor's answer.<br>
             <span style="font-size:11px; color:var(--text-muted); margin-top:6px; display:block;">Source: Harvard Business Review — Speed-to-Lead Study</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="revenue-calculator" id="revenue-calculator">
+        <div class="calculator-intro">
+          <div class="calculator-kicker">Your missed-call ledger</div>
+          <h3 class="calculator-title">Put a number on the leakage.</h3>
+          <p class="calculator-copy">
+            Use three numbers from your business. We’ll estimate the annual revenue currently walking to a competitor after hours.
+          </p>
+        </div>
+        <div class="calculator-form">
+          <div class="calculator-field">
+            <label for="missedCalls">Missed calls per month</label>
+            <input id="missedCalls" type="number" min="0" max="1000" step="1" value="31" inputmode="numeric" />
+          </div>
+          <div class="calculator-field">
+            <label for="averageTicket">Average ticket value</label>
+            <input id="averageTicket" type="number" min="0" max="100000" step="50" value="350" inputmode="decimal" />
+          </div>
+          <div class="calculator-field">
+            <label for="competitorCapture">Customers who call a competitor</label>
+            <input id="competitorCapture" type="range" min="0" max="100" step="1" value="71" />
+            <div class="range-meta">
+              <span>Conservative</span>
+              <span class="range-value" id="competitorCaptureValue">71%</span>
+              <span>Aggressive</span>
+            </div>
+          </div>
+          <div class="calculator-result" aria-live="polite">
+            <div class="calculator-result-label">Estimated recoverable revenue / year</div>
+            <div class="calculator-result-value" id="revenueResult">$92,442</div>
+            <div class="calculator-result-detail">
+              That’s <strong id="recoveredJobsResult">22 recovered jobs / month</strong> at your current inputs.
+            </div>
           </div>
         </div>
       </div>
@@ -1464,14 +1642,14 @@
         </h2>
 
         <p class="cta-desc">
-          The $38,400 is the HVAC industry average. Your real number depends on your call volume, ticket size, and response rate. In 20 minutes, we'll calculate it precisely — using your actual data.
+          The $92,442 estimate is an HVAC benchmark. Your real number depends on your call volume, ticket size, and response rate. In 20 minutes, we'll calculate it precisely — using your actual data.
         </p>
 
         <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" rel="noopener noreferrer" class="btn-gold-filled" style="display:inline-block; text-decoration:none; text-align:center;">Book a 20-Minute Analysis Call →</a>
 
         <div class="contact-handles">
-          <span>📧 <a href="mailto:taha@zynvox.tech">taha@zynvox.tech</a></span>
-          <span>🌐 <a href="https://zynvox.tech" target="_blank" rel="noopener noreferrer">zynvox.tech</a></span>
+          <span><a href="mailto:taha@zynvox.tech">taha@zynvox.tech</a></span>
+          <span><a href="https://zynvox.tech" target="_blank" rel="noopener noreferrer">zynvox.tech</a></span>
         </div>
       </div>
 
@@ -1716,6 +1894,28 @@
         }
       }
     }
+
+    // REVENUE CALCULATOR
+    function updateRevenueCalculator() {
+      const missedCalls = Math.max(0, Number(document.getElementById('missedCalls')?.value) || 0);
+      const averageTicket = Math.max(0, Number(document.getElementById('averageTicket')?.value) || 0);
+      const competitorCapture = Math.min(100, Math.max(0, Number(document.getElementById('competitorCapture')?.value) || 0));
+      const annualRevenue = missedCalls * averageTicket * (competitorCapture / 100) * 12;
+      const recoveredJobs = Math.round(missedCalls * (competitorCapture / 100));
+
+      document.getElementById('competitorCaptureValue').textContent = `${competitorCapture}%`;
+      document.getElementById('revenueResult').textContent = annualRevenue.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0
+      });
+      document.getElementById('recoveredJobsResult').textContent = `${recoveredJobs.toLocaleString('en-US')} recovered jobs / month`;
+    }
+
+    ['missedCalls', 'averageTicket', 'competitorCapture'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', updateRevenueCalculator);
+    });
+    updateRevenueCalculator();
 
     // MODAL HANDLERS
     function openModal() {
