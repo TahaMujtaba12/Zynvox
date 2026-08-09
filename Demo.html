@@ -1542,6 +1542,18 @@
   </style>
 
   <script>
+    function reportError(context, error) {
+      console.error(`[Zynvox] ${context}:`, error);
+    }
+
+    window.addEventListener('error', (event) => {
+      reportError('uncaught error', event.error || event.message);
+    });
+
+    window.addEventListener('unhandledrejection', (event) => {
+      reportError('unhandled promise rejection', event.reason);
+    });
+
     // DOM LOAD SAFE INITIALIZATION
     document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add('loaded');
@@ -1555,7 +1567,15 @@
         chat.appendChild(div);
       }
 
-      // Intersection Observer with DOM Readiness
+      // Intersection Observer with DOM Readiness — without the fallback,
+      // an unavailable observer would leave every section permanently hidden.
+      const sections = document.querySelectorAll('.part-section');
+      if (!('IntersectionObserver' in window)) {
+        reportError('reveal animations', new Error('IntersectionObserver unavailable; revealing all sections'));
+        sections.forEach(section => section.classList.add('visible'));
+        return;
+      }
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -1564,7 +1584,7 @@
         });
       }, { threshold: 0.1 });
 
-      document.querySelectorAll('.part-section').forEach(section => {
+      sections.forEach(section => {
         observer.observe(section);
       });
     });
@@ -1597,6 +1617,12 @@
       isPlaying = true;
 
       const chat = document.getElementById('chatStream');
+      if (!chat) {
+        isPlaying = false;
+        reportError('chat simulation', new Error('#chatStream is missing; simulation cannot run'));
+        return;
+      }
+
       const startBtn = document.getElementById('startSimulation');
       if (startBtn) startBtn.style.display = 'none';
 
@@ -1607,7 +1633,7 @@
       if (statusContainer) statusContainer.innerHTML = '';
 
       function addLiveStatus() {
-        if (statusIndex >= statusTimeline.length) return;
+        if (!statusContainer || statusIndex >= statusTimeline.length) return;
         const item = statusTimeline[statusIndex];
         const div = document.createElement('div');
         div.className = 'status-item';
@@ -1697,6 +1723,7 @@
       document.getElementById('modalLoading').style.display = 'none';
       document.getElementById('modalSuccess').style.display = 'none';
       document.body.style.overflow = 'hidden';
+      hideModalMessage();
     }
 
     function closeModal() {
@@ -1704,11 +1731,69 @@
       document.body.style.overflow = 'auto';
     }
 
-    document.getElementById('auditModal').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
+    const auditModal = document.getElementById('auditModal');
+    if (auditModal) {
+      auditModal.addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+      });
+    }
 
-    function submitAudit() {
+    const AUDIT_ENDPOINT = 'https://formspree.io/f/xvzenbbn';
+    const AUDIT_TIMEOUT_MS = 15000;
+    const AUDIT_MIN_LOADING_MS = 2000;
+
+    function showModalMessage(text) {
+      let errMsg = document.getElementById('modalValidationError');
+      if (!errMsg) {
+        errMsg = document.createElement('div');
+        errMsg.id = 'modalValidationError';
+        errMsg.style.cssText = 'color:#E5BE48; font-size:12px; font-family:"JetBrains Mono",monospace; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:6px; padding:10px 14px; margin-bottom:12px; text-align:center; line-height:1.6;';
+        const form = document.getElementById('modalForm');
+        const btn = form.querySelector('button');
+        form.insertBefore(errMsg, btn);
+      }
+      errMsg.textContent = text;
+      errMsg.style.display = 'block';
+    }
+
+    function hideModalMessage() {
+      const existingErr = document.getElementById('modalValidationError');
+      if (existingErr) existingErr.style.display = 'none';
+    }
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function describeFailure(response) {
+      let detail = '';
+      try {
+        const body = await response.json();
+        detail = body.error || (Array.isArray(body.errors) ? body.errors.map(e => e.message).join(', ') : '');
+      } catch (parseError) {
+        reportError('parsing audit endpoint error body', parseError);
+      }
+      return `Audit endpoint responded ${response.status}${detail ? `: ${detail}` : ''}`;
+    }
+
+    async function postAudit(payload) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), AUDIT_TIMEOUT_MS);
+      try {
+        const response = await fetch(AUDIT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        if (!response.ok) throw new Error(await describeFailure(response));
+        return response;
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    async function submitAudit() {
       const name = document.getElementById('modalName').value.trim();
       const owner = document.getElementById('modalOwner').value.trim();
       const phone = document.getElementById('modalPhone').value.trim();
@@ -1717,36 +1802,27 @@
       const industry = document.getElementById('modalIndustry').value;
 
       if (!name || !owner || !phone || !email || !industry) {
-        let errMsg = document.getElementById('modalValidationError');
-        if (!errMsg) {
-          errMsg = document.createElement('div');
-          errMsg.id = 'modalValidationError';
-          errMsg.style.cssText = 'color:#E5BE48; font-size:12px; font-family:"JetBrains Mono",monospace; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:6px; padding:10px 14px; margin-bottom:12px; text-align:center;';
-          const form = document.getElementById('modalForm');
-          const btn = form.querySelector('button');
-          form.insertBefore(errMsg, btn);
-        }
-        errMsg.textContent = '⚠ Please fill in all required fields.';
-        errMsg.style.display = 'block';
+        showModalMessage('⚠ Please fill in all required fields.');
         return;
       }
-      const existingErr = document.getElementById('modalValidationError');
-      if (existingErr) existingErr.style.display = 'none';
 
-      document.getElementById('modalForm').style.display = 'none';
-      document.getElementById('modalLoading').style.display = 'block';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        showModalMessage('⚠ Please enter a valid business email address.');
+        return;
+      }
 
-      setTimeout(() => {
-        document.getElementById('modalLoading').style.display = 'none';
-        document.getElementById('modalSuccess').style.display = 'block';
+      hideModalMessage();
 
-        const refId = Math.floor(1000 + Math.random() * 9000);
-        document.getElementById('refId').textContent = refId;
+      const form = document.getElementById('modalForm');
+      const loading = document.getElementById('modalLoading');
+      form.style.display = 'none';
+      loading.style.display = 'block';
 
-        fetch('https://formspree.io/f/xvzenbbn', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
+      const refId = Math.floor(1000 + Math.random() * 9000);
+
+      try {
+        await Promise.all([
+          postAudit({
             business_name: name,
             owner_name: owner,
             phone: phone,
@@ -1754,9 +1830,24 @@
             website: website,
             industry: industry,
             reference_id: 'ZX-2026-' + refId
-          })
-        }).catch(err => console.error('Formspree error:', err));
-      }, 2000);
+          }),
+          delay(AUDIT_MIN_LOADING_MS)
+        ]);
+      } catch (error) {
+        reportError('audit form submission', error);
+        loading.style.display = 'none';
+        form.style.display = 'block';
+        showModalMessage(
+          error.name === 'AbortError'
+            ? '⚠ The request timed out before we could save your details. Please try again, or email taha@zynvox.tech.'
+            : '⚠ We could not submit your request. Please try again, or email taha@zynvox.tech.'
+        );
+        return;
+      }
+
+      loading.style.display = 'none';
+      document.getElementById('refId').textContent = refId;
+      document.getElementById('modalSuccess').style.display = 'block';
     }
 
     // URL PERSONALIZATION ENGINE
