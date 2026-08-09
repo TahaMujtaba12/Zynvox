@@ -1,0 +1,17 @@
+{
+  "name": "zynvox-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Official website for Zynvox — AI automation infrastructure.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.2.4",
+    "jsdom": "^26.1.0",
+    "vitest": "^3.2.4"
+  }
+}
