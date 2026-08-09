@@ -1,4 +1,5 @@
 import { INITIAL_SYSTEM_BUBBLE_HTML } from './chatData.js';
+import { reportError } from './errors.js';
 
 export function prerenderFirstBubble(doc) {
   const chat = doc.getElementById('chatStream');
@@ -10,15 +11,24 @@ export function prerenderFirstBubble(doc) {
   return true;
 }
 
+// Without the fallback, an unavailable observer would leave every section
+// permanently hidden.
 export function observeSections(doc, ObserverImpl) {
-  if (typeof ObserverImpl !== 'function') return null;
+  const sections = doc.querySelectorAll('.part-section');
+
+  if (typeof ObserverImpl !== 'function') {
+    reportError('reveal animations', new Error('IntersectionObserver unavailable; revealing all sections'));
+    sections.forEach((section) => section.classList.add('visible'));
+    return null;
+  }
+
   const observer = new ObserverImpl((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) entry.target.classList.add('visible');
     });
   }, { threshold: 0.1 });
 
-  doc.querySelectorAll('.part-section').forEach((section) => observer.observe(section));
+  sections.forEach((section) => observer.observe(section));
   return observer;
 }
 

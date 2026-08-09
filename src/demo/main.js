@@ -3,6 +3,10 @@ import { goToPart } from './navigation.js';
 import { closeModal, openModal, submitAudit } from './auditModal.js';
 import { applyURLParams } from './urlParams.js';
 import { initDemo } from './init.js';
+import { installGlobalErrorHandlers } from './errors.js';
+import { initRevenueCalculator } from './revenueCalculator.js';
+
+installGlobalErrorHandlers(window);
 
 const simulation = createChatSimulation(document);
 
@@ -19,6 +23,7 @@ if (modal) {
   });
 }
 
+initRevenueCalculator(document);
 applyURLParams(document, window.location.search);
 
 if (document.readyState === 'loading') {

@@ -84,12 +84,15 @@ describe('createChatSimulation', () => {
     expect(sim.start()).toBe(false);
   });
 
-  it('does nothing when the chat stream is missing', () => {
+  it('reports and stays idle when the chat stream is missing', () => {
     document.body.innerHTML = '';
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     const sim = createChatSimulation(document);
 
     expect(sim.start()).toBe(false);
     expect(sim.isPlaying()).toBe(false);
+    expect(consoleError.mock.calls[0][0]).toBe('[Zynvox] chat simulation:');
+    consoleError.mockRestore();
   });
 
   it('shows a thinking indicator before each message and replaces it', () => {
@@ -165,5 +168,6 @@ describe('createChatSimulation', () => {
     expect(sim.start()).toBe(true);
     expect(() => runToCompletion()).not.toThrow();
     expect(document.querySelectorAll('#chatStream .bubble')).toHaveLength(chatMessages.length);
+    expect(document.querySelectorAll('.status-item')).toHaveLength(0);
   });
 });

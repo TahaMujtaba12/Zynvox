@@ -1,4 +1,5 @@
 import { chatMessages, statusTimeline } from './chatData.js';
+import { reportError } from './errors.js';
 
 export function createStatusItem(doc, item) {
   const div = doc.createElement('div');
@@ -50,7 +51,10 @@ export function createChatSimulation(doc = document) {
     if (isPlaying) return false;
 
     const chat = doc.getElementById('chatStream');
-    if (!chat) return false;
+    if (!chat) {
+      reportError('chat simulation', new Error('#chatStream is missing; simulation cannot run'));
+      return false;
+    }
     isPlaying = true;
 
     const startBtn = doc.getElementById('startSimulation');
@@ -63,9 +67,9 @@ export function createChatSimulation(doc = document) {
     let statusIndex = 0;
 
     function addLiveStatus() {
-      if (statusIndex >= statusTimeline.length) return;
+      if (!statusContainer || statusIndex >= statusTimeline.length) return;
       const div = createStatusItem(doc, statusTimeline[statusIndex]);
-      if (statusContainer) statusContainer.appendChild(div);
+      statusContainer.appendChild(div);
       statusIndex++;
       setTimeout(() => { div.classList.add('visible'); }, 50);
     }

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { INITIAL_SYSTEM_BUBBLE_HTML } from '../src/demo/chatData.js';
 import { initDemo, observeSections, prerenderFirstBubble } from '../src/demo/init.js';
 
@@ -77,9 +77,18 @@ describe('observeSections', () => {
     expect(b.classList.contains('visible')).toBe(false);
   });
 
-  it('returns null when IntersectionObserver is unavailable', () => {
+  it('reveals every section and reports when IntersectionObserver is unavailable', () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+
     expect(observeSections(document, undefined)).toBeNull();
+
+    expect(document.getElementById('a').classList.contains('visible')).toBe(true);
+    expect(document.getElementById('b').classList.contains('visible')).toBe(true);
+    expect(document.getElementById('c').classList.contains('visible')).toBe(false);
+    expect(consoleError.mock.calls[0][0]).toBe('[Zynvox] reveal animations:');
   });
+
+  afterEach(() => vi.restoreAllMocks());
 });
 
 describe('initDemo', () => {
