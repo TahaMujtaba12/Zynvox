@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Zynvox Intelligence — Product Demonstration</title>
 
   <!-- Typography Stack: Cinzel, Playfair Display, Plus Jakarta Sans, JetBrains Mono -->
@@ -1196,7 +1197,7 @@
         <div class="brand-subtitle-tag">INTELLIGENCE ENGINE</div>
       </div>
 
-      <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" class="btn-analysis-call">Analysis Call →</a>
+      <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" rel="noopener noreferrer" class="btn-analysis-call">Analysis Call →</a>
     </header>
 
     <!-- STICKY STEP NAVIGATION -->
@@ -1644,11 +1645,11 @@
           The $92,442 estimate is an HVAC benchmark. Your real number depends on your call volume, ticket size, and response rate. In 20 minutes, we'll calculate it precisely — using your actual data.
         </p>
 
-        <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" class="btn-gold-filled" style="display:inline-block; text-decoration:none; text-align:center;">Book a 20-Minute Analysis Call →</a>
+        <a href="https://cal.com/zynvox/zynvox-consultation" target="_blank" rel="noopener noreferrer" class="btn-gold-filled" style="display:inline-block; text-decoration:none; text-align:center;">Book a 20-Minute Analysis Call →</a>
 
         <div class="contact-handles">
           <span><a href="mailto:taha@zynvox.tech">taha@zynvox.tech</a></span>
-          <span><a href="https://zynvox.tech" target="_blank">zynvox.tech</a></span>
+          <span><a href="https://zynvox.tech" target="_blank" rel="noopener noreferrer">zynvox.tech</a></span>
         </div>
       </div>
 
@@ -1679,11 +1680,11 @@
         <h2>Book Your Analysis Call</h2>
         <div class="modal-sub">20 minutes. We calculate your real revenue leakage number using your actual call data — no guesswork.</div>
 
-        <input id="modalName" type="text" placeholder="Business Name" />
-        <input id="modalOwner" type="text" placeholder="Owner Name" />
-        <input id="modalPhone" type="tel" placeholder="Phone Number" />
-        <input id="modalEmail" type="email" placeholder="Business Email" />
-        <input id="modalWebsite" type="text" placeholder="Business Website" />
+        <input id="modalName" type="text" placeholder="Business Name" maxlength="120" required />
+        <input id="modalOwner" type="text" placeholder="Owner Name" maxlength="120" required />
+        <input id="modalPhone" type="tel" placeholder="Phone Number" maxlength="25" required />
+        <input id="modalEmail" type="email" placeholder="Business Email" maxlength="254" required />
+        <input id="modalWebsite" type="url" placeholder="Business Website (https://...)" maxlength="200" />
 
         <select id="modalIndustry">
           <option value="">Select Industry</option>
@@ -1938,6 +1939,25 @@
       });
     }
 
+    const FIELD_MAX_LENGTH = 200;
+
+    function readField(id) {
+      return document.getElementById(id).value.trim().slice(0, FIELD_MAX_LENGTH);
+    }
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+    }
+
+    function isValidPhone(value) {
+      const digits = value.replace(/\D/g, '');
+      return digits.length >= 7 && digits.length <= 15;
+    }
+
+    function isValidWebsite(value) {
+      return value === '' || /^(https?:\/\/)?[a-z0-9-]+(\.[a-z0-9-]+)+(\/[^\s]*)?$/i.test(value);
+    }
+
     const AUDIT_ENDPOINT = 'https://formspree.io/f/xvzenbbn';
     const AUDIT_TIMEOUT_MS = 15000;
     const AUDIT_MIN_LOADING_MS = 2000;
@@ -1994,11 +2014,11 @@
     }
 
     async function submitAudit() {
-      const name = document.getElementById('modalName').value.trim();
-      const owner = document.getElementById('modalOwner').value.trim();
-      const phone = document.getElementById('modalPhone').value.trim();
-      const email = document.getElementById('modalEmail').value.trim();
-      const website = document.getElementById('modalWebsite').value.trim();
+      const name = readField('modalName');
+      const owner = readField('modalOwner');
+      const phone = readField('modalPhone');
+      const email = readField('modalEmail');
+      const website = readField('modalWebsite');
       const industry = document.getElementById('modalIndustry').value;
 
       if (!name || !owner || !phone || !email || !industry) {
@@ -2006,8 +2026,18 @@
         return;
       }
 
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      if (!isValidEmail(email)) {
         showModalMessage('⚠ Please enter a valid business email address.');
+        return;
+      }
+
+      if (!isValidPhone(phone)) {
+        showModalMessage('⚠ Please enter a valid phone number.');
+        return;
+      }
+
+      if (!isValidWebsite(website)) {
+        showModalMessage('⚠ Please enter a valid website address.');
         return;
       }
 
@@ -2053,11 +2083,19 @@
     // URL PERSONALIZATION ENGINE
     (function applyURLParams() {
       const params = new URLSearchParams(window.location.search);
-      const biz = params.get('biz');
-      const city = params.get('city');
-      const owner = params.get('owner');
-      const industry = params.get('industry');
-      const customer = params.get('customer') || 'Sarah M.';
+
+      function readParam(key) {
+        const raw = params.get(key);
+        if (!raw) return null;
+        const cleaned = raw.replace(/[^\p{L}\p{N} .,'&/-]/gu, '').trim().slice(0, 60);
+        return cleaned || null;
+      }
+
+      const biz = readParam('biz');
+      const city = readParam('city');
+      const owner = readParam('owner');
+      const industry = readParam('industry');
+      const customer = readParam('customer') || 'Sarah M.';
 
       const notifCustomer = document.getElementById('notifCustomer');
       if (notifCustomer) notifCustomer.textContent = customer;
