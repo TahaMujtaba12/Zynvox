@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zynvox — AI Dispatch Systems for HVAC & Home Service Businesses</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:    #0a0a0a;
+      --surface:  #111111;
+      --card:     #161616;
+      --border:   #222222;
+      --gold:     #C9A84C;
+      --gold-dim: #7a6330;
+      --teal:     #C9A84C;
+      --white:    #f5f5f5;
+      --muted:    #888888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-mark {
+      width: 32px; height: 32px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .nav-logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: #000 !important;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.85; color: #000 !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -100px;
+      width: 500px; height: 500px;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(52px, 7.5vw, 96px);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      color: var(--white);
+      max-width: 900px;
+      margin-bottom: 32px;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    .hero-sub strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: #000;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      padding: 14px 28px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.85; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      padding: 14px 28px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-ticker-REMOVED {
+      margin-top: 80px;
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      max-width: 780px;
+    }
+
+    .ticker-item {
+      flex: 1;
+      padding: 24px 28px;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+
+    .ticker-item:last-child { border-right: none; }
+
+    .ticker-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 42px;
+      letter-spacing: 0.02em;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .ticker-label {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+    }
+
+    .ticker-live {
+      position: absolute;
+      top: 16px; right: 16px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+
+    .ticker-live::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── PAIN SECTION ── */
+    .pain {
+      padding: 120px 48px;
+      border-top: 1px solid var(--border);
+      position: relative;
+    }
+
+    .section-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .section-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 4.5vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .section-headline em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .pain-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 64px;
+    }
+
+    .pain-copy p {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .pain-copy p strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .pain-copy .pull-quote {
+      margin-top: 36px;
+      padding: 24px;
+      border-left: 2px solid var(--gold);
+      background: var(--card);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .pain-copy .pull-quote p {
+      font-size: 15px;
+      color: var(--white);
+      margin: 0;
+      font-style: italic;
+    }
+
+    .pain-copy .pull-quote cite {
+      display: block;
+      margin-top: 10px;
+      font-size: 11px;
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--gold);
+      font-style: normal;
+      letter-spacing: 0.08em;
+    }
+
+    .pain-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .stat-card:hover { border-color: var(--gold-dim); }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--gold);
+    }
+
+    .stat-card + .stat-card { margin-top: 12px; }
+
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 56px;
+      line-height: 1;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+
+    .stat-desc {
+      font-size: 14px;
+      color: var(--white);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .stat-source {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .stat-card.highlight::before { background: var(--gold); }
+    .stat-card.highlight .stat-number { color: var(--gold); }
+
+    /* ── CALCULATOR STRIP ── */
+    .calc-strip {
+      margin-top: 80px;
+      padding: 48px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .calc-strip-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .calc-strip-header h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
+
+    .calc-strip-header p {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 320px;
+      text-align: right;
+    }
+
+    .calc-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 16px;
+      align-items: end;
+    }
+
+    .calc-field label {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .calc-field input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--white);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 16px;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .calc-field input:focus { border-color: var(--gold); }
+
+    .calc-btn {
+      background: var(--gold);
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+      height: 48px;
+    }
+
+    .calc-btn:hover { opacity: 0.85; }
+
+    .calc-result {
+      margin-top: 32px;
+      padding: 28px 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .calc-result.visible { display: flex; }
+
+    .result-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 52px;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .result-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .result-jobs {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--white);
+      padding: 12px 20px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      padding: 120px 48px;
+      border-top: 1px solid var(--border);
+      position: relative;
+    }
+
+    .how-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: end;
+      margin-bottom: 80px;
+    }
+
+    .how-header p {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .sequence {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .seq-step {
+      padding: 36px 24px;
+      border-right: 1px solid var(--border);
+      position: relative;
+      transition: background 0.25s;
+    }
+
+    .seq-step:last-child { border-right: none; }
+    .seq-step:hover { background: var(--card); }
+
+    .seq-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    
+
+    .seq-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .seq-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .seq-arrow {
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      background: var(--black);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: var(--gold);
+      z-index: 2;
+    }
+
+    .seq-step:last-child .seq-arrow { display: none; }
+
+    /* ── PLATFORM MODULES ── */
+    .platform {
+      padding: 120px 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .platform-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: end;
+      margin-bottom: 64px;
+    }
+
+    .platform-header p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .module-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px;
+      position: relative;
+      transition: border-color 0.25s, transform 0.2s;
+      overflow: hidden;
+    }
+
+    .module-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-2px);
+    }
+
+    .module-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .module-card:hover::after { opacity: 1; }
+
+    .module-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+
+    .module-badge.live {
+      background: rgba(201,168,76,0.10);
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.20);
+    }
+
+    .module-badge.live::before {
+      content: '●';
+      font-size: 7px;
+      animation: pulse 2s infinite;
+    }
+
+    .module-badge.full {
+      background: rgba(201,168,76,0.08);
+      color: var(--gold-dim);
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .module-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .module-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .platform-legend {
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.06em;
+    }
+
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.teal { background: var(--gold); }
+    .legend-dot.gold { background: var(--gold-dim); }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      padding: 120px 48px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px; height: 400px;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .final-cta .section-eyebrow {
+      justify-content: center;
+      display: flex;
+      margin-bottom: 24px;
+    }
+
+    .final-cta h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(36px, 5.5vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .final-cta h2 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .final-cta p {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    .final-cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .final-note {
+      margin-top: 24px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .footer-logo-mark {
+      width: 28px; height: 28px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      color: var(--gold-dim);
+    }
+
+    .footer-logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── RESPONSIVE ── */
+    /* ── DISPATCH CONSOLE ── */
+    .dispatch-console {
+      margin-top: 64px;
+      max-width: 780px;
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0d0f12;
+    }
+
+    .console-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      background: rgba(201,168,76,0.04);
+    }
+
+    .console-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    .console-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .console-status {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.25);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .console-log {
+      padding: 16px 18px;
+      min-height: 120px;
+      max-height: 160px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .log-line {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      line-height: 1.4;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .log-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .log-time { color: rgba(201,168,76,0.55); flex-shrink: 0; font-size: 11px; }
+    .log-type { flex-shrink: 0; font-size: 10px; padding: 1px 6px; border-radius: 2px; letter-spacing: 0.08em; }
+    .log-type.missed { color: #FC8181; background: rgba(252,129,129,0.08); border: 1px solid rgba(252,129,129,0.18); }
+    .log-type.sent   { color: var(--gold); background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.18); }
+    .log-type.booked { color: var(--gold); background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.18); }
+    .log-type.review { color: #9F7AEA; background: rgba(159,122,234,0.08); border: 1px solid rgba(159,122,234,0.18); }
+    .log-msg { color: #C4CDD6; }
+    .log-msg strong { color: var(--white); font-weight: 500; }
+
+    @media (max-width: 1100px) {
+      .sequence { grid-template-columns: repeat(4, 1fr); }
+      .seq-step:nth-child(4) { border-right: none; }
+      .modules-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── HAMBURGER MENU ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(10,10,10,0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 24px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu .mob-cta {
+      margin-top: 12px;
+      background: var(--gold);
+      color: #000 !important;
+      text-align: center;
+      padding: 14px;
+      border-radius: 4px;
+      font-weight: 700;
+      border-bottom: none;
+    }
+
+    /* ── STICKY BOTTOM CTA (mobile only) ── */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 98;
+      padding: 12px 20px;
+      background: rgba(10,10,10,0.97);
+      border-top: 1px solid var(--border);
+    }
+    .sticky-cta a {
+      display: block;
+      background: var(--gold);
+      color: #000;
+      text-align: center;
+      padding: 14px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .sticky-cta { display: block; }
+
+      /* Hero */
+      .hero { padding: 90px 20px 80px; }
+      .hero-headline { font-size: clamp(36px, 10vw, 52px); }
+      .hero-sub { font-size: 15px; }
+
+      /* Sections */
+      .pain { padding: 64px 20px; }
+      .how { padding: 64px 20px; }
+      .platform { padding: 64px 20px; }
+      .final-cta { padding: 64px 20px; padding-bottom: 100px; }
+      footer { padding: 32px 20px; padding-bottom: 100px; }
+
+      /* Layouts */
+      .pain-layout { grid-template-columns: 1fr; gap: 40px; }
+      .how-header { grid-template-columns: 1fr; }
+      .platform-header { grid-template-columns: 1fr; }
+
+      /* 7-step sequence — single column on mobile */
+      .sequence {
+        grid-template-columns: 1fr;
+        border-radius: 8px;
+      }
+      .seq-step {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 24px 20px;
+      }
+      .seq-step:last-child { border-bottom: none; }
+      .seq-arrow { display: none; }
+
+      /* Calculator */
+      .calc-strip { padding: 24px 20px; }
+      .calc-inputs { grid-template-columns: 1fr; }
+      .calc-btn { width: 100%; height: 48px; }
+      .calc-strip-header { flex-direction: column; align-items: flex-start; }
+      .calc-strip-header p { text-align: left; max-width: 100%; }
+      .result-number { font-size: 38px; }
+
+      /* Modules */
+      .modules-grid { grid-template-columns: 1fr; }
+
+      /* Footer */
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+      .footer-links { flex-direction: column; gap: 12px; align-items: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-headline { font-size: 32px; }
+      .section-headline { font-size: 26px; }
+      nav { padding: 0 16px; }
+      .hero { padding: 80px 16px 80px; }
+      .pain { padding: 48px 16px; }
+      .how { padding: 48px 16px; }
+      .final-cta { padding: 48px 16px 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="zynvox_logo.png" alt="Zynvox" style="width:32px;height:32px;border-radius:5px;object-fit:cover;display:block;">
+    <span class="nav-logo-text">ZYNVOX</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="platform.html">Platform</a></li>
+    <li><a href="https://zynvox.tech/Demo.html" target="_blank">Live Demo</a></li>
+    <li><a href="book.html" class="nav-cta">Book a Call</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#how-it-works" onclick="closeMenu()">How It Works</a>
+  <a href="platform.html" onclick="closeMenu()">Platform</a>
+  <a href="https://zynvox.tech/Demo.html" target="_blank" onclick="closeMenu()">Live Demo</a>
+  <a href="book.html" class="mob-cta">Book a Call →</a>
+</div>
+
+<!-- STICKY BOTTOM CTA (mobile) -->
+<div class="sticky-cta">
+  <a href="book.html">Book a Free 20-Min Analysis Call →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">AI Dispatch Systems — HVAC · Plumbing · Electrical</div>
+  <h1 class="hero-headline">
+    Every Missed Call<br>
+    Becomes a<br>
+    <em>Booked Job.</em>
+  </h1>
+  <p class="hero-sub">
+    When your phone goes unanswered, <strong>Zynvox responds in seconds</strong> — qualifying the lead, booking the appointment, and dispatching your technician. Automatically. 24/7. No staff required.
+  </p>
+  
+
+  <!-- DISPATCH CONSOLE LOG — signature element -->
+  <div class="dispatch-console" id="dispatchConsole" aria-label="Live dispatch activity log">
+    <div class="console-header">
+      <span class="console-dot"></span>
+      <span class="console-title">ZYNVOX DISPATCH — LIVE FEED</span>
+      <span class="console-status">ACTIVE</span>
+    </div>
+    <div class="console-log" id="consoleLog"></div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="pain" id="pain">
+  <div class="section-eyebrow">The Problem</div>
+  <h2 class="section-headline">Your Phone Rings<br>While You're <em>On the Job.</em></h2>
+
+  <div class="pain-layout">
+    <div class="pain-copy">
+      <p>
+        HVAC, plumbing, and electrical businesses run on calls. Every missed call is a customer who needed help tonight — and called your competitor instead.
+      </p>
+      <p>
+        Most service businesses miss <strong>27% of after-hours calls</strong>. At an average ticket of $350, that's not a minor operational gap. That's a six-figure revenue leak, happening quietly, every single month.
+      </p>
+      <p>
+        The problem isn't that your team doesn't care. It's that <strong>humans can't be available every hour of every day</strong> — but the phone rings anyway. A customer's AC fails at 11 PM on a Saturday. Your technician is finishing a job. The call goes to voicemail. The customer hangs up and calls the next number on Google.
+      </p>
+      <p>
+        That's not a missed call. That's a booked job your competitor just captured.
+      </p>
+
+      <div class="pull-quote">
+        <p>"71% of customers who don't reach a business on the first call will contact a competitor within 3 minutes."</p>
+        <cite>— Harvard Business Review, Speed-to-Lead Study</cite>
+      </div>
+    </div>
+
+    <div class="pain-stats">
+      <div class="stat-card">
+        <div class="stat-number">27%</div>
+        <div class="stat-desc">of after-hours calls go unanswered at the average HVAC business</div>
+        <div class="stat-source">SOURCE: SERVICETITAN 2024 FIELD SERVICE BENCHMARK</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">71%</div>
+        <div class="stat-desc">of unanswered customers call a competitor within 3 minutes</div>
+        <div class="stat-source">SOURCE: HARVARD BUSINESS REVIEW — SPEED-TO-LEAD</div>
+      </div>
+      <div class="stat-card highlight">
+        <div class="stat-number">$92,442</div>
+        <div class="stat-desc">estimated annual revenue lost to missed calls — HVAC industry average</div>
+        <div class="stat-source">BASED ON: 31 MISSED CALLS/MO × $350 AVG TICKET × 71% CAPTURE × 12 MONTHS</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="calc-strip">
+    <div class="calc-strip-header">
+      <h3>Calculate Your Leakage</h3>
+      <p>Enter your actual numbers. We'll show you exactly what's walking to a competitor every month.</p>
+    </div>
+    <div class="calc-inputs">
+      <div class="calc-field">
+        <label>Missed Calls / Month</label>
+        <input type="number" id="missedCalls" placeholder="31" value="31" min="1" />
+      </div>
+      <div class="calc-field">
+        <label>Avg. Ticket Value ($)</label>
+        <input type="number" id="ticketValue" placeholder="350" value="350" min="1" />
+      </div>
+      <div class="calc-field">
+        <label>% Who Call Competitor</label>
+        <input type="number" id="competitorPct" placeholder="71" value="71" min="1" max="100" />
+      </div>
+      <button class="calc-btn" onclick="calculate()">Calculate →</button>
+    </div>
+    <div class="calc-result" id="calcResult">
+      <div>
+        <div class="result-number" id="resultNumber">$92,442</div>
+        <div class="result-label">Estimated annual revenue currently going to competitors</div>
+      </div>
+      <div class="result-jobs" id="resultJobs">
+        That's 22 recovered jobs / month at your current inputs.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how-it-works">
+  <div class="how-header">
+    <div>
+      <div class="section-eyebrow">The System</div>
+      <h2 class="section-headline">Seven Steps.<br><em>Zero Manual Work.</em></h2>
+    </div>
+    <p>From the moment a call is missed to a booked, dispatched job — the entire sequence runs automatically. No staff required. No delays. No voicemails sitting unanswered until morning.</p>
+  </div>
+
+  <div class="sequence">
+    <div class="seq-step">
+      <div class="seq-num">01</div>
+      
+      <div class="seq-title">Missed Call Detected</div>
+      <div class="seq-desc">The moment your phone goes unanswered, the system activates instantly.</div>
+      <div class="seq-arrow">→</div>
+    </div>
+    <div class="seq-step">
+      <div class="seq-num">02</div>
+      
+      <div class="seq-title">Instant Text-Back Sent</div>
+      <div class="seq-desc">An SMS goes out in under 8 seconds — before the customer puts their phone down.</div>
+      <div class="seq-arrow">→</div>
+    </div>
+    <div class="seq-step">
+      <div class="seq-num">03</div>
+      
+      <div class="seq-title">AI Qualifies the Job</div>
+      <div class="seq-desc">Asks what's broken, how urgent, and where — in real conversation, not a form.</div>
+      <div class="seq-arrow">→</div>
+    </div>
+    <div class="seq-step">
+      <div class="seq-num">04</div>
+      
+      <div class="seq-title">Booking + Operational Intelligence</div>
+      <div class="seq-desc">The system matches the job to your rules, availability, service area, and technician requirements while building structured context for the next decision.</div>
+      <div class="seq-arrow">→</div>
+    </div>
+    <div class="seq-step">
+      <div class="seq-num">05</div>
+      
+      <div class="seq-title">Autonomous Execution + Business Memory</div>
+      <div class="seq-desc">Job context moves through your CRM and operations while Zynvox preserves customer, technician, and business knowledge for future decisions.</div>
+      <div class="seq-arrow">→</div>
+    </div>
+    <div class="seq-step">
+      <div class="seq-num">06</div>
+      
+      <div class="seq-title">Review Requested</div>
+      <div class="seq-desc">Once the job is marked complete, a review request fires automatically. No one has to remember.</div>
+      <div class="seq-arrow">→</div>
+    </div>
+    <div class="seq-step">
+      <div class="seq-num">07</div>
+      
+      <div class="seq-title">Maintenance Reminder Set</div>
+      <div class="seq-desc">Seasonal reminders go out on schedule, turning one job into a repeat customer.</div>
+      <div class="seq-arrow">→</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="section-eyebrow">Get Started</div>
+  <h2>Your Competitors Are<br>Answering <em>Right Now.</em></h2>
+  <p>In 20 minutes, we calculate your exact revenue leakage number using your actual call data — and show you what the system looks like running on your business number.</p>
+  <div class="final-cta-actions">
+    <a href="book.html" class="btn-primary">Book a 20-Min Analysis Call</a>
+    <a href="https://zynvox.tech/Demo.html" target="_blank" class="btn-secondary">▶ &nbsp;See the Demo First</a>
+  </div>
+  <div class="final-note">NO COMMITMENT — 20 MINUTES — WE DO THE MATH FOR YOU</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="footer-logo">
+    <img src="zynvox_logo.png" alt="Zynvox" style="width:28px;height:28px;border-radius:5px;object-fit:cover;display:block;">
+    <span class="footer-logo-text">ZYNVOX</span>
+  </a>
+  <ul class="footer-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="platform.html">Platform</a></li>
+    <li><a href="https://zynvox.tech/Demo.html" target="_blank">Live Demo</a></li>
+    <li><a href="book.html">Book a Call</a></li>
+    <li><a href="mailto:taha@zynvox.tech">taha@zynvox.tech</a></li>
+    <li><a href="https://www.linkedin.com/company/zynvox/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 ZYNVOX. ALL RIGHTS RESERVED.</div>
+</footer>
+
+<script>
+  // ── DISPATCH CONSOLE LOG ──
+  const EVENTS = [
+    { time: '02:14 AM', type: 'missed', msg: '<strong>Missed call</strong> — +1 (817) 304-9182 · Fort Worth, TX' },
+    { time: '02:14 AM', type: 'sent',   msg: '<strong>Text-back sent</strong> in 9 seconds — "Hi, this is Tiger Air…"' },
+    { time: '02:16 AM', type: 'sent',   msg: '<strong>Lead qualified</strong> — AC unit, emergency, 3412 Maple Ave' },
+    { time: '02:17 AM', type: 'booked', msg: '<strong>Appointment booked</strong> — Tomorrow 8:00 AM · $349 est.' },
+    { time: '02:17 AM', type: 'sent',   msg: '<strong>Technician notified</strong> — Marcus assigned · ETA confirmed' },
+    { time: '09:41 AM', type: 'missed', msg: '<strong>Missed call</strong> — +1 (972) 558-0034 · Plano, TX' },
+    { time: '09:41 AM', type: 'sent',   msg: '<strong>Text-back sent</strong> in 7 seconds — lead engaged immediately' },
+    { time: '09:43 AM', type: 'booked', msg: '<strong>Appointment booked</strong> — Today 2:00 PM · $189 est.' },
+    { time: '11:20 AM', type: 'review', msg: '<strong>Review requested</strong> — Maria G. · job completed · 5★ received' },
+    { time: '03:58 PM', type: 'missed', msg: '<strong>Missed call</strong> — +1 (214) 672-1190 · Dallas, TX' },
+    { time: '03:58 PM', type: 'sent',   msg: '<strong>Text-back sent</strong> in 11 seconds — customer responded' },
+    { time: '04:01 PM', type: 'booked', msg: '<strong>Appointment booked</strong> — Mon 10:00 AM · $275 est.' },
+  ];
+
+  let idx = 0;
+  const log = document.getElementById('consoleLog');
+
+  function addLine() {
+    const e = EVENTS[idx % EVENTS.length];
+    const line = document.createElement('div');
+    line.className = 'log-line';
+    line.innerHTML = `<span class="log-time">${e.time}</span><span class="log-type ${e.type}">${e.type.toUpperCase()}</span><span class="log-msg">${e.msg}</span>`;
+    log.appendChild(line);
+    requestAnimationFrame(() => line.classList.add('visible'));
+
+    // Keep max 5 lines visible — remove oldest with fade
+    const lines = log.querySelectorAll('.log-line');
+    if (lines.length > 5) {
+      const oldest = lines[0];
+      oldest.style.opacity = '0';
+      setTimeout(() => oldest.remove(), 350);
+    }
+
+    idx++;
+  }
+
+  // Stagger initial load
+  EVENTS.slice(0, 4).forEach((_, i) => setTimeout(addLine, i * 400));
+  // Then continue cycling
+  setTimeout(() => setInterval(addLine, 2800), 4 * 400 + 800);
+
+  function calculate() {
+    const missed = parseFloat(document.getElementById('missedCalls').value) || 31;
+    const ticket = parseFloat(document.getElementById('ticketValue').value) || 350;
+    const pct    = parseFloat(document.getElementById('competitorPct').value) || 71;
+    const annual = Math.round(missed * ticket * (pct / 100) * 12);
+    const jobs   = Math.round(missed * (pct / 100));
+    document.getElementById('resultNumber').textContent = '$' + annual.toLocaleString();
+    document.getElementById('resultJobs').textContent   = `That's ${jobs} recovered jobs / month at your current inputs.`;
+    document.getElementById('calcResult').classList.add('visible');
+  }
+  // Run on load with defaults
+  window.addEventListener('load', calculate);
+
+  // ── HAMBURGER MENU ──
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+  // Close menu on outside click
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+    }
+  });
+
+  // ── SCROLL REVEAL ──
+  const revealEls = document.querySelectorAll('.stat-card, .seq-step, .module-card');
+  revealEls.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
