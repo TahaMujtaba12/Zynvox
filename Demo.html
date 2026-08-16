@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zynvox Intelligence — Product Demonstration</title>
 
-  <!-- Typography Stack: Cinzel, Playfair Display, Plus Jakarta Sans, JetBrains Mono -->
+  <!-- Typography Stack: Instrument Serif, Space Grotesk, IBM Plex Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -1183,6 +1183,296 @@
 
     .modal-box input:focus, .modal-box select:focus { border-color: var(--gold); }
     .modal-box select option { background: #111111; color: #FFF; }
+  </style>
+  <style>
+    /* CONTROL ROOM REDESIGN
+       A dispatch board, not a luxury-tech landing page:
+       hard edges, route-map lines, coral incident markers, and one warm paper panel. */
+    :root {
+      --bg: #081013;
+      --card-bg: #0d191c;
+      --card-featured-bg: rgba(255, 106, 79, 0.08);
+      --card-border: rgba(169, 205, 195, 0.2);
+      --card-border-gold: rgba(255, 106, 79, 0.7);
+      --gold: #ff6a4f;
+      --gold-light: #ffc0a9;
+      --gold-italic: #ff8d72;
+      --text-main: #f2eee2;
+      --text-muted: #8da09c;
+      --signal-green: #b9ef9d;
+      --paper: #e9e1cf;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Space Grotesk', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    html { background: var(--bg); }
+
+    body {
+      background:
+        linear-gradient(rgba(8, 16, 19, 0.94), rgba(8, 16, 19, 0.94)),
+        linear-gradient(90deg, rgba(185,239,157,0.04) 1px, transparent 1px),
+        linear-gradient(rgba(185,239,157,0.04) 1px, transparent 1px) !important;
+      background-size: auto, 44px 44px, 44px 44px !important;
+      color: var(--text-main);
+      font-family: var(--font-body);
+    }
+
+    .container { max-width: 1180px; }
+
+    .top-header {
+      background: rgba(8, 16, 19, 0.9);
+      border-bottom: 1px solid rgba(185,239,157,0.2);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand-title {
+      color: var(--text-main);
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .brand-subtitle-tag,
+    .step-item,
+    .btn-analysis-call,
+    .hero-tag,
+    .calculator-kicker,
+    .calculator-field label {
+      font-family: var(--font-mono);
+    }
+
+    .brand-subtitle-tag { color: var(--signal-green); }
+
+    .btn-analysis-call {
+      background: var(--signal-green);
+      border-color: var(--signal-green);
+      border-radius: 0;
+      color: #081013;
+    }
+
+    .btn-analysis-call:hover {
+      background: var(--text-main);
+      border-color: var(--text-main);
+    }
+
+    .step-nav-wrapper {
+      background: rgba(8,16,19,0.96);
+      border-bottom-color: rgba(185,239,157,0.2);
+    }
+
+    .step-item {
+      border-radius: 0;
+      background: transparent;
+      border-color: rgba(169,205,195,0.22);
+    }
+
+    .step-item.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #081013;
+    }
+
+    .hero-cinematic {
+      min-height: 78vh;
+      margin-bottom: 92px;
+      border-top: 1px solid rgba(185,239,157,0.2);
+      border-bottom: 1px solid rgba(185,239,157,0.2);
+      background:
+        linear-gradient(90deg, transparent 0 54%, rgba(185,239,157,0.14) 54% 54.1%, transparent 54.1%),
+        radial-gradient(circle at 73% 50%, rgba(255,106,79,0.18), transparent 30%);
+    }
+
+    .hero-cinematic::before {
+      background:
+        linear-gradient(90deg, transparent 0 49.9%, rgba(185,239,157,0.08) 50%, transparent 50.1%),
+        linear-gradient(0deg, transparent 0 49.9%, rgba(185,239,157,0.08) 50%, transparent 50.1%);
+      background-size: 88px 88px;
+    }
+
+    .hero-cinematic::after {
+      background: linear-gradient(135deg, transparent 0 67%, rgba(255,106,79,0.13) 67% 67.2%, transparent 67.2%);
+    }
+
+    .hero-tag {
+      color: var(--signal-green);
+      letter-spacing: 0.13em;
+    }
+
+    .hero-tag::before { background: var(--signal-green); }
+
+    .hero-main-title {
+      font-family: var(--font-display);
+      font-size: clamp(72px, 9vw, 132px);
+      font-weight: 400;
+      letter-spacing: -0.035em;
+      line-height: 0.82;
+      font-style: normal;
+    }
+
+    .hero-main-title span {
+      color: var(--gold);
+      font-style: italic;
+      margin-left: 0.16em;
+    }
+
+    .hero-description {
+      color: #b7c2bd;
+      max-width: 420px;
+    }
+
+    .btn-hero-watch { color: var(--signal-green); }
+    .btn-hero-watch:hover { color: var(--text-main); }
+
+    .btn-hero-watch .play-circle {
+      border-radius: 0;
+      border-color: var(--signal-green);
+      background: rgba(185,239,157,0.08);
+    }
+
+    .dashboard-mockup {
+      border-color: rgba(185,239,157,0.35);
+      border-radius: 0;
+      transform: perspective(1000px) rotateY(-2deg) rotateX(1deg);
+      box-shadow: 16px 16px 0 rgba(255,106,79,0.16) !important;
+    }
+
+    .mockup-topbar { background: #122326; }
+    .mockup-badge { color: var(--signal-green); }
+    .mockup-bar.highlight { background: var(--gold); }
+    .mockup-activity-val { color: var(--signal-green); }
+
+    .hero-float-card {
+      border-color: var(--gold);
+      border-radius: 0;
+      background: var(--paper);
+      color: #081013;
+      box-shadow: 8px 8px 0 var(--gold);
+    }
+
+    .hero-float-card-value {
+      color: #081013;
+      font-family: var(--font-display);
+      font-size: 38px;
+    }
+
+    .hero-float-card-label { color: #3f514a; }
+
+    .part-section {
+      margin-bottom: 132px;
+      border-left: 1px solid rgba(185,239,157,0.22);
+      padding-left: 30px;
+    }
+
+    .section-num-badge {
+      display: inline-block;
+      padding: 5px 9px;
+      background: var(--signal-green);
+      color: #081013;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      margin-bottom: 22px;
+    }
+
+    .section-heading-serif,
+    .col-card-title,
+    .callout-block-title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .section-heading-serif { font-size: clamp(42px, 6vw, 72px); }
+    .quote-italic-gold { color: var(--gold-light); }
+    .sub-section-divider { border-color: rgba(185,239,157,0.24); }
+
+    .borderless-metrics-grid,
+    .comparison-table,
+    .phone-container,
+    .autonomous-dashboard,
+    .cta-box {
+      border-radius: 0;
+    }
+
+    .borderless-metrics-grid { border-color: rgba(185,239,157,0.26); }
+    .borderless-col.featured-col { border-left-color: var(--gold); }
+    .col-card-gold-highlight { color: var(--signal-green); }
+    .new-state { color: var(--signal-green) !important; }
+
+    .revenue-calculator {
+      border-radius: 0;
+      border-color: var(--gold);
+      background: var(--paper);
+      color: #081013;
+      box-shadow: 12px 12px 0 rgba(185,239,157,0.55);
+    }
+
+    .calculator-intro {
+      border-right-color: rgba(8,16,19,0.22);
+      background:
+        linear-gradient(135deg, transparent 0 72%, rgba(255,106,79,0.18) 72% 72.4%, transparent 72.4%),
+        var(--paper);
+    }
+
+    .calculator-kicker,
+    .calculator-title,
+    .calculator-copy,
+    .calculator-field label,
+    .calculator-result-label,
+    .calculator-result-detail { color: #081013; }
+
+    .calculator-title { font-size: clamp(38px, 5vw, 62px); }
+    .calculator-copy { color: #52645d; }
+    .calculator-form { background: #102023; }
+    .calculator-field input[type="number"] {
+      border-radius: 0;
+      border-color: rgba(185,239,157,0.38);
+      background: #0b1719;
+    }
+    .calculator-field input[type="number"]:hover,
+    .calculator-field input[type="number"]:focus { background: #122629; }
+    .calculator-field label,
+    .calculator-result-label { color: var(--text-main); }
+    .calculator-result { border-top-color: rgba(185,239,157,0.28); }
+    .calculator-result-value { color: var(--gold); }
+    .calculator-result-detail { color: #9db0aa; }
+    .calculator-result-detail strong { color: var(--signal-green); }
+    .range-meta { color: #8da09c; }
+    .range-value { color: var(--signal-green); }
+
+    .gold-link-arrow { color: var(--signal-green); }
+    .gold-link-arrow:hover { color: var(--text-main); }
+
+    .btn-gold-filled {
+      border-radius: 0;
+      background: var(--gold);
+      color: #081013;
+    }
+
+    .btn-gold-filled:hover { background: var(--signal-green); }
+
+    .footer-bar {
+      border-top-color: rgba(185,239,157,0.22);
+      color: #8da09c;
+    }
+
+    @media (max-width: 760px) {
+      .part-section { border-left: 0; padding-left: 0; }
+      .hero-main-title { font-size: clamp(64px, 18vw, 92px); }
+      .revenue-calculator { box-shadow: 7px 7px 0 rgba(185,239,157,0.55); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
