@@ -1,0 +1,40 @@
+# Zynvox
+
+> Zynvox is an AI receptionist and workflow automation platform for any business that runs on inbound calls. When a call is missed it replies in seconds by text or answers by AI voice, qualifies the customer, books the appointment, updates the CRM, notifies the team and sends reminders and follow-ups — 24/7.
+
+Key facts:
+- Workflow: missed call → instant text-back or AI voice answer → AI qualification → booking on the real calendar → CRM update → team and owner notified → reminders, follow-ups and review requests.
+- Ten modules: AI Dispatcher, AI Receptionist, Lead Qualification, Appointment Booking, Owner Dashboard, Technician Dispatch, Review Automation, Maintenance Reminders, Knowledge Graph & Business Memory, Operational Intelligence Engine.
+- Industries: home services (HVAC, plumbing, electrical, roofing, moving), law firms, dental and medical clinics, real estate, auto repair, property management, insurance agencies, salons and med spas, B2B sales teams, and any other business customers call.
+- Missed-call revenue leakage = missed calls per month × average job value × share of callers who go to a competitor × 12.
+- 82% of consumers say they will call a competitor if a business doesn’t answer (CallRail survey of 1,000 US consumers, 2025).
+- Serves businesses across the United States.
+- Contact: taha@zynvox.tech · Book an analysis call: https://cal.com/zynvox/zynvox-consultation
+
+## Pages
+
+- [Home](https://zynvox.tech/): What Zynvox does, the leakage calculator, the seven-step workflow and FAQ.
+- [Platform](https://zynvox.tech/platform): The ten modules, the knowledge graph and before/after comparison.
+- [Live demo](https://zynvox.tech/demo): A missed call recovered, qualified and booked in real time.
+- [Industries](https://zynvox.tech/industries): How the workflow applies in each industry.
+- [Missed-call revenue leakage guide](https://zynvox.tech/guides/missed-call-revenue-leakage): Definition, formula, worked example and how to stop it.
+- [Enterprise](https://zynvox.tech/enterprise): Zynvox for franchises and multi-location businesses.
+- [Security](https://zynvox.tech/security): How customer data is handled.
+- [About](https://zynvox.tech/about): Who Zynvox is and who it is for.
+
+## Industries
+
+- [HVAC companies](https://zynvox.tech/industries/hvac)
+- [Plumbing companies](https://zynvox.tech/industries/plumbing)
+- [Electrical contractors](https://zynvox.tech/industries/electrical)
+- [Roofing contractors](https://zynvox.tech/industries/roofing)
+- [Law firms](https://zynvox.tech/industries/law-firms)
+- [Dental practices](https://zynvox.tech/industries/dental)
+- [Medical clinics](https://zynvox.tech/industries/medical-clinics)
+- [Real estate agents & brokerages](https://zynvox.tech/industries/real-estate)
+- [Auto repair shops](https://zynvox.tech/industries/auto-repair)
+- [Property management companies](https://zynvox.tech/industries/property-management)
+- [Insurance agencies](https://zynvox.tech/industries/insurance-agencies)
+- [Med spas & salons](https://zynvox.tech/industries/med-spas-salons)
+- [Moving companies](https://zynvox.tech/industries/moving-companies)
+- [B2B sales teams](https://zynvox.tech/industries/b2b-sales)
