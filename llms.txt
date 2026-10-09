@@ -1,13 +1,15 @@
 # Zynvox
 
-> Zynvox is an AI receptionist and workflow automation platform for any business that runs on inbound calls. When a call is missed it replies in seconds by text or answers by AI voice, qualifies the customer, books the appointment, updates the CRM, notifies the team and sends reminders and follow-ups — 24/7.
+> Zynvox is an AI receptionist and missed-call text-back platform built for US home service businesses (HVAC, plumbing, electrical, roofing) and any business that runs on inbound calls. When a call is missed it replies in seconds by text or answers by AI voice, qualifies the customer, books the appointment, updates the CRM, notifies the team and sends reminders and follow-ups — 24/7.
 
 Key facts:
 - Workflow: missed call → instant text-back or AI voice answer → AI qualification → booking on the real calendar → CRM update → team and owner notified → reminders, follow-ups and review requests.
 - Ten modules: AI Dispatcher, AI Receptionist, Lead Qualification, Appointment Booking, Owner Dashboard, Technician Dispatch, Review Automation, Maintenance Reminders, Knowledge Graph & Business Memory, Operational Intelligence Engine.
 - Industries: home services (HVAC, plumbing, electrical, roofing, moving), law firms, dental and medical clinics, real estate, auto repair, property management, insurance agencies, salons and med spas, B2B sales teams, and any other business customers call.
-- Missed-call revenue leakage = missed calls per month × average job value × share of callers who go to a competitor × 12.
-- 82% of consumers say they will call a competitor if a business doesn’t answer (CallRail survey of 1,000 US consumers, 2025).
+- Missed-call revenue leakage = missed calls per month × share that would have booked × share who go to a competitor × average job value × 12.
+- Pricing: Starter $197 setup + $79/month; Pro $497 setup + $197/month (founding-partner prices). 14-day free trial, no contract. Details: https://zynvox.tech/pricing/
+- Emergencies are escalated to an on-call person, never booked into a later slot; callers are told they are talking to an automated assistant.
+- 82% of consumers say they will call a competitor if a business doesn’t answer (CallRail consumer survey, 2025: https://www.callrail.com/blog/missed-calls-cost-businesses-more-than-ever).
 - Serves businesses across the United States.
 - Contact: taha@zynvox.tech · Book an analysis call: https://cal.com/zynvox/zynvox-consultation
 
@@ -15,12 +17,19 @@ Key facts:
 
 - [Home](https://zynvox.tech/): What Zynvox does, the leakage calculator, the seven-step workflow and FAQ.
 - [Platform](https://zynvox.tech/platform): The ten modules, the knowledge graph and before/after comparison.
-- [Live demo](https://zynvox.tech/demo): A missed call recovered, qualified and booked in real time.
+- [Live demo](https://zynvox.tech/demo): An interactive demo following one customer through all ten modules.
+- [Pricing](https://zynvox.tech/pricing): Plans, setup fees and the 14-day free trial.
+- [Safety & consent](https://zynvox.tech/safety): Emergencies, AI disclosure, texting consent and data.
+- [AI receptionist vs. answering service](https://zynvox.tech/guides/ai-receptionist-vs-answering-service): How they compare and when each fits.
+- [Missed-call text-back guide](https://zynvox.tech/guides/missed-call-text-back): How it works, what to say and the rules to follow.
+- [AI receptionist pricing explained](https://zynvox.tech/guides/ai-receptionist-pricing): Pricing models, hidden fees and total cost.
+- [Missed calls for plumbers](https://zynvox.tech/guides/missed-calls-plumbers): Why plumbers miss calls and how to stop losing jobs.
+- [After-hours HVAC calls guide](https://zynvox.tech/guides/after-hours-hvac-calls): Triage, emergency rules and escalation.
 - [Industries](https://zynvox.tech/industries): How the workflow applies in each industry.
 - [Missed-call revenue leakage guide](https://zynvox.tech/guides/missed-call-revenue-leakage): Definition, formula, worked example and how to stop it.
 - [Enterprise](https://zynvox.tech/enterprise): Zynvox for franchises and multi-location businesses.
 - [Security](https://zynvox.tech/security): How customer data is handled.
-- [About](https://zynvox.tech/about): Who Zynvox is and who it is for.
+- [About](https://zynvox.tech/about): Who is behind Zynvox (founder Taha Mujtaba; a hands-on team serving US home service businesses), and how it works.
 
 ## Industries
 
