@@ -10,7 +10,7 @@
 <title>Bluebell Flowers | Prototype by Zynvox</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="img/rose.jpg">
+<link rel="preload" as="image" href="img/pinklily.jpg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
 <style>
 :root{
@@ -65,7 +65,7 @@ nav.main a:hover{opacity:1}
 .btn.wa{background:var(--wa);color:var(--wa-ink)!important;font-weight:600}
 .btn.wa:hover{background:var(--wa-hover)}
 .wa-ic{width:20px;height:20px;flex:none}
-.heroimg{position:relative;border-radius:18px;overflow:hidden;width:100%;max-width:720px;aspect-ratio:16/10;margin-top:32px;box-shadow:var(--shadow);border:1px solid var(--hairline)}
+.heroimg{position:relative;border-radius:18px;overflow:hidden;width:100%;max-width:520px;aspect-ratio:1/1;margin-top:32px;box-shadow:var(--shadow);border:1px solid var(--hairline)}
 .heroimg img{width:100%;height:100%;object-fit:cover;display:block}
 .heroimg .tag{position:absolute;inset-inline-start:12px;bottom:12px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-radius:12px;padding:8px 12px;text-align:start}
 .heroimg .tag b{display:block;font-size:15px;font-weight:600}
@@ -162,7 +162,7 @@ form.co input:focus,form.co textarea:focus,form.co select:focus{outline:2px soli
 </head>
 <body>
 
-<div class="proto" data-i="proto">Website prototype for Bluebell Flower Boutique · prepared by Zynvox · sample prices</div>
+<div class="proto" data-i="proto">Website prototype for Bluebell Flower Boutique · prepared by Zynvox</div>
 
 <header class="site">
   <div class="wrap hbar">
@@ -188,14 +188,14 @@ form.co input:focus,form.co textarea:focus,form.co select:focus{outline:2px soli
         </div>
       </div>
       <div class="heroimg">
-        <img src="img/rose.jpg" alt="Pink and white rose bouquet by Bluebell" width="600" height="600" fetchpriority="high">
-        <div class="tag"><b data-i="heroTagB">Blush Rose Bouquet</b><span data-i="heroTagS">Handmade at Bluebell · from OMR 18</span></div>
+        <img src="img/pinklily.jpg" alt="Pink lily and rose arrangement by Bluebell" width="600" height="600" fetchpriority="high">
+        <div class="tag"><b data-i="heroTagB">Pink Lily Arrangement</b><span data-i="heroTagS">Handmade at Bluebell, Al Wafi</span></div>
       </div>
     </div>
   </section>
 
   <div class="wrap trust">
-    <div><b data-i="t1b">See every design</b><span data-i="t1">Bouquets, boxes and baskets with prices</span></div>
+    <div><b data-i="t1b">See every design</b><span data-i="t1">Bouquets, boxes and baskets in one place</span></div>
     <div><b data-i="t2b">Order on WhatsApp</b><span data-i="t2">Your order arrives as a ready message</span></div>
     <div><b data-i="t3b">Add a card message</b><span data-i="t3">Written on a Bluebell card for you</span></div>
   </div>
@@ -204,11 +204,6 @@ form.co input:focus,form.co textarea:focus,form.co select:focus{outline:2px soli
     <div class="wrap">
       <div class="shophead">
         <div><h2 data-i="shopH">Our flowers</h2><div class="count" id="count"></div></div>
-        <select class="sort" id="sort" aria-label="Sort">
-          <option value="pop" data-i="sortF">Sort: Featured</option>
-          <option value="low" data-i="sortL">Price: low to high</option>
-          <option value="high" data-i="sortH">Price: high to low</option>
-        </select>
       </div>
       <div class="filters">
         <div class="frow" id="typeRow" role="group"><span class="flabel" data-i="fType">Type</span></div>
@@ -225,7 +220,7 @@ form.co input:focus,form.co textarea:focus,form.co select:focus{outline:2px soli
   <div class="infoband"><div class="wrap info">
     <div class="panel" id="how">
       <h2 data-i="howH">How to order</h2>
-      <p data-i="howP">Add designs to your cart and send your order on WhatsApp. The Bluebell team confirms availability, delivery and payment with you.</p>
+      <p data-i="howP">Add designs to your order and send it on WhatsApp. The Bluebell team confirms price, availability and delivery with you.</p>
       <div class="steps">
         <div><i>1</i><span data-i="s1" data-html>Choose a design and tap <b>Add to cart</b>.</span></div>
         <div><i>2</i><span data-i="s2" data-html>Pick <b>delivery or pickup</b>, the date, and write your card message.</span></div>
@@ -264,52 +259,51 @@ form.co input:focus,form.co textarea:focus,form.co select:focus{outline:2px soli
 const WA = '96897988700';
 const WAI = '<svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg>';
 const products = [
-  {id:'rose', img:'img/rose.jpg', type:'bq', occ:['love','bday'], price:18, en:['Blush Rose Bouquet','Pink and ivory roses with lavender chrysanthemum and soft filler, hand-tied.'], ar:['باقة الورد الوردي','ورد وردي وعاجي مع أقحوان بنفسجي ولمسات ناعمة، منسقة يدوياً.']},
-  {id:'giftbox', img:'img/giftbox.jpg', type:'box', occ:['bday','love'], price:25, en:['Flower Box with Gift','A flower box of gerbera, alstroemeria, carnation and roses, with a gift box tucked in.'], ar:['صندوق ورد مع هدية','صندوق ورد من الجربيرا والألستروميريا والقرنفل والورد، مع علبة هدية.']},
-  {id:'whiteyellow', img:'img/whiteyellow.jpg', type:'bq', occ:['congrats','baby'], price:20, en:['White & Yellow Elegance','White calla, chrysanthemum and yellow roses in navy wrap with a Bluebell card.'], ar:['أناقة الأبيض والأصفر','كالا بيضاء وأقحوان وورد أصفر بتغليف كحلي مع بطاقة بلوبيل.']},
-  {id:'lavender', img:'img/lavender.jpg', type:'bq', occ:['bday','congrats'], price:15, en:['Lavender Dream','Lilac chrysanthemum with pink-edged spray roses in lavender wrap.'], ar:['حلم اللافندر','أقحوان ليلكي مع ورد صغير بأطراف وردية بتغليف لافندر.']},
-  {id:'pinklily', img:'img/pinklily.jpg', type:'arr', occ:['baby','love'], price:22, en:['Pink Lily Arrangement','Pink roses, lilies and alstroemeria in a vase, finished with a satin ribbon.'], ar:['تنسيق الليليوم الوردي','ورد وردي وليليوم وألستروميريا في مزهرية مع شريطة ستان.']},
-  {id:'rainbow', img:'img/rainbow.jpg', type:'bq', occ:['bday','congrats'], price:16, en:['Rainbow Bouquet','Hydrangea, lilies, sunflowers and roses in every colour, wrapped in white.'], ar:['باقة قوس قزح','هيدرانجيا وليليوم ودوار الشمس وورد بكل الألوان بتغليف أبيض.']},
-  {id:'whitewrap', img:'img/whitewrap.jpg', type:'bq', occ:['love','wed'], price:30, en:['Grand Rose Bouquet','A large bouquet of pink and red roses in white wrap, with personalised name cards.'], ar:['باقة الورد الفاخرة','باقة كبيرة من الورد الوردي والأحمر بتغليف أبيض مع بطاقات بالأسماء.']},
-  {id:'basket', img:'img/basket.jpg', type:'bask', occ:['wed','congrats'], price:35, en:['Celebration Basket','Gerbera, roses, lilies and carnations with a printed message ribbon for weddings and big days.'], ar:['سلة التهنئة','جربيرا وورد وليليوم وقرنفل مع شريطة مطبوعة للأعراس والمناسبات.']}
+  {id:'giftbox', img:'img/giftbox.jpg', type:'box', occ:['bday','love'], en:['Flower Box with Gift','A flower box of gerbera, alstroemeria, carnation and roses, with a gift box tucked in.'], ar:['صندوق ورد مع هدية','صندوق ورد من الجربيرا والألستروميريا والقرنفل والورد، مع علبة هدية.']},
+  {id:'whiteyellow', img:'img/whiteyellow.jpg', type:'bq', occ:['congrats','baby'], en:['White & Yellow Elegance','White calla, chrysanthemum and yellow roses in navy wrap with a Bluebell card.'], ar:['أناقة الأبيض والأصفر','كالا بيضاء وأقحوان وورد أصفر بتغليف كحلي مع بطاقة بلوبيل.']},
+  {id:'lavender', img:'img/lavender.jpg', type:'bq', occ:['bday','congrats'], en:['Lavender Dream','Lilac chrysanthemum with pink-edged spray roses in lavender wrap.'], ar:['حلم اللافندر','أقحوان ليلكي مع ورد صغير بأطراف وردية بتغليف لافندر.']},
+  {id:'pinklily', img:'img/pinklily.jpg', type:'arr', occ:['baby','love'], en:['Pink Lily Arrangement','Pink roses, lilies and alstroemeria in a vase, finished with a satin ribbon.'], ar:['تنسيق الليليوم الوردي','ورد وردي وليليوم وألستروميريا في مزهرية مع شريطة ستان.']},
+  {id:'rainbow', img:'img/rainbow.jpg', type:'bq', occ:['bday','congrats'], en:['Rainbow Bouquet','Hydrangea, lilies, sunflowers and roses in every colour, wrapped in white.'], ar:['باقة قوس قزح','هيدرانجيا وليليوم ودوار الشمس وورد بكل الألوان بتغليف أبيض.']},
+  {id:'whitewrap', img:'img/whitewrap.jpg', type:'bq', occ:['love','wed'], en:['Grand Rose Bouquet','A large bouquet of pink and red roses in white wrap, with personalised name cards.'], ar:['باقة الورد الفاخرة','باقة كبيرة من الورد الوردي والأحمر بتغليف أبيض مع بطاقات بالأسماء.']},
+  {id:'basket', img:'img/basket.jpg', type:'bask', occ:['wed','congrats'], en:['Celebration Basket','Gerbera, roses, lilies and carnations with a printed message ribbon for weddings and big days.'], ar:['سلة التهنئة','جربيرا وورد وليليوم وقرنفل مع شريطة مطبوعة للأعراس والمناسبات.']}
 ];
 const TYPES = ['all','bq','box','arr','bask'];
 const OCCS = ['all','love','bday','congrats','wed','baby'];
 const T = {
-  en:{proto:'Website prototype for Bluebell Flower Boutique · prepared by Zynvox · sample prices',navShop:'Shop',navHow:'How to order',navVisit:'Visit us',cart:'Cart',
+  en:{proto:'Website prototype for Bluebell Flower Boutique · prepared by Zynvox',navShop:'Shop',navHow:'How to order',navVisit:'Visit us',cart:'Cart',
     eyebrow:'Where every flower tells a story',h1:'Fresh bouquets &amp; <em>flower gifts</em> in Al Wafi',heroP:'Choose a design, add your card message and order on WhatsApp in a minute. Pick up from the shop or get it delivered.',
-    shopAll:'Shop flowers',waUs:'Order on WhatsApp',heroTagB:'Blush Rose Bouquet',heroTagS:'Handmade at Bluebell · from OMR 18',
-    t1b:'See every design',t1:'Bouquets, boxes and baskets with prices',t2b:'Order on WhatsApp',t2:'Your order arrives as a ready message',t3b:'Add a card message',t3:'Written on a Bluebell card for you',
+    shopAll:'Shop flowers',waUs:'Order on WhatsApp',heroTagB:'Pink Lily Arrangement',heroTagS:'Handmade at Bluebell, Al Wafi',
+    t1b:'See every design',t1:'Bouquets, boxes and baskets in one place',t2b:'Order on WhatsApp',t2:'Your order arrives as a ready message',t3b:'Add a card message',t3:'Written on a Bluebell card for you',
     shopH:'Our flowers',sortF:'Sort: Featured',sortL:'Price: low to high',sortH:'Price: high to low',fType:'Type',fOcc:'Occasion',
     types:{all:'All',bq:'Bouquets',box:'Flower boxes',arr:'Arrangements',bask:'Baskets'},
     occs:{all:'All',love:'Love',bday:'Birthday',congrats:'Congratulations',wed:'Wedding',baby:'New baby'},
     items:n=>n+(n===1?' design':' designs'),add:'Add to cart',added:'Added ✓',view:'View',none:'No designs match these filters.',
     cuH:'Want something special?',cuP:'Tell us your colours, budget and occasion and we will design it for you.',cuBtn:'Request a custom design',customMsg:'Hi Bluebell, I would like a custom flower design.\nOccasion:\nColours:\nBudget:',
-    howH:'How to order',howP:'Add designs to your cart and send your order on WhatsApp. The Bluebell team confirms availability, delivery and payment with you.',
+    howH:'How to order',howP:'Add designs to your order and send it on WhatsApp. The Bluebell team confirms price, availability and delivery with you.',
     s1:'Choose a design and tap <b>Add to cart</b>.',s2:'Pick <b>delivery or pickup</b>, the date, and write your card message.',s3:'Tap <b>Send order on WhatsApp</b>. Your order arrives as a ready message.',
     visitH:'Visit the boutique',visitP:'Al Wafi, Wilayat Al Kamil Wal Wafi, Oman',d1:'Tuesday – Sunday',d2:'Monday',closed:'Closed',chat:'Chat on WhatsApp',map:'Open in Google Maps',
     cartH:'Your order',empty:'Your cart is empty.<br>Add a design to start your order.',browse:'Browse flowers',total:'Total',
     fName:'Your name',fPhone:'Your phone / WhatsApp',fHow:'Delivery or pickup',del:'Delivery',pick:'Pickup',fArea:'Delivery area / address',fDate:'Date needed',fTo:'Recipient name (optional)',fCard:'Card message (optional)',
     send:'Send order on WhatsApp',missing:'Please add your name, phone and date (and the area for delivery).',ready:'Your order message is ready',open:'Open WhatsApp',copy:'Copy message',copied:'Copied ✓',selected:'Selected, copy it',
-    fallback:'If WhatsApp doesn\'t open, copy the message and send it to +968 9798 8700.',ask:p=>`Hi Bluebell, I am interested in the ${p}. Is it available?`,askBtn:'Ask about this design on WhatsApp',
-    msg:{hi:'Hi Bluebell, I would like to order:',total:'Total',name:'Name',phone:'Phone',how:'Delivery / pickup',area:'Area / address',date:'Date',to:'Recipient',card:'Card message'},cur:n=>'OMR '+n.toFixed(3)},
-  ar:{proto:'نموذج موقع لبلوبيل فلاور بوتيك · من إعداد Zynvox · الأسعار للتوضيح',navShop:'المتجر',navHow:'طريقة الطلب',navVisit:'زورونا',cart:'السلة',
+    fallback:'If WhatsApp doesn\'t open, copy the message and send it to +968 9798 8700.',ask:p=>`Hi Bluebell, I am interested in the ${p}. Is it available, and what is the price?`,askBtn:'Ask about this design on WhatsApp',
+    msg:{hi:'Hi Bluebell, I would like to order:',total:'Total',name:'Name',phone:'Phone',how:'Delivery / pickup',area:'Area / address',date:'Date',to:'Recipient',card:'Card message'}},
+  ar:{proto:'نموذج موقع لبلوبيل فلاور بوتيك · من إعداد Zynvox',navShop:'المتجر',navHow:'طريقة الطلب',navVisit:'زورونا',cart:'السلة',
     eyebrow:'حيث كل زهرة تحكي قصة',h1:'باقات ورد طبيعي و<em>هدايا ورد</em> في الوافي',heroP:'اختر التصميم، اكتب رسالة البطاقة، واطلب عبر الواتساب خلال دقيقة. استلام من المحل أو توصيل.',
-    shopAll:'تسوق الورد',waUs:'اطلب عبر الواتساب',heroTagB:'باقة الورد الوردي',heroTagS:'صنعت يدوياً في بلوبيل · من 18 ر.ع',
-    t1b:'شاهد كل التصاميم',t1:'باقات وصناديق وسلال مع الأسعار',t2b:'اطلب عبر الواتساب',t2:'يصلنا طلبك كرسالة جاهزة',t3b:'أضف رسالة البطاقة',t3:'نكتبها لك على بطاقة بلوبيل',
+    shopAll:'تسوق الورد',waUs:'اطلب عبر الواتساب',heroTagB:'تنسيق الليليوم الوردي',heroTagS:'صنع يدوياً في بلوبيل، الوافي',
+    t1b:'شاهد كل التصاميم',t1:'باقات وصناديق وسلال في مكان واحد',t2b:'اطلب عبر الواتساب',t2:'يصلنا طلبك كرسالة جاهزة',t3b:'أضف رسالة البطاقة',t3:'نكتبها لك على بطاقة بلوبيل',
     shopH:'تصاميمنا',sortF:'الترتيب: المميز',sortL:'السعر: من الأقل',sortH:'السعر: من الأعلى',fType:'النوع',fOcc:'المناسبة',
     types:{all:'الكل',bq:'باقات',box:'صناديق ورد',arr:'تنسيقات',bask:'سلال'},
     occs:{all:'الكل',love:'حب',bday:'عيد ميلاد',congrats:'تهنئة',wed:'زواج',baby:'مولود جديد'},
     items:n=>n+' تصميم',add:'أضف للسلة',added:'تمت الإضافة ✓',view:'عرض',none:'لا توجد تصاميم بهذه الخيارات.',
     cuH:'تبغى تصميم خاص؟',cuP:'أخبرنا بالألوان والميزانية والمناسبة ونصمم لك.',cuBtn:'اطلب تصميم خاص',customMsg:'مرحباً بلوبيل، أرغب في تصميم ورد خاص.\nالمناسبة:\nالألوان:\nالميزانية:',
-    howH:'طريقة الطلب',howP:'أضف التصاميم للسلة وأرسل طلبك عبر الواتساب. فريق بلوبيل يؤكد معك التوفر والتوصيل والدفع.',
+    howH:'طريقة الطلب',howP:'أضف التصاميم لطلبك وأرسله عبر الواتساب. فريق بلوبيل يؤكد معك السعر والتوفر والتوصيل.',
     s1:'اختر التصميم واضغط <b>أضف للسلة</b>.',s2:'اختر <b>التوصيل أو الاستلام</b> والتاريخ واكتب رسالة البطاقة.',s3:'اضغط <b>أرسل الطلب عبر الواتساب</b>. يصلنا طلبك كرسالة جاهزة.',
     visitH:'زوروا المحل',visitP:'الوافي، ولاية الكامل والوافي، سلطنة عُمان',d1:'الثلاثاء – الأحد',d2:'الإثنين',closed:'مغلق',chat:'تواصل عبر الواتساب',map:'افتح في خرائط قوقل',
     cartH:'طلبك',empty:'السلة فارغة.<br>أضف تصميماً لبدء طلبك.',browse:'تصفح الورد',total:'المجموع',
     fName:'الاسم',fPhone:'رقم الهاتف / الواتساب',fHow:'توصيل أو استلام',del:'توصيل',pick:'استلام',fArea:'منطقة / عنوان التوصيل',fDate:'التاريخ المطلوب',fTo:'اسم المستلم (اختياري)',fCard:'رسالة البطاقة (اختياري)',
     send:'أرسل الطلب عبر الواتساب',missing:'يرجى إدخال الاسم والهاتف والتاريخ (والمنطقة في حال التوصيل).',ready:'رسالة طلبك جاهزة',open:'افتح الواتساب',copy:'انسخ الرسالة',copied:'تم النسخ ✓',selected:'تم التحديد، انسخها',
-    fallback:'إذا لم يفتح الواتساب، انسخ الرسالة وأرسلها إلى 96897988700+.',ask:p=>`مرحباً بلوبيل، أنا مهتم بـ ${p}. هل هو متوفر؟`,askBtn:'اسأل عن هذا التصميم عبر الواتساب',
-    msg:{hi:'مرحباً بلوبيل، أرغب في طلب:',total:'المجموع',name:'الاسم',phone:'الهاتف',how:'توصيل / استلام',area:'المنطقة / العنوان',date:'التاريخ',to:'المستلم',card:'رسالة البطاقة'},cur:n=>n.toFixed(3)+' ر.ع'}
+    fallback:'إذا لم يفتح الواتساب، انسخ الرسالة وأرسلها إلى 96897988700+.',ask:p=>`مرحباً بلوبيل، أنا مهتم بـ ${p}. هل هو متوفر وكم السعر؟`,askBtn:'اسأل عن هذا التصميم عبر الواتساب',
+    msg:{hi:'مرحباً بلوبيل، أرغب في طلب:',total:'المجموع',name:'الاسم',phone:'الهاتف',how:'توصيل / استلام',area:'المنطقة / العنوان',date:'التاريخ',to:'المستلم',card:'رسالة البطاقة'}}
 };
 const $ = s => document.querySelector(s);
 let L = 'en', fType = 'all', fOcc = 'all', sort = 'pop', cart = {}, mode = 'del';
@@ -334,12 +328,9 @@ function buildChips() {
       b.onclick = () => { set(v); row.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === b ? 'true' : 'false')); render(); }; row.appendChild(b); });
   });
 }
-$('#sort').addEventListener('change', e => { sort = e.target.value; render(); });
 
 function render() {
   let list = products.filter(p => (fType === 'all' || p.type === fType) && (fOcc === 'all' || p.occ.includes(fOcc)));
-  if (sort === 'low') list = [...list].sort((a, b) => a.price - b.price);
-  if (sort === 'high') list = [...list].sort((a, b) => b.price - a.price);
   $('#count').textContent = t().items(list.length);
   $('#grid').innerHTML = list.length ? list.map(p => `
     <article class="card">
@@ -347,7 +338,7 @@ function render() {
       <div class="body">
         <div class="type">${p.occ.map(o => t().occs[o]).join(' · ')}</div>
         <h3>${nm(p)}</h3>
-        <div class="price">${t().cur(p.price)}</div>
+        <div style="margin-top:auto"></div>
         <div class="acts"><button class="add" data-add="${p.id}">${t().add}</button><button class="view" data-view="${p.id}">${t().view}</button></div>
       </div>
     </article>`).join('') : `<p class="empty">${t().none}</p>`;
@@ -368,7 +359,6 @@ function openSheet(id) {
     <div class="in">
       <div style="font-size:13px;color:var(--muted)">${t().types[p.type]} · ${p.occ.map(o => t().occs[o]).join(' · ')}</div>
       <h2 id="sTitle">${nm(p)}</h2>
-      <div class="price" style="font-size:24px">${t().cur(p.price)}</div>
       <p style="margin:0;color:var(--muted)">${p[L][1]}</p>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
         <div class="qty"><button id="qm" aria-label="−">−</button><span id="qv">1</span><button id="qp" aria-label="+">+</button></div>
@@ -394,10 +384,9 @@ function drawCart() {
   ['cName','cPhone','cArea','cDate','cTo','cCard'].forEach(k => { const el = document.getElementById(k); if (el) keep[k] = el.value; });
   const ids = Object.keys(cart);
   if (!ids.length) { $('#dbody').innerHTML = `<p class="empty">${t().empty}</p>`; $('#dfoot').innerHTML = `<button class="btn red" id="goShop">${t().browse}</button>`; $('#goShop').onclick = () => { closeAll(); location.hash = 'shop'; }; return; }
-  let total = 0;
   const today = new Date().toISOString().slice(0, 10);
-  $('#dbody').innerHTML = ids.map(id => { const p = products.find(x => x.id === id); const q = cart[id]; total += p.price * q;
-    return `<div class="line"><img src="${p.img}" alt=""><div><div class="t">${nm(p)}</div><div class="p">${t().cur(p.price)} × ${q}</div><button class="rm" data-rm="${id}">✕</button></div>
+  $('#dbody').innerHTML = ids.map(id => { const p = products.find(x => x.id === id); const q = cart[id];
+    return `<div class="line"><img src="${p.img}" alt=""><div><div class="t">${nm(p)}</div><div class="p">× ${q}</div><button class="rm" data-rm="${id}">✕</button></div>
       <div class="qty"><button data-q="${id}" data-d="-1" aria-label="−">−</button><span>${q}</span><button data-q="${id}" data-d="1" aria-label="+">+</button></div></div>`; }).join('') +
     `<form class="co" id="co" novalidate>
       <label for="cName">${t().fName}</label><input id="cName" autocomplete="name">
@@ -409,19 +398,19 @@ function drawCart() {
       <label for="cCard">${t().fCard}</label><textarea id="cCard" rows="2"></textarea>
     </form><div id="coMsg"></div>`;
   Object.entries(keep).forEach(([k, v]) => { const el = document.getElementById(k); if (el && v) el.value = v; });
-  $('#dfoot').innerHTML = `<div class="tot"><span>${t().total}</span><span>${t().cur(total)}</span></div><button class="btn wa" id="send">${WAI}<span>${t().send}</span></button>`;
+  $('#dfoot').innerHTML = `<button class="btn wa" id="send">${WAI}<span>${t().send}</span></button>`;
   $('#dbody').querySelectorAll('[data-q]').forEach(b => b.onclick = () => add(b.dataset.q, +b.dataset.d));
   $('#dbody').querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { delete cart[b.dataset.rm]; save(); updateCount(); drawCart(); });
   $('#dbody').querySelectorAll('[data-m]').forEach(b => b.onclick = () => { mode = b.dataset.m; $('#dbody').querySelectorAll('[data-m]').forEach(x => x.setAttribute('aria-pressed', x === b)); $('#areaWrap').hidden = mode === 'pick'; });
-  $('#send').onclick = () => sendOrder(total);
+  $('#send').onclick = () => sendOrder();
 }
-function sendOrder(total) {
+function sendOrder() {
   const v = id => (document.getElementById(id) || {}).value?.trim() || '';
   const n = v('cName'), ph = v('cPhone'), ar = v('cArea'), dt = v('cDate'), to = v('cTo'), cd = v('cCard');
   if (!n || !ph || !dt || (mode === 'del' && !ar)) { $('#coMsg').innerHTML = `<p style="color:var(--err);font-weight:600;margin:0">${t().missing}</p>`; return; }
   const M = t().msg;
-  const lines = Object.keys(cart).map(id => { const p = products.find(x => x.id === id); return `• ${nm(p)} × ${cart[id]} = ${t().cur(p.price * cart[id])}`; });
-  const msg = `${M.hi}\n${lines.join('\n')}\n${M.total}: ${t().cur(total)}\n\n${M.name}: ${n}\n${M.phone}: ${ph}\n${M.how}: ${mode === 'del' ? t().del : t().pick}${mode === 'del' ? '\n' + M.area + ': ' + ar : ''}\n${M.date}: ${dt}${to ? '\n' + M.to + ': ' + to : ''}${cd ? '\n' + M.card + ': ' + cd : ''}`;
+  const lines = Object.keys(cart).map(id => { const p = products.find(x => x.id === id); return `• ${nm(p)} × ${cart[id]}`; });
+  const msg = `${M.hi}\n${lines.join('\n')}\n\n${M.name}: ${n}\n${M.phone}: ${ph}\n${M.how}: ${mode === 'del' ? t().del : t().pick}${mode === 'del' ? '\n' + M.area + ': ' + ar : ''}\n${M.date}: ${dt}${to ? '\n' + M.to + ': ' + to : ''}${cd ? '\n' + M.card + ': ' + cd : ''}`;
   $('#coMsg').innerHTML = `<p style="margin:0 0 6px;font-weight:700">${t().ready}</p><div class="done" id="msgTxt"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent(msg)}">${WAI}<span>${t().open}</span></a><button class="btn ghost" id="copy">${t().copy}</button></div>
     <p style="font-size:12px;color:var(--muted);margin:8px 0 0">${t().fallback}</p>`;
