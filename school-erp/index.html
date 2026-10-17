@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#121214">
+<title>School ERP Demo | Zynvox</title>
+<style>
+:root{
+  --primary:#0055ff; --primary-h:#1d4ed8; --primary-soft:#e8efff;
+  --nav:#121214; --nav-ink:#e5e7eb; --nav-dim:#9ca3af;
+  --bg:#f5f5f7; --card:#fff; --ink:#0f172a; --ink2:#334155; --muted:#64748b; --line:#e2e8f0;
+  --ok:#16a34a; --ok-soft:#dcfce7; --warn:#d97706; --warn-soft:#fef3c7; --bad:#dc2626; --bad-soft:#fee2e2;
+  --wa:#25D366;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--primary)}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+h1,h2,h3{margin:0;letter-spacing:-.01em}
+.demo{background:#0b1220;color:#cbd5e1;font-size:11.5px;text-align:center;padding:5px 10px}
+.demo b{color:#fff}
+
+/* login */
+.login{min-height:calc(100vh - 26px);display:grid;place-items:center;padding:24px 16px;background:radial-gradient(90% 60% at 50% 0%,#dbe6ff 0%,var(--bg) 60%)}
+.lbox{width:min(920px,100%)}
+.lhead{text-align:center;margin-bottom:22px}
+.crest{width:64px;height:64px;border-radius:18px;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:800;font-size:24px;margin:0 auto 12px;box-shadow:0 10px 30px rgba(0,85,255,.3)}
+.lhead h1{font-size:clamp(24px,4vw,32px)}
+.lhead p{color:var(--muted);margin:6px 0 0}
+.roles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:760px){.roles{grid-template-columns:1fr 1fr}}
+.role{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;text-align:left;transition:transform .15s,box-shadow .15s,border-color .15s}
+.role:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(15,23,42,.08);border-color:var(--primary)}
+.role .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:10px;background:var(--primary-soft)}
+.role b{display:block;font-size:16px}
+.role span{font-size:13px;color:var(--muted)}
+.lfoot{text-align:center;color:var(--muted);font-size:12px;margin-top:18px}
+
+/* app shell */
+.app{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 26px)}
+aside.side{background:var(--nav);color:var(--nav-ink);padding:16px 12px;position:sticky;top:0;height:calc(100vh - 26px);overflow:auto}
+.sbrand{display:flex;gap:10px;align-items:center;padding:4px 8px 16px;border-bottom:1px solid #26262b;margin-bottom:10px}
+.sbrand .crest{width:36px;height:36px;border-radius:10px;font-size:15px;margin:0;box-shadow:none}
+.sbrand b{display:block;font-size:14px}
+.sbrand span{font-size:11px;color:var(--nav-dim)}
+.navi{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;color:var(--nav-dim);text-align:left;padding:9px 10px;border-radius:10px;font-size:14px}
+.navi:hover{background:#1d1d22;color:#fff}
+.navi[aria-current="page"]{background:var(--primary);color:#fff}
+.navi .e{width:20px;text-align:center}
+.who{margin-top:14px;border-top:1px solid #26262b;padding:12px 8px 0;font-size:12px;color:var(--nav-dim)}
+.who b{color:#fff;display:block;font-size:13px}
+.who button{margin-top:8px;background:#1d1d22;border:1px solid #2c2c33;color:#e5e7eb;border-radius:8px;padding:6px 10px;font-size:12px}
+main.view{padding:22px clamp(14px,3vw,30px) 90px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.top h2{font-size:24px}
+.top p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.mtop{display:none}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  aside.side{position:fixed;inset:0 auto 0 0;width:260px;height:100%;z-index:60;transform:translateX(-100%);transition:transform .2s}
+  aside.side.open{transform:none}
+  .mtop{display:flex;position:sticky;top:0;z-index:40;background:var(--nav);color:#fff;align-items:center;justify-content:space-between;padding:10px 14px}
+  .mtop button{background:#1d1d22;border:1px solid #2c2c33;color:#fff;border-radius:10px;padding:7px 12px}
+  .shade{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:55}
+}
+
+/* ui */
+.grid{display:grid;gap:14px}
+.k4{grid-template-columns:repeat(4,1fr)}
+.c2{grid-template-columns:1.4fr 1fr}
+.c2e{grid-template-columns:1fr 1fr}
+@media (max-width:1100px){.k4{grid-template-columns:1fr 1fr}.c2,.c2e{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;min-width:0}
+.card h3{font-size:15px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.kpi .l{font-size:12px;color:var(--muted)}
+.kpi .v{font-size:clamp(19px,5vw,26px);font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:12px;margin-top:2px}
+.up{color:var(--ok)}.dn{color:var(--bad)}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:500;background:var(--primary);color:#fff;white-space:nowrap}
+.btn:hover{background:var(--primary-h)}
+.btn.ghost{background:#fff;color:var(--primary);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--primary)}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.sm{padding:5px 10px;font-size:12px}
+.btn.ok{background:var(--ok)}.btn.bad{background:var(--bad)}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line);padding:8px 8px}
+.tbl td{border-bottom:1px solid var(--line);padding:9px 8px;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto;margin:0 -4px;padding:0 4px}
+.pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:600}
+.p-ok{background:var(--ok-soft);color:var(--ok)}.p-warn{background:var(--warn-soft);color:var(--warn)}.p-bad{background:var(--bad-soft);color:var(--bad)}.p-info{background:var(--primary-soft);color:var(--primary)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.inp,select.inp{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 11px;font-size:14px;min-width:0}
+.inp:focus{outline:2px solid var(--primary);outline-offset:0;border-color:transparent}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+.bars{display:flex;align-items:flex-end;gap:8px;height:160px;padding-top:8px}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.bar i{display:block;width:100%;max-width:38px;border-radius:8px 8px 3px 3px;background:var(--primary)}
+.bar i.lt{background:#bcd0ff}
+.bar span{font-size:11px;color:var(--muted);white-space:nowrap}
+.hbar{display:grid;grid-template-columns:70px 1fr 44px;gap:8px;align-items:center;font-size:12.5px;margin:7px 0}
+.hbar .t{height:9px;background:var(--bg);border-radius:9px;overflow:hidden}
+.hbar .t i{display:block;height:100%;background:var(--primary);border-radius:9px}
+.feed{display:grid;gap:10px}
+.feed div{display:grid;grid-template-columns:28px 1fr;gap:10px;font-size:13px}
+.feed .e{width:28px;height:28px;border-radius:9px;background:var(--bg);display:grid;place-items:center}
+.att{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:#fff;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"].P{background:var(--ok);color:#fff}
+.seg button[aria-pressed="true"].A{background:var(--bad);color:#fff}
+.seg button[aria-pressed="true"].L{background:var(--warn);color:#fff}
+.wa-msg{background:#e7ffdb;border-radius:12px 12px 12px 3px;padding:10px 12px;font-size:13px;white-space:pre-wrap;box-shadow:0 1px 1px rgba(0,0,0,.08);max-width:440px}
+.wa-head{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:10px 0 6px}
+.kan{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:900px){.kan{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.kan{grid-template-columns:1fr}}
+.col{background:var(--bg);border-radius:14px;padding:10px;min-height:120px}
+.col h4{margin:2px 4px 10px;font-size:13px;display:flex;justify-content:space-between}
+.kc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px;font-size:13px}
+.kc b{display:block}
+.tt{width:100%;border-collapse:separate;border-spacing:4px;font-size:12px}
+.tt th{color:var(--muted);font-weight:600;padding:4px}
+.tt td{background:var(--primary-soft);border-radius:8px;padding:8px 6px;text-align:center;min-width:86px}
+.tt td small{display:block;color:var(--muted)}
+.tt td.abs{background:var(--bad-soft)}
+.tt td.sub{background:var(--ok-soft)}
+.tt td.brk{background:var(--bg);color:var(--muted)}
+.modal-bg{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:80;display:grid;place-items:center;padding:16px}
+.modal{background:#fff;border-radius:18px;width:min(560px,100%);max-height:90vh;overflow:auto;padding:20px}
+.modal h3{font-size:18px;margin-bottom:12px}
+.form{display:grid;gap:10px}
+.form label{font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px}
+.form .inp{width:100%}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:480px){.f2{grid-template-columns:1fr}}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 16px;border-radius:12px;font-size:13px;z-index:90;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:92vw}
+.rc{border:1px solid var(--line);border-radius:14px;padding:18px}
+.rc h4{margin:0;font-size:18px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px}
+.chip[aria-pressed="true"]{border-color:var(--primary);color:var(--primary);background:var(--primary-soft)}
+.slot{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 10px;font-size:13px}
+.slot[aria-pressed="true"]{border-color:var(--primary);background:var(--primary-soft);color:var(--primary);font-weight:600}
+.slot:disabled{opacity:.45;text-decoration:line-through}
+.child{display:flex;gap:12px;align-items:center}
+.av{width:46px;height:46px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;font-weight:700}
+.lock{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center}
+@media print{.demo,aside.side,.mtop,.top .row,.noprint{display:none!important}.app{display:block}main.view{padding:0}.card{border:0}}
+</style>
+</head>
+<body>
+<div class="demo"><b>Demo by Zynvox</b> · Fictional school and sample data · Nothing here is real</div>
+<div id="root"></div>
+<div id="modal"></div>
+<div id="toast" class="toast" hidden></div>
+
+<script>
+/* ================= DATA ================= */
+const SCHOOL = 'Al-Noor Model School';
+let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const pick = a => a[Math.floor(rnd() * a.length)];
+const FN = ['Ahmed','Ali','Hamza','Usman','Bilal','Zain','Hassan','Ibrahim','Saad','Fahad','Ayesha','Fatima','Zainab','Maryam','Hira','Iqra','Sana','Aleena','Hoorain','Eman','Abdullah','Rayyan','Haris','Muneeb','Areeba','Anaya','Mahnoor','Laiba'];
+const LN = ['Khan','Malik','Raza','Qureshi','Butt','Shah','Iqbal','Siddiqui','Chaudhry','Awan','Javed','Hussain','Mirza','Abbasi'];
+const CLASSES = ['Nursery','KG','Class 1','Class 2','Class 3','Class 4','Class 5','Class 6','Class 7','Class 8','Class 9','Class 10'];
+const FEE = { 'Nursery': 4500, 'KG': 4500, 'Class 1': 5000, 'Class 2': 5000, 'Class 3': 5500, 'Class 4': 5500, 'Class 5': 6000, 'Class 6': 6500, 'Class 7': 6500, 'Class 8': 7000, 'Class 9': 8000, 'Class 10': 8000 };
+const SUBJ = ['English','Urdu','Maths','Science','Islamiat','Computer'];
+const students = [];
+CLASSES.forEach((c, ci) => { const n = 9 + Math.floor(rnd() * 5); for (let i = 0; i < n; i++) {
+  const f = pick(FN), l = pick(LN), gf = pick(['Imran','Tariq','Kashif','Naveed','Asif','Shahid','Faisal','Waqas','Adnan','Rizwan']);
+  const st = rnd(); const fee = st < .72 ? 'Paid' : st < .9 ? 'Unpaid' : 'Overdue';
+  students.push({ id: 'ANS-' + String(1001 + students.length), name: f + ' ' + l, cls: c, roll: i + 1, guardian: gf + ' ' + l, phone: '03' + (Math.floor(rnd() * 5) * 10 + 10) + '-' + String(Math.floor(1000000 + rnd() * 8999999)), fee, att: Math.round(80 + rnd() * 19), route: rnd() < .45 ? pick(['Route 1 · DHA', 'Route 2 · Gulberg', 'Route 3 · Johar Town']) : '', marks: SUBJ.map(() => Math.round(48 + rnd() * 50)) });
+} });
+const TEACHERS = [
+  ['Ms. Saima Rashid','English',['Class 8','Class 9','Class 10']], ['Mr. Kamran Ali','Maths',['Class 8','Class 9','Class 10']], ['Ms. Nadia Farooq','Science',['Class 6','Class 7','Class 8']],
+  ['Mr. Junaid Akhtar','Urdu',['Class 6','Class 7','Class 8']], ['Ms. Rabia Noor','Islamiat',['Class 5','Class 6','Class 7']], ['Mr. Owais Tariq','Computer',['Class 6','Class 7','Class 8','Class 9','Class 10']],
+  ['Ms. Amna Shah','Maths',['Class 5','Class 6','Class 7']], ['Ms. Hina Javed','Class teacher',['Class 1','Class 2']], ['Ms. Saba Iqbal','Class teacher',['Nursery','KG']], ['Mr. Adeel Mirza','Science',['Class 9','Class 10']]
+].map(([n, s, c], i) => ({ id: 'T' + (i + 1), name: n, subject: s, classes: c, salary: [65000, 72000, 60000, 55000, 52000, 58000, 60000, 48000, 45000, 70000][i], phone: '0300-' + (5100000 + i * 13579) }));
+const leaves = [
+  { id: 1, who: 'Ms. Nadia Farooq', type: 'Sick leave', dates: '20–21 Oct', reason: 'Fever', st: 'Pending' },
+  { id: 2, who: 'Mr. Junaid Akhtar', type: 'Casual leave', dates: '23 Oct', reason: 'Family event', st: 'Pending' },
+  { id: 3, who: 'Ms. Hina Javed', type: 'Casual leave', dates: '9 Oct', reason: 'Personal work', st: 'Approved' }
+];
+const applicants = [
+  { n: 'Rayyan Abbasi', c: 'Class 1', s: 0 }, { n: 'Eman Chaudhry', c: 'KG', s: 0 }, { n: 'Haris Awan', c: 'Class 6', s: 1 },
+  { n: 'Mahnoor Siddiqui', c: 'Class 3', s: 1 }, { n: 'Abdullah Raza', c: 'Class 9', s: 2 }, { n: 'Anaya Qureshi', c: 'Nursery', s: 3 }
+];
+const STAGES = ['Applied', 'Documents verified', 'Entry test', 'Admitted'];
+const notices = [
+  { t: 'Parent-teacher meeting', b: 'PTM for Classes 6–10 on Saturday, 25 October, 9 AM – 12 PM.', to: 'Classes 6–10', d: '15 Oct' },
+  { t: 'Winter uniform', b: 'Winter uniform is compulsory from 1 November.', to: 'All parents', d: '12 Oct' }
+];
+const books = [['Oxford English Grammar', 'Available', ''], ['Science Encyclopedia', 'Issued', 'Zainab Malik · due 22 Oct'], ['Stories of the Prophets', 'Available', ''], ['Basic Computer Skills', 'Issued', 'Hamza Khan · due 19 Oct'], ['Urdu Adab Selection', 'Available', '']];
+const routes = [
+  { r: 'Route 1 · DHA', bus: 'LEA-4512', drv: 'Muhammad Aslam', st: 'On route', eta: '7:52 AM' },
+  { r: 'Route 2 · Gulberg', bus: 'LEB-1188', drv: 'Ghulam Rasool', st: 'Reached school', eta: '7:41 AM' },
+  { r: 'Route 3 · Johar Town', bus: 'LEC-7730', drv: 'Rafaqat Ali', st: 'On route', eta: '7:58 AM' }
+];
+const diary = [['English', 'Learn spellings of Unit 4 (20 words).'], ['Maths', 'Exercise 3.2, Q1–Q8 in notebook.'], ['Science', 'Draw and label the plant cell.']];
+const PERIODS = ['8:00', '8:40', '9:20', '10:00', '10:30', '11:10', '11:50'];
+const TT = { 'Class 8': ['English·Ms. Saima Rashid', 'Maths·Mr. Kamran Ali', 'Science·Ms. Nadia Farooq', 'BREAK', 'Urdu·Mr. Junaid Akhtar', 'Computer·Mr. Owais Tariq', 'Islamiat·Ms. Rabia Noor'],
+  'Class 9': ['Maths·Mr. Kamran Ali', 'English·Ms. Saima Rashid', 'Computer·Mr. Owais Tariq', 'BREAK', 'Science·Mr. Adeel Mirza', 'Urdu·Mr. Junaid Akhtar', 'Islamiat·Ms. Rabia Noor'],
+  'Class 7': ['Science·Ms. Nadia Farooq', 'Islamiat·Ms. Rabia Noor', 'Maths·Ms. Amna Shah', 'BREAK', 'Computer·Mr. Owais Tariq', 'Urdu·Mr. Junaid Akhtar', 'English·Ms. Saima Rashid'] };
+let absentTeacher = '';
+const months = [['May', 7.9], ['Jun', 7.6], ['Jul', 4.9], ['Aug', 8.0], ['Sep', 8.1], ['Oct', 0]];
+const ME = { admin: { n: 'Mrs. Farah Ahmed', r: 'Principal' }, acc: { n: 'Mr. Shoaib Hassan', r: 'Accountant' }, teacher: { n: 'Ms. Saima Rashid', r: 'Teacher · Class 8' }, parent: { n: 'Mr. Imran Khan', r: 'Parent' } };
+const myChild = students.find(s => s.cls === 'Class 8') || students[0];
+myChild.name = 'Hamza Khan'; myChild.guardian = 'Imran Khan'; myChild.fee = 'Unpaid';
+const ptmSlots = ['9:00', '9:15', '9:30', '9:45', '10:00', '10:15', '10:30', '10:45'].map((t, i) => ({ t, taken: [1, 4, 5].includes(i) }));
+let myPtm = '';
+
+/* ================= HELPERS ================= */
+const $ = s => document.querySelector(s);
+const rs = n => 'Rs ' + Math.round(n).toLocaleString('en-PK');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const pill = s => `<span class="pill ${({ Paid: 'p-ok', Approved: 'p-ok', Present: 'p-ok', Admitted: 'p-ok', 'Reached school': 'p-ok', Available: 'p-ok', Unpaid: 'p-warn', Pending: 'p-warn', 'On route': 'p-info', Issued: 'p-info', Overdue: 'p-bad', Rejected: 'p-bad', Absent: 'p-bad' })[s] || 'p-info'}">${s}</span>`;
+function toast(t) { const el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => el.hidden = true, 2600); }
+function modal(html) { $('#modal').innerHTML = `<div class="modal-bg" id="mbg"><div class="modal" role="dialog" aria-modal="true">${html}</div></div>`; $('#mbg').onclick = e => { if (e.target.id === 'mbg') closeModal(); }; }
+function closeModal() { $('#modal').innerHTML = ''; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+const grade = p => p >= 90 ? 'A+' : p >= 80 ? 'A' : p >= 70 ? 'B' : p >= 60 ? 'C' : p >= 50 ? 'D' : 'F';
+const waBox = (to, msg) => `<div class="wa-head"><span style="color:var(--wa)">●</span> WhatsApp message to ${esc(to)}</div><div class="wa-msg">${esc(msg)}</div>`;
+
+/* ================= ROLES & NAV ================= */
+const NAV = {
+  admin: [['dash', '📊', 'Dashboard'], ['students', '🎓', 'Students'], ['admissions', '📝', 'Admissions'], ['attendance', '✅', 'Attendance'], ['fees', '💳', 'Fees'], ['exams', '📄', 'Exams & results'], ['timetable', '🗓️', 'Timetable'], ['staff', '👩‍🏫', 'Staff & HR'], ['transport', '🚌', 'Transport'], ['library', '📚', 'Library'], ['notices', '📣', 'Notices & PTM'], ['reports', '📈', 'Reports']],
+  acc: [['dash', '📊', 'Dashboard'], ['fees', '💳', 'Fees'], ['students', '🎓', 'Students'], ['staff', '💼', 'Payroll'], ['reports', '📈', 'Reports']],
+  teacher: [['tdash', '🏠', 'My day'], ['attendance', '✅', 'Attendance'], ['exams', '📄', 'Marks entry'], ['timetable', '🗓️', 'Timetable'], ['notices', '📣', 'Notices & PTM']],
+  parent: [['pdash', '🏠', 'My child'], ['pfees', '💳', 'Fees'], ['presult', '📄', 'Result card'], ['pdiary', '📒', 'Diary'], ['notices', '📣', 'Notices & PTM']]
+};
+let role = null, page = null, navOpen = false;
+
+function login() {
+  role = null;
+  $('#root').innerHTML = `<div class="login"><div class="lbox">
+    <div class="lhead"><div class="crest">AN</div><h1>${SCHOOL}</h1><p>School management system · Choose who you want to log in as</p></div>
+    <div class="roles">
+      <button class="role" data-r="admin"><div class="ic">🏫</div><b>Principal / Admin</b><span>Whole school at a glance</span></button>
+      <button class="role" data-r="acc"><div class="ic">💳</div><b>Accountant</b><span>Fees, defaulters, payroll</span></button>
+      <button class="role" data-r="teacher"><div class="ic">👩‍🏫</div><b>Teacher</b><span>Attendance, marks, timetable</span></button>
+      <button class="role" data-r="parent"><div class="ic">👨‍👩‍👦</div><b>Parent</b><span>Child's fees, results, diary</span></button>
+    </div>
+    <p class="lfoot">🔒 Each login sees only its own sections (role-based access). In the real system every user has a secure password.</p>
+  </div></div>`;
+  document.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { role = b.dataset.r; page = NAV[role][0][0]; shell(); });
+}
+
+function shell() {
+  const me = ME[role];
+  $('#root').innerHTML = `<div class="mtop"><button id="menu" aria-label="Open menu">☰ Menu</button><b>${SCHOOL}</b><span></span></div>
+  <div class="app"><aside class="side" id="side">
+    <div class="sbrand"><div class="crest">AN</div><div><b>${SCHOOL}</b><span>Session 2026–27</span></div></div>
+    <nav>${NAV[role].map(([k, e, t]) => `<button class="navi" data-p="${k}" ${k === page ? 'aria-current="page"' : ''}><span class="e">${e}</span>${t}</button>`).join('')}</nav>
+    <div class="who"><b>${me.n}</b>${me.r}<br><button id="out">Switch login</button></div>
+  </aside><main class="view" id="view"></main></div><div class="shade" id="shade" hidden></div>`;
+  document.querySelectorAll('[data-p]').forEach(b => b.onclick = () => go(b.dataset.p));
+  $('#out').onclick = login;
+  $('#menu').onclick = () => setNav(true); $('#shade').onclick = () => setNav(false);
+  render();
+}
+function setNav(o) { navOpen = o; $('#side').classList.toggle('open', o); $('#shade').hidden = !o; }
+function go(p) { page = p; document.querySelectorAll('[data-p]').forEach(b => { if (b.dataset.p === p) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); setNav(false); render(); scrollTo(0, 0); }
+function head(t, s, actions = '') { return `<div class="top"><div><h2>${t}</h2><p>${s}</p></div><div class="row">${actions}</div></div>`; }
+function render() { const v = $('#view'); (PAGES[page] || PAGES.dash)(v); }
+
+/* ================= PAGES ================= */
+const PAGES = {};
+const feeStats = () => { const due = students.reduce((a, s) => a + FEE[s.cls], 0); const paid = students.filter(s => s.fee === 'Paid').reduce((a, s) => a + FEE[s.cls], 0); return { due, paid, pend: due - paid, def: students.filter(s => s.fee !== 'Paid').length }; };
+
+PAGES.dash = v => {
+  const f = feeStats(); const pres = Math.round(students.reduce((a, s) => a + s.att, 0) / students.length);
+  const isAcc = role === 'acc';
+  v.innerHTML = head(isAcc ? 'Finance dashboard' : 'Good morning, ' + ME[role].n.split(' ').slice(1).join(' '), 'Friday, 17 October 2026 · Live overview') + `
+  <div class="grid k4">
+    <div class="card kpi"><div class="l">Students enrolled</div><div class="v">${students.length}</div><div class="s up">▲ 6 new admissions this month</div></div>
+    <div class="card kpi"><div class="l">Attendance today</div><div class="v">${pres}%</div><div class="s muted">${Math.round(students.length * (100 - pres) / 100)} absent · parents alerted</div></div>
+    <div class="card kpi"><div class="l">October fee collected</div><div class="v">${rs(f.paid)}</div><div class="s muted">of ${rs(f.due)} (${Math.round(f.paid / f.due * 100)}%)</div></div>
+    <div class="card kpi"><div class="l">Fee defaulters</div><div class="v dn">${f.def}</div><div class="s"><a href="#" id="goDef">Send reminders →</a></div></div>
+  </div>
+  <div class="grid c2" style="margin-top:14px">
+    <div class="card"><h3>Fee collection (Rs, lakh)<span class="pill p-info">2026</span></h3>
+      <div class="bars">${months.map(([m, x], i) => (x = i === months.length - 1 ? Math.round(f.paid / 10000) / 10 : x, 0) || `<div class="bar"><b class="small">${x}</b><i class="${i === months.length - 1 ? '' : 'lt'}" style="height:${x / 8.5 * 120}px"></i><span>${m}</span></div>`).join('')}</div>
+      <p class="small muted">July is low because of summer vacations. October is still being collected.</p></div>
+    <div class="card"><h3>Attendance by class (this month)</h3>${['Class 1', 'Class 3', 'Class 5', 'Class 7', 'Class 8', 'Class 9', 'Class 10'].map(c => { const l = students.filter(s => s.cls === c); const p = Math.round(l.reduce((a, s) => a + s.att, 0) / l.length); return `<div class="hbar"><span>${c}</span><div class="t"><i style="width:${p}%"></i></div><b>${p}%</b></div>`; }).join('')}</div>
+  </div>
+  <div class="grid c2e" style="margin-top:14px">
+    <div class="card"><h3>Today's activity</h3><div class="feed">
+      <div><span class="e">✅</span><span>Attendance marked for <b>11 of 12 classes</b>. Class 4 is pending.</span></div>
+      <div><span class="e">💬</span><span><b>${Math.round(students.length * (100 - pres) / 100)} absence alerts</b> sent to parents on WhatsApp.</span></div>
+      <div><span class="e">💳</span><span>${rs(184500)} received today (Cash, JazzCash, Easypaisa, bank).</span></div>
+      <div><span class="e">📝</span><span>2 new admission applications online.</span></div>
+      <div><span class="e">🧑‍🏫</span><span>2 leave requests waiting for approval.</span></div>
+    </div></div>
+    <div class="card"><h3>Quick actions</h3><div class="row">
+      <button class="btn" data-go="admissions">📝 New admission</button><button class="btn ghost" data-go="fees">💳 Collect fee</button>
+      <button class="btn ghost" data-go="notices">📣 Send notice</button><button class="btn ghost" data-go="exams">📄 Result cards</button>
+      <button class="btn ghost" data-go="${role === 'acc' ? 'staff' : 'timetable'}">${role === 'acc' ? '💼 Run payroll' : '🗓️ Substitute teacher'}</button>
+    </div><p class="small muted" style="margin-top:12px">Everything is in one place, with no registers, Excel sheets or WhatsApp groups to chase.</p></div>
+  </div>`;
+  v.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(NAV[role].some(n => n[0] === b.dataset.go) ? b.dataset.go : NAV[role][0][0]));
+  $('#goDef').onclick = e => { e.preventDefault(); feeFilter = 'Defaulters'; go('fees'); };
+};
+
+let stuQ = '', stuC = 'All';
+PAGES.students = v => {
+  const list = students.filter(s => (stuC === 'All' || s.cls === stuC) && (s.name + s.id + s.guardian).toLowerCase().includes(stuQ.toLowerCase()));
+  v.innerHTML = head('Students', 'Student information system · profiles, guardians, fees and attendance in one record', role === 'admin' ? '<button class="btn" id="addS">+ Add student</button>' : '') + `
+  <div class="card"><div class="toolbar"><input class="inp" id="q" placeholder="Search name, ID or guardian" value="${esc(stuQ)}" style="flex:1;min-width:180px">
+  <select class="inp" id="cf"><option>All</option>${CLASSES.map(c => `<option ${c === stuC ? 'selected' : ''}>${c}</option>`).join('')}</select><span class="small muted">${list.length} students</span></div>
+  <div class="tw"><table class="tbl"><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Guardian</th><th class="num">Attendance</th><th>Fee</th><th></th></tr></thead><tbody>
+  ${list.slice(0, 60).map(s => `<tr><td class="small muted">${s.id}</td><td><b>${esc(s.name)}</b></td><td>${s.cls}</td><td>${esc(s.guardian)}<br><span class="small muted">${s.phone}</span></td><td class="num">${s.att}%</td><td>${pill(s.fee)}</td><td><button class="btn ghost sm" data-s="${s.id}">Profile</button></td></tr>`).join('')}
+  </tbody></table></div></div>`;
+  $('#q').oninput = e => { stuQ = e.target.value; const pos = e.target.selectionStart; PAGES.students(v); $('#q').focus(); $('#q').setSelectionRange(pos, pos); };
+  $('#cf').onchange = e => { stuC = e.target.value; PAGES.students(v); };
+  v.querySelectorAll('[data-s]').forEach(b => b.onclick = () => profile(students.find(s => s.id === b.dataset.s)));
+  if ($('#addS')) $('#addS').onclick = () => go('admissions');
+};
+function profile(s) {
+  const tot = s.marks.reduce((a, b) => a + b, 0), p = Math.round(tot / 6);
+  modal(`<h3>${esc(s.name)} <span class="small muted">${s.id}</span></h3>
+  <div class="grid c2e" style="gap:10px">
+    <div class="card"><div class="small muted">Class</div><b>${s.cls} · Roll ${s.roll}</b></div>
+    <div class="card"><div class="small muted">Guardian</div><b>${esc(s.guardian)}</b><div class="small">${s.phone}</div></div>
+    <div class="card"><div class="small muted">Attendance</div><b>${s.att}%</b></div>
+    <div class="card"><div class="small muted">Monthly fee</div><b>${rs(FEE[s.cls])}</b> ${pill(s.fee)}</div>
+    <div class="card"><div class="small muted">Last result</div><b>${p}% · Grade ${grade(p)}</b></div>
+    <div class="card"><div class="small muted">Transport</div><b>${s.route || 'Own transport'}</b></div>
+  </div>
+  <p class="lock" style="margin-top:12px">🔒 Medical notes and documents are visible to the principal only.</p>
+  <div class="row" style="margin-top:10px"><button class="btn ghost" onclick="closeModal()">Close</button></div>`);
+}
+
+PAGES.admissions = v => {
+  v.innerHTML = head('Admissions', 'Online applications, document checks and entry tests, tracked step by step', '<button class="btn" id="newA">+ New application</button>') + `
+  <div class="kan">${STAGES.map((st, i) => `<div class="col"><h4>${st}<span class="muted">${applicants.filter(a => a.s === i).length}</span></h4>
+  ${applicants.map((a, k) => a.s !== i ? '' : `<div class="kc"><b>${esc(a.n)}</b><span class="muted small">${a.c}</span><div class="row" style="margin-top:8px">${i < 3 ? `<button class="btn sm" data-mv="${k}">${['Verify docs', 'Send to test', 'Admit'][i]} →</button>` : '<span class="pill p-ok">Roll no. issued</span>'}</div></div>`).join('')}
+  </div>`).join('')}</div>
+  <div class="card" style="margin-top:14px"><h3>What parents see</h3><p class="small muted" style="margin-top:-4px">Parents apply from the school website or a link on WhatsApp, upload B-Form and photo, and get updates automatically.</p>
+  ${waBox('Kashif Awan (parent)', 'Assalam o Alaikum! Haris Awan ki admission application (Class 6) ke documents verify ho gaye hain. ✅\nEntry test: Monday 20 October, 9:00 AM.\n— Al-Noor Model School')}</div>`;
+  v.querySelectorAll('[data-mv]').forEach(b => b.onclick = () => { const a = applicants[+b.dataset.mv]; a.s++; toast(a.s === 3 ? `${a.n} admitted · student record created · fee voucher generated` : `${a.n} moved to "${STAGES[a.s]}" · parent notified on WhatsApp`); if (a.s === 3) students.push({ id: 'ANS-' + (1001 + students.length), name: a.n, cls: a.c, roll: 99, guardian: 'Guardian of ' + a.n.split(' ')[0], phone: '0300-0000000', fee: 'Unpaid', att: 100, route: '', marks: SUBJ.map(() => 0) }); PAGES.admissions(v); });
+  $('#newA').onclick = () => { modal(`<h3>New admission application</h3><form class="form" id="af">
+    <div class="f2"><div><label>Student name</label><input class="inp" id="an" required></div><div><label>Class applying for</label><select class="inp" id="ac">${CLASSES.map(c => `<option>${c}</option>`).join('')}</select></div></div>
+    <div class="f2"><div><label>Guardian name</label><input class="inp"></div><div><label>WhatsApp number</label><input class="inp" inputmode="tel"></div></div>
+    <div><label>Documents</label><div class="row small muted">📎 B-Form · 📎 Photo · 📎 Previous result card</div></div>
+    <div class="row"><button class="btn" type="submit">Submit application</button><button class="btn ghost" type="button" onclick="closeModal()">Cancel</button></div></form>`);
+    $('#af').onsubmit = e => { e.preventDefault(); const n = $('#an').value.trim() || 'New Student'; applicants.push({ n, c: $('#ac').value, s: 0 }); closeModal(); toast('Application received · acknowledgement sent to parent'); PAGES.admissions(v); }; };
+};
+
+let attClass = 'Class 8', attState = {}, attSaved = false;
+PAGES.attendance = v => {
+  const list = students.filter(s => s.cls === attClass);
+  list.forEach(s => { if (!attState[s.id]) attState[s.id] = 'P'; });
+  const abs = list.filter(s => attState[s.id] === 'A'), lv = list.filter(s => attState[s.id] === 'L');
+  v.innerHTML = head('Attendance', 'Mark the whole class in seconds · absent students\' parents get a WhatsApp alert automatically') + `
+  <div class="grid c2"><div class="card"><div class="toolbar"><select class="inp" id="ac">${CLASSES.map(c => `<option ${c === attClass ? 'selected' : ''}>${c}</option>`).join('')}</select><span class="sp"></span>
+  <span class="small"><b class="up">${list.length - abs.length - lv.length}</b> present · <b class="dn">${abs.length}</b> absent · <b style="color:var(--warn)">${lv.length}</b> leave</span></div>
+  ${list.map(s => `<div class="att"><div><b>${s.roll}. ${esc(s.name)}</b><div class="small muted">${s.att}% this month</div></div><div class="seg">${['P', 'A', 'L'].map(k => `<button class="${k}" data-a="${s.id}" data-k="${k}" aria-pressed="${attState[s.id] === k}">${k}</button>`).join('')}</div></div>`).join('')}
+  <div class="row" style="margin-top:12px"><button class="btn" id="saveA">${attSaved ? 'Saved ✓ · Update' : 'Save attendance'}</button><span class="small muted">Also works with biometric or RFID card scanners at the gate.</span></div></div>
+  <div class="card"><h3>Automatic parent alerts</h3>${abs.length ? abs.slice(0, 3).map(s => waBox(s.guardian, `Assalam o Alaikum ${s.guardian.split(' ')[0]} sahab,\n${s.name} aaj (17 Oct) school nahi aaye/aayi. Agar chhutti ki wajah ho to class teacher ko bata dein.\n— Al-Noor Model School`)).join('') : '<p class="muted small">Mark a student <b>A</b> (absent) to see the WhatsApp alert their parent receives.</p>'}${abs.length > 3 ? `<p class="small muted">+ ${abs.length - 3} more alerts</p>` : ''}</div></div>`;
+  $('#ac').onchange = e => { attClass = e.target.value; attSaved = false; PAGES.attendance(v); };
+  v.querySelectorAll('[data-a]').forEach(b => b.onclick = () => { attState[b.dataset.a] = b.dataset.k; PAGES.attendance(v); });
+  $('#saveA').onclick = () => { attSaved = true; toast(`Attendance saved · ${abs.length} WhatsApp alert${abs.length === 1 ? '' : 's'} sent to parents`); PAGES.attendance(v); };
+};
+
+let feeFilter = 'All', feeQ = '';
+PAGES.fees = v => {
+  const f = feeStats();
+  const list = students.filter(s => (feeFilter === 'All' || (feeFilter === 'Defaulters' ? s.fee !== 'Paid' : s.fee === feeFilter)) && s.name.toLowerCase().includes(feeQ.toLowerCase()));
+  v.innerHTML = head('Fees', 'Monthly vouchers, online payments and defaulter reminders', '<button class="btn wa" id="remind">💬 Remind all defaulters</button><button class="btn ghost" id="genV">🧾 Generate November vouchers</button>') + `
+  <div class="grid k4"><div class="card kpi"><div class="l">Billed (October)</div><div class="v">${rs(f.due)}</div></div><div class="card kpi"><div class="l">Collected</div><div class="v up">${rs(f.paid)}</div></div><div class="card kpi"><div class="l">Outstanding</div><div class="v dn">${rs(f.pend)}</div></div><div class="card kpi"><div class="l">Defaulters</div><div class="v">${f.def}</div></div></div>
+  <div class="card" style="margin-top:14px"><div class="toolbar"><div class="chips">${['All', 'Paid', 'Unpaid', 'Overdue', 'Defaulters'].map(x => `<button class="chip" data-ff="${x}" aria-pressed="${x === feeFilter}">${x}</button>`).join('')}</div><span class="sp"></span><input class="inp" id="fq" placeholder="Search student" value="${esc(feeQ)}"></div>
+  <div class="tw"><table class="tbl"><thead><tr><th>Student</th><th>Class</th><th class="num">October fee</th><th>Status</th><th></th></tr></thead><tbody>
+  ${list.slice(0, 50).map(s => `<tr><td><b>${esc(s.name)}</b><br><span class="small muted">${esc(s.guardian)}</span></td><td>${s.cls}</td><td class="num">${rs(FEE[s.cls] + (s.fee === 'Overdue' ? 300 : 0))}${s.fee === 'Overdue' ? '<br><span class="small dn">incl. Rs 300 late fee</span>' : ''}</td><td>${pill(s.fee)}</td><td class="num">${s.fee === 'Paid' ? `<button class="btn ghost sm" data-v="${s.id}">Receipt</button>` : `<button class="btn sm" data-pay="${s.id}">Collect</button>`}</td></tr>`).join('')}
+  </tbody></table></div></div>`;
+  v.querySelectorAll('[data-ff]').forEach(b => b.onclick = () => { feeFilter = b.dataset.ff; PAGES.fees(v); });
+  $('#fq').oninput = e => { feeQ = e.target.value; const p = e.target.selectionStart; PAGES.fees(v); $('#fq').focus(); $('#fq').setSelectionRange(p, p); };
+  v.querySelectorAll('[data-pay]').forEach(b => b.onclick = () => collect(students.find(s => s.id === b.dataset.pay), v));
+  v.querySelectorAll('[data-v]').forEach(b => b.onclick = () => voucher(students.find(s => s.id === b.dataset.v), true));
+  $('#remind').onclick = () => { const d = students.filter(s => s.fee !== 'Paid'); modal(`<h3>Send fee reminders</h3><p class="muted small">${d.length} parents will receive this message on WhatsApp, each with their own amount and payment link.</p>${waBox(d[0] ? d[0].guardian : 'Parent', `Assalam o Alaikum ${(d[0] ? d[0].guardian : '').split(' ')[0]} sahab,\n${d[0] ? d[0].name : ''} (${d[0] ? d[0].cls : ''}) ki October fee ${d[0] ? rs(FEE[d[0].cls]) : ''} abhi baqi hai.\nAakhri tareekh: 20 October.\nJazzCash / Easypaisa / bank se ghar baithe pay karein: [payment link]\n— Al-Noor Model School`)}<div class="row" style="margin-top:14px"><button class="btn wa" id="sendR">Send to ${d.length} parents</button><button class="btn ghost" onclick="closeModal()">Cancel</button></div>`); $('#sendR').onclick = () => { closeModal(); toast(`${d.length} reminders sent on WhatsApp`); }; };
+  $('#genV').onclick = () => toast(`${students.length} November vouchers generated · sent to parents' app and WhatsApp`);
+};
+function collect(s, v) {
+  modal(`<h3>Collect fee · ${esc(s.name)}</h3><div class="form">
+  <div class="f2"><div><label>Amount</label><input class="inp" value="${FEE[s.cls] + (s.fee === 'Overdue' ? 300 : 0)}" inputmode="numeric" id="amt"></div><div><label>Method</label><select class="inp" id="mth"><option>Cash</option><option>JazzCash</option><option>Easypaisa</option><option>Bank transfer</option><option>Debit / credit card</option></select></div></div>
+  <div class="row"><button class="btn ok" id="paid">Mark as paid</button><button class="btn ghost" onclick="closeModal()">Cancel</button></div></div>`);
+  $('#paid').onclick = () => { const m = $('#mth').value, a = +$('#amt').value || FEE[s.cls]; s.fee = 'Paid'; closeModal(); toast(`${rs(a)} received by ${m} · receipt sent to ${s.guardian.split(' ')[0]} on WhatsApp`); if (v) PAGES.fees(v); };
+}
+function voucher(s, paid) {
+  modal(`<div class="rc"><div class="row"><div><h4>${SCHOOL}</h4><span class="small muted">Fee ${paid ? 'receipt' : 'voucher'} · October 2026</span></div><span class="sp"></span>${pill(paid ? 'Paid' : s.fee)}</div>
+  <table class="tbl" style="margin-top:12px"><tr><td>Student</td><td class="num"><b>${esc(s.name)}</b></td></tr><tr><td>Class</td><td class="num">${s.cls}</td></tr><tr><td>Tuition fee</td><td class="num">${rs(FEE[s.cls])}</td></tr><tr><td><b>Total</b></td><td class="num"><b>${rs(FEE[s.cls])}</b></td></tr></table>
+  <p class="small muted">Pay by 20 October via JazzCash, Easypaisa, bank or at the school office.</p></div>
+  <div class="row noprint" style="margin-top:12px"><button class="btn ghost" onclick="window.print()">🖨️ Print</button><button class="btn ghost" onclick="closeModal()">Close</button></div>`);
+}
+
+let exClass = 'Class 8';
+PAGES.exams = v => {
+  const list = students.filter(s => s.cls === exClass);
+  const tot = s => s.marks.reduce((a, b) => a + (+b || 0), 0);
+  const ranked = [...list].sort((a, b) => tot(b) - tot(a));
+  v.innerHTML = head(role === 'teacher' ? 'Marks entry' : 'Exams & results', 'Mid-term 2026 · enter marks once, and grades, percentages, positions and report cards are calculated automatically', '<button class="btn" id="pub">📤 Publish results to parents</button>') + `
+  <div class="card"><div class="toolbar"><select class="inp" id="ec">${CLASSES.slice(2).map(c => `<option ${c === exClass ? 'selected' : ''}>${c}</option>`).join('')}</select><span class="small muted">Each subject out of 100 · tap a number to edit</span></div>
+  <div class="tw"><table class="tbl"><thead><tr><th>Student</th>${SUBJ.map(x => `<th class="num">${x}</th>`).join('')}<th class="num">Total</th><th class="num">%</th><th>Grade</th><th class="num">Position</th><th></th></tr></thead><tbody>
+  ${list.map(s => { const t = tot(s), p = Math.round(t / 6); return `<tr><td><b>${esc(s.name)}</b></td>${s.marks.map((m, i) => `<td class="num"><input class="inp" style="width:56px;padding:5px 6px;text-align:right" inputmode="numeric" data-m="${s.id}" data-i="${i}" value="${m}"></td>`).join('')}<td class="num"><b>${t}</b>/600</td><td class="num">${p}%</td><td>${pill(grade(p))}</td><td class="num">${ranked.indexOf(s) + 1}</td><td><button class="btn ghost sm" data-rc="${s.id}">Card</button></td></tr>`; }).join('')}
+  </tbody></table></div></div>`;
+  $('#ec').onchange = e => { exClass = e.target.value; PAGES.exams(v); };
+  v.querySelectorAll('[data-m]').forEach(inp => inp.onchange = () => { const s = students.find(x => x.id === inp.dataset.m); s.marks[+inp.dataset.i] = Math.max(0, Math.min(100, +inp.value || 0)); PAGES.exams(v); toast('Saved · totals, grades and positions updated'); });
+  v.querySelectorAll('[data-rc]').forEach(b => b.onclick = () => resultCard(students.find(s => s.id === b.dataset.rc)));
+  $('#pub').onclick = () => toast(`Report cards for ${exClass} published · parents notified on app and WhatsApp`);
+};
+function resultCard(s, inline) {
+  const list = students.filter(x => x.cls === s.cls), tot = x => x.marks.reduce((a, b) => a + b, 0);
+  const pos = [...list].sort((a, b) => tot(b) - tot(a)).indexOf(s) + 1, t = tot(s), p = Math.round(t / 6);
+  const html = `<div class="rc"><div class="row"><div><h4>${SCHOOL}</h4><span class="small muted">Result card · Mid-term 2026</span></div><span class="sp"></span><div class="av">${grade(p)}</div></div>
+  <p style="margin:10px 0"><b>${esc(s.name)}</b> · ${s.cls} · Roll ${s.roll}</p>
+  <table class="tbl"><thead><tr><th>Subject</th><th class="num">Marks</th><th>Grade</th></tr></thead><tbody>${SUBJ.map((x, i) => `<tr><td>${x}</td><td class="num">${s.marks[i]}/100</td><td>${grade(s.marks[i])}</td></tr>`).join('')}
+  <tr><td><b>Total</b></td><td class="num"><b>${t}/600</b></td><td><b>${p}%</b></td></tr></tbody></table>
+  <div class="row" style="margin-top:10px"><span class="pill p-info">Position ${pos} of ${list.length}</span><span class="pill p-ok">Attendance ${s.att}%</span></div>
+  <p class="small muted" style="margin-top:10px">Teacher's remarks: ${p >= 80 ? 'Excellent work. Keep it up!' : p >= 60 ? 'Good effort. Focus more on weaker subjects.' : 'Needs regular practice at home. Let\'s meet at the PTM.'}</p></div>`;
+  if (inline) return html;
+  modal(html + `<div class="row noprint" style="margin-top:12px"><button class="btn ghost" onclick="window.print()">🖨️ Print / save PDF</button><button class="btn ghost" onclick="closeModal()">Close</button></div>`);
+}
+
+let ttClass = 'Class 8';
+PAGES.timetable = v => {
+  const row = TT[ttClass];
+  const busy = p => Object.values(TT).map(r => r[p]).filter(x => x !== 'BREAK').map(x => x.split('·')[1]);
+  const subFor = p => TEACHERS.map(t => t.name).find(n => !busy(p).includes(n) && n !== absentTeacher) || 'Ms. Hina Javed';
+  v.innerHTML = head('Timetable', 'Clash-free timetable · mark a teacher absent and the system suggests a free substitute') + `
+  <div class="card"><div class="toolbar"><select class="inp" id="tc">${Object.keys(TT).map(c => `<option ${c === ttClass ? 'selected' : ''}>${c}</option>`).join('')}</select>
+  <span class="sp"></span><label class="small muted" for="abs">Teacher absent today:</label><select class="inp" id="abs"><option value="">None</option>${TEACHERS.map(t => `<option ${t.name === absentTeacher ? 'selected' : ''}>${t.name}</option>`).join('')}</select></div>
+  <div class="tw"><table class="tt"><tr>${PERIODS.map(p => `<th>${p}</th>`).join('')}</tr><tr>${row.map((c, i) => { if (c === 'BREAK') return '<td class="brk">Break</td>'; const [sub, t] = c.split('·'); if (t === absentTeacher) return `<td class="sub"><b>${sub}</b><small>⚠️ ${t.split(' ').slice(-1)} absent</small><small>➜ ${subFor(i)}</small></td>`; return `<td><b>${sub}</b><small>${t}</small></td>`; }).join('')}</tr></table></div>
+  ${absentTeacher ? `<p class="small" style="margin-top:10px">✅ Substitutes assigned and notified on their app. Mark <b>${esc(absentTeacher)}</b> absent in Class 9 or 7 too by switching class.</p>` : '<p class="small muted" style="margin-top:10px">Try it: choose a teacher in "Teacher absent today".</p>'}</div>`;
+  $('#tc').onchange = e => { ttClass = e.target.value; PAGES.timetable(v); };
+  $('#abs').onchange = e => { absentTeacher = e.target.value; PAGES.timetable(v); if (absentTeacher) toast('Substitute teachers found and notified'); };
+};
+
+PAGES.staff = v => {
+  const total = TEACHERS.reduce((a, t) => a + t.salary, 0);
+  v.innerHTML = head(role === 'acc' ? 'Payroll' : 'Staff & HR', 'Staff records, leave approvals and one-click monthly payroll', '<button class="btn" id="pay">💼 Run October payroll</button>') + `
+  <div class="grid c2"><div class="card"><h3>Staff <span class="small muted">${TEACHERS.length} teachers</span></h3><div class="tw"><table class="tbl"><thead><tr><th>Name</th><th>Subject</th><th>Classes</th><th class="num">Salary</th></tr></thead><tbody>
+  ${TEACHERS.map(t => `<tr><td><b>${t.name}</b><br><span class="small muted">${t.phone}</span></td><td>${t.subject}</td><td class="small">${t.classes.join(', ')}</td><td class="num">${rs(t.salary)}</td></tr>`).join('')}
+  <tr><td colspan="3"><b>Total monthly payroll</b></td><td class="num"><b>${rs(total)}</b></td></tr></tbody></table></div></div>
+  <div class="card"><h3>Leave requests</h3>${leaves.map(l => `<div class="att"><div><b>${l.who}</b><div class="small muted">${l.type} · ${l.dates} · ${l.reason}</div></div><div class="row">${l.st === 'Pending' && role === 'admin' ? `<button class="btn ok sm" data-lv="${l.id}" data-s="Approved">Approve</button><button class="btn bad sm" data-lv="${l.id}" data-s="Rejected">Reject</button>` : pill(l.st)}</div></div>`).join('')}
+  <p class="small muted" style="margin-top:10px">Approved leave flows into attendance and payroll automatically.</p></div></div>`;
+  v.querySelectorAll('[data-lv]').forEach(b => b.onclick = () => { const l = leaves.find(x => x.id == b.dataset.lv); l.st = b.dataset.s; toast(`Leave ${l.st.toLowerCase()} · ${l.who.split(' ').slice(-1)} notified`); PAGES.staff(v); });
+  $('#pay').onclick = () => toast(`Payroll ${rs(total)} prepared · salary slips sent to ${TEACHERS.length} staff`);
+};
+
+PAGES.transport = v => {
+  v.innerHTML = head('Transport', 'Routes, buses and drivers · parents get pickup and drop-off alerts') + `
+  <div class="grid c2"><div class="card"><h3>Live routes (morning)</h3><div class="tw"><table class="tbl"><thead><tr><th>Route</th><th>Bus</th><th>Driver</th><th class="num">Students</th><th>Status</th></tr></thead><tbody>
+  ${routes.map(r => `<tr><td><b>${r.r}</b></td><td>${r.bus}</td><td>${r.drv}</td><td class="num">${students.filter(s => s.route === r.r).length}</td><td>${pill(r.st)}<br><span class="small muted">ETA ${r.eta}</span></td></tr>`).join('')}
+  </tbody></table></div><p class="small muted">With a GPS tracker in each bus, parents can see the bus live on a map.</p></div>
+  <div class="card"><h3>Parent alert</h3>${waBox('Imran Khan (parent)', 'Assalam o Alaikum! Hamza Khan school bus (Route 1 · DHA) mein sawaar ho gaye hain. 🚌\nAndazan school pohanch: 7:52 AM.\n— Al-Noor Model School')}</div></div>`;
+};
+
+PAGES.library = v => {
+  v.innerHTML = head('Library & inventory', 'Books, issues and returns, plus school assets') + `<div class="card"><div class="tw"><table class="tbl"><thead><tr><th>Book</th><th>Status</th><th>Issued to</th></tr></thead><tbody>${books.map(([b, s, w]) => `<tr><td><b>${b}</b></td><td>${pill(s)}</td><td class="small">${w || '—'}</td></tr>`).join('')}</tbody></table></div><p class="small muted">Overdue books trigger an automatic reminder to the student's parent.</p></div>`;
+};
+
+let ptmPick = '';
+PAGES.notices = v => {
+  const canSend = role !== 'parent';
+  v.innerHTML = head('Notices & PTM', 'Official notices replace messy WhatsApp groups · parents book PTM slots online') + `
+  <div class="grid c2"><div class="card"><h3>Notices</h3>${canSend ? `<form class="form" id="nf" style="margin-bottom:14px"><div class="f2"><div><label>Title</label><input class="inp" id="nt" placeholder="e.g. Holiday on Monday"></div><div><label>Send to</label><select class="inp" id="nto"><option>All parents</option>${CLASSES.map(c => `<option>${c}</option>`).join('')}<option>All staff</option></select></div></div><div><label>Message</label><textarea class="inp" id="nb" rows="2" placeholder="Write the notice"></textarea></div><div class="row"><button class="btn" type="submit">📣 Send on app + WhatsApp</button></div></form>` : ''}
+  ${notices.map(n => `<div class="att"><div><b>${esc(n.t)}</b><div class="small">${esc(n.b)}</div><div class="small muted">${esc(n.to)} · ${n.d}</div></div><span class="pill p-ok">Delivered</span></div>`).join('')}</div>
+  <div class="card"><h3>Parent-teacher meeting · 25 Oct</h3><p class="small muted" style="margin-top:-4px">${role === 'parent' ? 'Choose a time to meet Hamza\'s class teacher.' : 'Parents choose their own slot; no phone calls or clashes.'}</p>
+  <div class="row">${ptmSlots.map(s => `<button class="slot" data-slot="${s.t}" ${s.taken && s.t !== myPtm ? 'disabled' : ''} aria-pressed="${s.t === myPtm}">${s.t} AM</button>`).join('')}</div>
+  ${myPtm ? `<p class="small" style="margin-top:12px">✅ Booked: <b>${myPtm} AM, Saturday 25 October</b> with Ms. Saima Rashid. A reminder will be sent the day before.</p>` : ''}</div></div>`;
+  if ($('#nf')) $('#nf').onsubmit = e => { e.preventDefault(); const t = $('#nt').value.trim(), b = $('#nb').value.trim(); if (!t || !b) { toast('Please add a title and message'); return; } notices.unshift({ t, b, to: $('#nto').value, d: '17 Oct' }); toast(`Notice sent to ${$('#nto').value}`); PAGES.notices(v); };
+  v.querySelectorAll('[data-slot]').forEach(b => b.onclick = () => { if (role !== 'parent') { toast('Parents book slots from their login'); return; } myPtm = b.dataset.slot; ptmSlots.forEach(s => { if (s.t === myPtm) s.taken = true; }); toast('PTM slot booked · confirmation sent'); PAGES.notices(v); });
+};
+
+PAGES.reports = v => {
+  const f = feeStats();
+  const byClass = CLASSES.map(c => { const l = students.filter(s => s.cls === c); return { c, n: l.length, fee: l.filter(s => s.fee === 'Paid').length / l.length, res: Math.round(l.reduce((a, s) => a + s.marks.reduce((x, y) => x + y, 0) / 6, 0) / l.length) }; });
+  v.innerHTML = head('Reports', 'Enrolment, fee collection and results, updated in real time', '<button class="btn ghost" onclick="window.print()">🖨️ Print / PDF</button>') + `
+  <div class="grid c2e"><div class="card"><h3>Fee collection rate by class</h3>${byClass.map(x => `<div class="hbar"><span>${x.c}</span><div class="t"><i style="width:${Math.round(x.fee * 100)}%"></i></div><b>${Math.round(x.fee * 100)}%</b></div>`).join('')}</div>
+  <div class="card"><h3>Average result by class</h3>${byClass.slice(2).map(x => `<div class="hbar"><span>${x.c}</span><div class="t"><i style="width:${x.res}%;background:#16a34a"></i></div><b>${x.res}%</b></div>`).join('')}</div></div>
+  <div class="card" style="margin-top:14px"><h3>Enrolment</h3><div class="tw"><table class="tbl"><thead><tr><th>Class</th><th class="num">Students</th><th class="num">Monthly fee</th><th class="num">Expected / month</th></tr></thead><tbody>${byClass.map(x => `<tr><td>${x.c}</td><td class="num">${x.n}</td><td class="num">${rs(FEE[x.c])}</td><td class="num">${rs(FEE[x.c] * x.n)}</td></tr>`).join('')}<tr><td><b>Total</b></td><td class="num"><b>${students.length}</b></td><td></td><td class="num"><b>${rs(f.due)}</b></td></tr></tbody></table></div></div>`;
+};
+
+/* ----- Teacher home ----- */
+PAGES.tdash = v => {
+  const mine = TT['Class 8'];
+  v.innerHTML = head('Good morning, Ms. Saima', 'Class teacher · Class 8 · English for Classes 8–10') + `
+  <div class="grid k4"><div class="card kpi"><div class="l">My class</div><div class="v">${students.filter(s => s.cls === 'Class 8').length}</div><div class="s muted">students in Class 8</div></div><div class="card kpi"><div class="l">Periods today</div><div class="v">4</div></div><div class="card kpi"><div class="l">Marks pending</div><div class="v">1</div><div class="s muted">Class 9 English</div></div><div class="card kpi"><div class="l">PTM bookings</div><div class="v">${ptmSlots.filter(s => s.taken).length}</div></div></div>
+  <div class="grid c2e" style="margin-top:14px"><div class="card"><h3>Today</h3><div class="feed">
+    <div><span class="e">✅</span><span><a href="#" data-go="attendance">Mark Class 8 attendance</a> (takes about 30 seconds)</span></div>
+    <div><span class="e">📄</span><span><a href="#" data-go="exams">Enter Class 9 English marks</a></span></div>
+    <div><span class="e">📒</span><span>Homework diary sent to Class 8 parents at 2:00 PM automatically</span></div></div></div>
+  <div class="card"><h3>My periods</h3>${PERIODS.map((p, i) => mine[i] === 'BREAK' ? `<div class="att"><span class="muted">${p} · Break</span></div>` : mine[i].includes('Saima') ? `<div class="att"><b>${p} · English · Class 8</b>${pill('Now')}</div>` : '').join('')}<div class="att"><b>11:10 · English · Class 9</b></div><div class="att"><b>11:50 · English · Class 7</b></div></div></div>`;
+  v.querySelectorAll('[data-go]').forEach(a => a.onclick = e => { e.preventDefault(); go(a.dataset.go); });
+};
+
+/* ----- Parent ----- */
+PAGES.pdash = v => {
+  const s = myChild, p = Math.round(s.marks.reduce((a, b) => a + b, 0) / 6);
+  v.innerHTML = head('Assalam o Alaikum, Imran sahab', 'Everything about Hamza in one place') + `
+  <div class="card"><div class="child"><div class="av">HK</div><div><b style="font-size:17px">${esc(s.name)}</b><div class="small muted">${s.cls} · Roll ${s.roll} · Class teacher Ms. Saima Rashid</div></div></div></div>
+  <div class="grid k4" style="margin-top:14px"><div class="card kpi"><div class="l">Today</div><div class="v up">Present</div><div class="s muted">Arrived 7:52 AM by bus</div></div><div class="card kpi"><div class="l">Attendance</div><div class="v">${s.att}%</div><div class="s muted">this month</div></div><div class="card kpi"><div class="l">October fee</div><div class="v ${s.fee === 'Paid' ? 'up' : 'dn'}">${s.fee === 'Paid' ? 'Paid' : rs(FEE[s.cls])}</div><div class="s">${s.fee === 'Paid' ? 'Thank you' : '<a href="#" data-go="pfees">Pay now →</a>'}</div></div><div class="card kpi"><div class="l">Mid-term result</div><div class="v">${p}%</div><div class="s"><a href="#" data-go="presult">View card →</a></div></div></div>
+  <div class="grid c2e" style="margin-top:14px"><div class="card"><h3>Today's diary</h3>${diary.map(([a, b]) => `<div class="att"><div><b>${a}</b><div class="small">${b}</div></div></div>`).join('')}</div>
+  <div class="card"><h3>Latest notices</h3>${notices.slice(0, 2).map(n => `<div class="att"><div><b>${esc(n.t)}</b><div class="small">${esc(n.b)}</div></div></div>`).join('')}<div class="row" style="margin-top:10px"><button class="btn" data-go="notices">Book PTM slot</button><button class="btn ghost" id="msgT">💬 Message class teacher</button></div></div></div>`;
+  v.querySelectorAll('[data-go]').forEach(a => a.onclick = e => { e.preventDefault(); go(a.dataset.go); });
+  $('#msgT').onclick = () => { modal(`<h3>Message Ms. Saima Rashid</h3><form class="form" id="mt"><textarea class="inp" rows="3" placeholder="Write your message"></textarea><div class="row"><button class="btn" type="submit">Send</button><button class="btn ghost" type="button" onclick="closeModal()">Cancel</button></div></form><p class="lock" style="margin-top:10px">🔒 Private chat inside the school app. Teachers' personal numbers stay private.</p>`); $('#mt').onsubmit = e => { e.preventDefault(); closeModal(); toast('Message sent to class teacher'); }; };
+};
+PAGES.pfees = v => {
+  const s = myChild;
+  v.innerHTML = head('Fees', 'Pay from home and get an instant receipt') + `
+  <div class="grid c2e"><div class="card"><h3>October 2026</h3><table class="tbl"><tr><td>Tuition fee</td><td class="num">${rs(FEE[s.cls])}</td></tr><tr><td>Due date</td><td class="num">20 October</td></tr><tr><td>Status</td><td class="num">${pill(s.fee)}</td></tr></table>
+  ${s.fee === 'Paid' ? '<p class="small up" style="margin-top:12px">✅ Paid. Receipt sent on WhatsApp.</p>' : `<p class="small muted" style="margin-top:12px">Choose a payment method:</p><div class="row">${['JazzCash', 'Easypaisa', 'Bank transfer', 'Card'].map(m => `<button class="btn ghost" data-pm="${m}">${m}</button>`).join('')}</div>`}</div>
+  <div class="card"><h3>Payment history</h3><table class="tbl">${['September', 'August', 'July', 'June'].map(m => `<tr><td>${m} 2026</td><td class="num">${rs(FEE[s.cls])}</td><td>${pill('Paid')}</td></tr>`).join('')}</table></div></div>`;
+  v.querySelectorAll('[data-pm]').forEach(b => b.onclick = () => { modal(`<h3>Pay ${rs(FEE[s.cls])} by ${b.dataset.pm}</h3><p class="small muted">In the live system this opens the ${b.dataset.pm} payment screen. This demo simulates a successful payment.</p><div class="row"><button class="btn ok" id="ok">Confirm payment (demo)</button><button class="btn ghost" onclick="closeModal()">Cancel</button></div>`); $('#ok').onclick = () => { s.fee = 'Paid'; closeModal(); toast('Payment received · receipt sent · school accounts updated'); PAGES.pfees(v); }; });
+};
+PAGES.presult = v => { v.innerHTML = head('Result card', 'Mid-term 2026', '<button class="btn ghost" onclick="window.print()">🖨️ Download PDF</button>') + `<div class="card" style="max-width:640px">${resultCard(myChild, true)}</div>`; };
+PAGES.pdiary = v => { v.innerHTML = head('Diary & homework', 'Sent by teachers every day at 2:00 PM') + `<div class="card" style="max-width:640px"><h3>Friday, 17 October</h3>${diary.map(([a, b]) => `<div class="att"><div><b>${a}</b><div class="small">${b}</div></div></div>`).join('')}<h3 style="margin-top:16px">Thursday, 16 October</h3><div class="att"><div><b>Urdu</b><div class="small">Read lesson 5 and write 5 new words.</div></div></div><div class="att"><div><b>Islamiat</b><div class="small">Memorise the first Kalima with translation.</div></div></div></div>`; };
+
+login();
+</script>
+</body>
+</html>
