@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#2f3a2a">
+<title>Noor-e-Sabun | Prototype by Zynvox</title>
+<meta name="description" content="Noor-e-Sabun: natural handmade soaps from Gujranwala. Honey Oatmeal, Rose Petal and Charcoal Detox. Delivery all over Pakistan. Website prototype by Zynvox.">
+<link rel="preload" as="image" href="img/hero.webp">
+<style>
+:root{
+  --bg:#faf6ef; --card:#ffffff; --sand:#f1e9dc; --line:#e6dccb;
+  --ink:#2b2622; --ink2:#4a423b; --muted:#7a6f63;
+  --olive:#4f6146; --olive-h:#3e4d37; --olive-soft:#e7ecdf; --nav:#2f3a2a;
+  --rose:#b5525c; --gold:#b8873b;
+  --wa:#25D366; --wa-h:#1EBE5A;
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,system-ui,sans-serif;
+  --shadow:0 12px 34px rgba(60,45,30,.12);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--olive);outline-offset:2px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.wrap{max-width:1100px;margin:0 auto;padding-inline:16px}
+.proto{background:var(--sand);color:var(--muted);font-size:12px;text-align:center;padding:6px 12px}
+.offer{background:var(--olive);color:#f4f1e8;font-size:13px;text-align:center;padding:7px 12px}
+header{position:sticky;top:0;z-index:30;background:rgba(250,246,239,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hbar{display:flex;align-items:center;gap:18px;height:62px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.mark{width:38px;height:38px;border-radius:50%;background:var(--olive);color:#f4f1e8;display:grid;place-items:center;font-family:var(--serif);font-size:19px}
+.logo b{font-family:var(--serif);font-size:21px;display:block;line-height:1}
+.logo small{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+nav.main{display:flex;gap:26px;font-size:14px;flex:1;justify-content:center}
+nav.main a{text-decoration:none;color:var(--ink2)}
+nav.main a:hover{color:var(--olive)}
+.cartbtn{white-space:nowrap;margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;display:flex;gap:8px;align-items:center;font-size:14px;font-weight:600;color:var(--ink)}
+.cartbtn .n{background:var(--olive);color:#fff;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;font-size:12px;padding:0 6px}
+@media (max-width:780px){nav.main{display:none}.logo small{display:none}.logo b{font-size:19px;white-space:nowrap}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:12px 22px;border-radius:999px;border:1px solid transparent;text-decoration:none;font-size:15px;font-weight:600;transition:background .2s,transform .12s}
+.btn:active{transform:scale(.97)}
+.btn.olive{background:var(--olive);color:#fff}.btn.olive:hover{background:var(--olive-h)}
+.btn.line{border-color:var(--olive);color:var(--olive);background:transparent}
+.btn.wa{background:var(--wa);color:#fff}.btn.wa:hover{background:var(--wa-h)}
+.wa-ic{width:19px;height:19px;flex:none}
+
+.hero{padding:34px 0 24px}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:34px;align-items:center}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:22px}.hero .txt{text-align:center}.hero .ctas{justify-content:center}.hero .facts{justify-content:center}}
+.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.hero h1{font-size:clamp(36px,5.6vw,58px);line-height:1.06;margin:12px 0 14px}
+.hero h1 em{color:var(--olive);font-style:italic}
+.hero p.lead{color:var(--ink2);font-size:clamp(16px,1.9vw,18.5px);max-width:44ch;margin:0 0 22px}
+@media (max-width:860px){.hero p.lead{margin-inline:auto}}
+.ctas{display:flex;gap:10px;flex-wrap:wrap}
+.facts{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;font-size:13.5px;color:var(--ink2)}
+.facts span{display:flex;align-items:center;gap:6px}
+.heroimg{border-radius:22px;overflow:hidden;box-shadow:var(--shadow);aspect-ratio:3/2;background:var(--sand)}
+.heroimg img{width:100%;height:100%;object-fit:cover}
+
+.strip{background:#fff;border-block:1px solid var(--line)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding-block:16px}
+.strip div{text-align:center;font-size:13px;color:var(--muted)}
+.strip b{display:block;color:var(--ink);font-size:14.5px}
+@media (max-width:700px){.strip .wrap{grid-template-columns:1fr 1fr;row-gap:14px}}
+
+section{padding:46px 0}
+.sh{text-align:center;margin-bottom:24px}
+.sh h2{font-size:clamp(28px,4vw,40px)}
+.sh p{color:var(--muted);margin:8px auto 0;max-width:52ch}
+
+.finder{background:var(--olive-soft);border-radius:22px;padding:22px;text-align:center}
+.finder h3{font-size:23px}
+.finder p{color:var(--ink2);margin:6px 0 14px;font-size:15px}
+.skins{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.skin{border:1px solid #cfd8c4;background:#fff;border-radius:999px;padding:10px 18px;font-size:14.5px;font-weight:600;color:var(--ink)}
+.skin[aria-pressed="true"]{background:var(--olive);color:#fff;border-color:var(--olive)}
+.match{margin-top:14px;font-size:15px;min-height:24px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+@media (max-width:900px){.grid{grid-template-columns:1fr 1fr;gap:12px}}
+@media (max-width:520px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.card.hl{outline:3px solid var(--olive);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}}
+.ph{position:relative;aspect-ratio:4/5;background:var(--sand);border:0;padding:0;width:100%;display:block}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sale{position:absolute;top:12px;left:12px;background:var(--rose);color:#fff;font-size:12px;font-weight:700;border-radius:999px;padding:4px 10px}
+.tag{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.9);color:var(--ink);font-size:11.5px;font-weight:600;border-radius:999px;padding:4px 10px}
+.body{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.body h3{font-size:21px}
+.for{font-size:13px;color:var(--olive);font-weight:600}
+.desc{font-size:14px;color:var(--muted);margin:0}
+.price{display:flex;align-items:baseline;gap:8px;margin-top:auto;padding-top:6px}
+.price b{font-size:21px;font-variant-numeric:tabular-nums}
+.price s{color:var(--muted);font-size:14px}
+.acts{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:8px}
+.add{background:var(--olive);color:#fff;border:0;border-radius:999px;padding:11px 12px;font-weight:600;font-size:14.5px}
+.add:hover{background:var(--olive-h)}
+.view{background:transparent;border:1px solid var(--line);border-radius:999px;padding:10px 16px;font-size:14px;color:var(--ink)}
+
+.why{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center}
+@media (max-width:860px){.why{grid-template-columns:1fr}}
+.why .img{border-radius:22px;overflow:hidden;box-shadow:var(--shadow);aspect-ratio:3/2}
+.why .img img{width:100%;height:100%;object-fit:cover}
+.why h2{font-size:clamp(28px,4vw,38px);margin-bottom:12px}
+.points{display:grid;gap:12px;margin-top:14px}
+.points>div{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start}
+.points i{font-style:normal;width:38px;height:38px;border-radius:12px;background:var(--olive-soft);display:grid;place-items:center;font-size:18px}
+.points b{display:block}
+.points span{font-size:14px;color:var(--muted)}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.step{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}
+.step i{font-style:normal;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--olive);color:#fff;font-weight:700;margin-bottom:8px}
+.step b{display:block;font-size:16px}
+.step span{font-size:14px;color:var(--muted)}
+
+.faq details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--olive);font-size:20px;line-height:1}
+.faq details[open] summary:after{content:"–"}
+.faq p{margin:8px 0 0;color:var(--ink2);font-size:14.5px}
+
+.contact{background:var(--nav);color:#efeadf;border-radius:24px;padding:clamp(22px,4vw,40px);display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:center}
+@media (max-width:760px){.contact{grid-template-columns:1fr;text-align:center}.contact .ctas{justify-content:center}}
+.contact h2{font-size:clamp(26px,3.6vw,36px)}
+.contact p{color:#cfc8b9;margin:8px 0 0}
+.contact .num{font-family:var(--serif);font-size:28px;color:#fff;margin-top:10px}
+footer{padding:24px 0 96px;color:var(--muted);font-size:12.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;box-shadow:0 10px 26px rgba(0,0,0,.2)}
+
+.scrim{position:fixed;inset:0;background:rgba(43,38,34,.45);z-index:50}
+.sheet{position:fixed;z-index:60;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,100%);max-height:92%;overflow:auto;background:var(--bg);border-radius:22px 22px 0 0;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.sheet .pimg{aspect-ratio:4/3;background:var(--sand);overflow:hidden}
+.sheet .pimg img{width:100%;height:100%;object-fit:cover}
+.sheet .in{padding:18px;display:grid;gap:10px}
+.sheet h2{font-size:27px}
+.benefits{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.benefits li{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:13px}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;width:max-content;background:#fff}
+.qty button{width:40px;height:40px;border:0;background:#fff;color:var(--olive);font-size:19px}
+.qty span{min-width:34px;text-align:center;font-weight:700}
+.close{position:absolute;right:12px;top:12px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);font-size:20px;box-shadow:var(--shadow)}
+.drawer{position:fixed;z-index:60;top:0;right:0;height:100%;width:min(420px,100%);background:var(--bg);display:flex;flex-direction:column}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+.dh h2{font-size:22px}
+.dbody{flex:1;overflow:auto;padding:14px 16px;display:grid;gap:12px;align-content:start}
+.line{display:grid;grid-template-columns:62px 1fr auto;gap:10px;align-items:center}
+.line img{width:62px;height:62px;border-radius:12px;object-fit:cover}
+.line .t{font-weight:600;font-size:14.5px}
+.line .p{color:var(--muted);font-size:13px}
+.rm{border:0;background:none;color:var(--rose);font-size:12.5px;padding:0}
+.dfoot{border-top:1px solid var(--line);padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));display:grid;gap:10px}
+.tot{display:flex;justify-content:space-between;font-weight:700;font-size:17px}
+.note{font-size:12.5px;color:var(--muted)}
+form.co{display:grid;gap:8px}
+form.co label{font-size:12px;font-weight:700;color:var(--muted)}
+form.co input,form.co textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 12px;font:inherit;font-size:16px;color:var(--ink)}
+form.co input:focus,form.co textarea:focus{outline:2px solid var(--olive);border-color:transparent}
+.done{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:13px;white-space:pre-wrap}
+.empty{text-align:center;color:var(--muted);padding:30px 8px}
+</style>
+</head>
+<body>
+<div class="proto">Website prototype for Noor-e-Sabun · prepared by Zynvox</div>
+<div class="offer">🌿 Handmade in Gujranwala · Delivery all over Pakistan</div>
+
+<header><div class="wrap hbar">
+  <a class="logo" href="#top" aria-label="Noor-e-Sabun home"><span class="mark">ن</span><span><b>Noor-e-Sabun</b><small>Natural handmade soaps</small></span></a>
+  <nav class="main" aria-label="Main"><a href="#shop">Shop</a><a href="#finder">Find your soap</a><a href="#why">Why handmade</a><a href="#order">How to order</a><a href="#contact">Contact</a></nav>
+  <button class="cartbtn" id="openCart" aria-label="Open cart">🛒 Cart <span class="n" id="cartCount">0</span></button>
+</div></header>
+
+<main id="top">
+  <section class="hero"><div class="wrap">
+    <div class="txt">
+      <div class="eyebrow">100% natural · Chemical-free</div>
+      <h1>Pure, handmade soaps for <em>every skin.</em></h1>
+      <p class="lead">Made in small batches in Gujranwala with raw honey, real rose petals and activated charcoal. Gentle on your skin, delivered to your door anywhere in Pakistan.</p>
+      <div class="ctas"><a class="btn olive" href="#shop">Shop soaps</a><a class="btn wa" href="https://wa.me/923321141774?text=Assalam%20o%20Alaikum%20Noor-e-Sabun%2C%20I%20want%20to%20order%20soap." target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg><span>Order on WhatsApp</span></a></div>
+      <div class="facts"><span>🍯 Raw honey</span><span>🌹 Real rose petals</span><span>🖤 Activated charcoal</span></div>
+    </div>
+    <div class="heroimg"><img src="img/hero.webp" alt="Three handmade soap bars with lavender, rose petals and charcoal" width="1200" height="800" fetchpriority="high"></div>
+  </div></section>
+
+  <div class="strip"><div class="wrap">
+    <div><b>🌿 100% natural</b>No harsh chemicals</div>
+    <div><b>✋ Handmade</b>Small batches in Gujranwala</div>
+    <div><b>🚚 All Pakistan</b>Delivery to your city</div>
+    <div><b>💬 Easy ordering</b>Order straight on WhatsApp</div>
+  </div></div>
+
+  <section id="shop"><div class="wrap">
+    <div class="sh"><h2>Our soaps</h2><p>Three bars, three skin needs. Every bar is made by hand with natural ingredients.</p></div>
+    <div class="finder" id="finder">
+      <h3>Not sure which one? Tell us your skin.</h3>
+      <p>Choose your skin type and we'll show you the right soap.</p>
+      <div class="skins" role="group" aria-label="Choose your skin type">
+        <button class="skin" data-skin="honey" aria-pressed="false">Dry / sensitive</button>
+        <button class="skin" data-skin="charcoal" aria-pressed="false">Oily / acne</button>
+        <button class="skin" data-skin="rose" aria-pressed="false">Dull, want a glow</button>
+      </div>
+      <div class="match" id="match" aria-live="polite"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div></section>
+
+  <section id="why" style="background:#fff;border-block:1px solid var(--line)"><div class="wrap why">
+    <div class="img"><img src="img/gift.webp" alt="Handmade soaps beside gift boxes tied with twine" loading="lazy" decoding="async" width="1200" height="800"></div>
+    <div>
+      <div class="eyebrow">Why handmade</div>
+      <h2>Made slowly, the natural way.</h2>
+      <p style="color:var(--ink2);margin:0">Factory soaps are made in huge batches. Ours are made by hand in small batches, so you get real ingredients you can see in every bar.</p>
+      <div class="points">
+        <div><i>🍯</i><div><b>Real ingredients</b><span>Raw honey, oats, rose petals and activated charcoal, not just fragrance.</span></div></div>
+        <div><i>🌿</i><div><b>Chemical-free</b><span>Gentle enough for daily use, for all skin types.</span></div></div>
+        <div><i>🎁</i><div><b>Lovely to gift</b><span>A thoughtful, natural gift for friends and family.</span></div></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="order"><div class="wrap">
+    <div class="sh"><h2>How to order</h2><p>No account needed. Your order goes straight to us on WhatsApp.</p></div>
+    <div class="steps">
+      <div class="step"><i>1</i><b>Add soaps to cart</b><span>Pick your soaps and quantity.</span></div>
+      <div class="step"><i>2</i><b>Enter your details</b><span>Name, phone, city and address.</span></div>
+      <div class="step"><i>3</i><b>Send on WhatsApp</b><span>We confirm your order and delivery charges, then ship to your door.</span></div>
+    </div>
+  </div></section>
+
+  <section class="faq" style="padding-top:0"><div class="wrap" style="max-width:760px">
+    <div class="sh"><h2>Questions</h2></div>
+    <details><summary>Do you deliver to my city?</summary><p>Yes, we deliver all over Pakistan. Delivery charges and time are confirmed on WhatsApp when you order.</p></details>
+    <details><summary>How do I pay?</summary><p>Payment options are confirmed with you on WhatsApp when you place your order.</p></details>
+    <details><summary>Which soap is best for my skin?</summary><p>Honey Oatmeal for dry and sensitive skin, Charcoal Detox for oily and acne-prone skin, and Rose Petal for soft, glowing skin. Use the skin finder above.</p></details>
+    <details><summary>Can I order soaps as a gift?</summary><p>Yes. Write the gift message in the address notes and we'll include it with your order.</p></details>
+  </div></section>
+
+  <section id="contact" style="padding-top:0"><div class="wrap"><div class="contact">
+    <div><h2>Order on WhatsApp</h2><p>Questions about your skin or an order? Message us and we'll help you choose.</p><div class="num">+92 332 1141774</div><p>📍 Gujranwala · Delivery all over Pakistan</p></div>
+    <div class="ctas"><a class="btn wa" href="https://wa.me/923321141774?text=Assalam%20o%20Alaikum%20Noor-e-Sabun%2C%20I%20have%20a%20question." target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg><span>Chat on WhatsApp</span></a></div>
+  </div></div></section>
+</main>
+
+<footer><div class="wrap"><span>© Noor-e-Sabun · Gujranwala</span><span>Prototype by Zynvox · zynvox.tech</span></div></footer>
+<a class="btn wa fab" href="https://wa.me/923321141774?text=Assalam%20o%20Alaikum%20Noor-e-Sabun%2C%20I%20want%20to%20order%20soap." target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg><span>WhatsApp</span></a>
+
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sTitle" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle" hidden>
+  <div class="dh"><h2 id="dTitle">Your cart</h2><button class="close" style="position:static;box-shadow:none" id="closeCart" aria-label="Close cart">×</button></div>
+  <div class="dbody" id="dbody"></div>
+  <div class="dfoot" id="dfoot"></div>
+</aside>
+
+<script>
+const WA = '923321141774', WAI = '<svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg>';
+const products = [
+  { id: 'honey', name: 'Honey Oatmeal Soap', img: 'img/honey.webp', price: 300, was: 350, tag: 'Dry & sensitive', for: 'For dry & sensitive skin',
+    desc: 'Made with raw honey and oats. Gentle, moisturising and chemical-free.', benefits: ['100% natural', 'Raw honey & oats', 'For dry & sensitive skin', 'Chemical-free', 'Handmade in Gujranwala'] },
+  { id: 'rose', name: 'Rose Petal Soap', img: 'img/rose.webp', price: 300, was: 350, tag: 'Soft & glowing', for: 'For soft & glowing skin',
+    desc: 'With real rose petals and a lovely fragrance. A favourite for girls.', benefits: ['100% natural', 'Real rose petals', 'Soft & glowing skin', 'Lovely fragrance', 'Great as a gift'] },
+  { id: 'charcoal', name: 'Charcoal Detox Soap', img: 'img/charcoal.webp', price: 320, was: 380, tag: 'Oily & acne', for: 'For oily skin & acne',
+    desc: 'Activated charcoal deep-cleans pores and removes dirt and oil. For men and women.', benefits: ['Activated charcoal', 'Oily skin & acne', 'Removes dirt & oil', 'Deep cleaning', 'For men & women'] }
+];
+const $ = s => document.querySelector(s);
+const rs = n => 'Rs ' + n.toLocaleString('en-PK');
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem('noor_cart') || '{}') || {}; } catch (e) { cart = {}; }
+const save = () => { try { localStorage.setItem('noor_cart', JSON.stringify(cart)); } catch (e) {} };
+const off = p => Math.round((1 - p.price / p.was) * 100);
+
+$('#grid').innerHTML = products.map(p => `
+  <article class="card" id="card-${p.id}">
+    <button class="ph" data-view="${p.id}" aria-label="View ${p.name}"><img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async" width="560" height="700"><span class="sale">${off(p)}% OFF</span><span class="tag">${p.tag}</span></button>
+    <div class="body">
+      <div class="for">${p.for}</div>
+      <h3>${p.name}</h3>
+      <p class="desc">${p.desc}</p>
+      <div class="price"><b>${rs(p.price)}</b><s>${rs(p.was)}</s></div>
+      <div class="acts"><button class="add" data-add="${p.id}">Add to cart</button><button class="view" data-view="${p.id}">Details</button></div>
+    </div>
+  </article>`).join('');
+
+document.querySelectorAll('[data-skin]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-skin]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  const p = products.find(x => x.id === b.dataset.skin);
+  $('#match').innerHTML = `Best for you: <b>${p.name}</b> · ${rs(p.price)} <a href="#card-${p.id}" style="color:var(--olive);font-weight:600">See it ↓</a>`;
+  document.querySelectorAll('.card').forEach(c => c.classList.toggle('hl', c.id === 'card-' + p.id));
+});
+
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-add]'); if (a) { add(a.dataset.add, 1); const t = a.textContent; a.textContent = 'Added ✓'; setTimeout(() => a.textContent = t, 1100); }
+  const v = e.target.closest('[data-view]'); if (v) openSheet(v.dataset.view);
+});
+function add(id, q) { cart[id] = (cart[id] || 0) + q; if (cart[id] <= 0) delete cart[id]; save(); count(); if (!$('#drawer').hidden) drawCart(); }
+function count() { $('#cartCount').textContent = Object.values(cart).reduce((a, b) => a + b, 0); }
+
+let sq = 1;
+function openSheet(id) {
+  const p = products.find(x => x.id === id); sq = 1;
+  $('#sheet').innerHTML = `<div style="position:relative"><div class="pimg"><img src="${p.img}" alt="${p.name}"></div><button class="close" id="sClose" aria-label="Close">×</button></div>
+  <div class="in"><div class="for">${p.for}</div><h2 id="sTitle">${p.name}</h2>
+  <div class="price" style="margin:0"><b>${rs(p.price)}</b><s>${rs(p.was)}</s><span class="sale" style="position:static">${off(p)}% OFF</span></div>
+  <p class="desc" style="font-size:15px">${p.desc}</p>
+  <ul class="benefits">${p.benefits.map(b => `<li>✓ ${b}</li>`).join('')}</ul>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div class="qty"><button id="qm" aria-label="Decrease">−</button><span id="qv">1</span><button id="qp" aria-label="Increase">+</button></div><button class="btn olive" id="sAdd" style="flex:1">Add to cart</button></div>
+  <a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent('Assalam o Alaikum Noor-e-Sabun, I want to order ' + p.name + ' (' + rs(p.price) + '). Is it available?')}">${WAI}<span>Ask on WhatsApp</span></a></div>`;
+  show($('#sheet'));
+  $('#sClose').onclick = closeAll;
+  $('#qm').onclick = () => { sq = Math.max(1, sq - 1); $('#qv').textContent = sq; };
+  $('#qp').onclick = () => { sq++; $('#qv').textContent = sq; };
+  $('#sAdd').onclick = () => { add(p.id, sq); closeAll(); openCart(); };
+}
+function show(el) { $('#scrim').hidden = false; el.hidden = false; document.body.style.overflow = 'hidden'; }
+function closeAll() { ['#scrim', '#sheet', '#drawer'].forEach(s => $(s).hidden = true); document.body.style.overflow = ''; }
+$('#scrim').onclick = closeAll; $('#openCart').onclick = openCart; $('#closeCart').onclick = closeAll;
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+
+function openCart() { drawCart(); show($('#drawer')); }
+const keep = {};
+function drawCart() {
+  ['cName', 'cPhone', 'cCity', 'cAddr'].forEach(k => { const el = document.getElementById(k); if (el) keep[k] = el.value; });
+  const ids = Object.keys(cart);
+  if (!ids.length) { $('#dbody').innerHTML = '<p class="empty">Your cart is empty.<br>Add a soap to start your order.</p>'; $('#dfoot').innerHTML = '<button class="btn olive" id="goShop">Shop soaps</button>'; $('#goShop').onclick = () => { closeAll(); location.hash = 'shop'; }; return; }
+  let total = 0;
+  $('#dbody').innerHTML = ids.map(id => { const p = products.find(x => x.id === id), q = cart[id]; total += p.price * q;
+    return `<div class="line"><img src="${p.img}" alt=""><div><div class="t">${p.name}</div><div class="p">${rs(p.price)} × ${q}</div><button class="rm" data-rm="${id}">Remove</button></div><div class="qty"><button data-q="${id}" data-d="-1" aria-label="Decrease">−</button><span>${q}</span><button data-q="${id}" data-d="1" aria-label="Increase">+</button></div></div>`; }).join('') +
+    `<form class="co" id="co" novalidate>
+      <label for="cName">Your name</label><input id="cName" autocomplete="name">
+      <label for="cPhone">Phone / WhatsApp</label><input id="cPhone" inputmode="tel" autocomplete="tel">
+      <label for="cCity">City</label><input id="cCity" autocomplete="address-level2">
+      <label for="cAddr">Full address (and gift message, if any)</label><textarea id="cAddr" rows="2"></textarea>
+    </form><div id="coMsg"></div>`;
+  Object.entries(keep).forEach(([k, v]) => { const el = document.getElementById(k); if (el && v) el.value = v; });
+  $('#dfoot').innerHTML = `<div class="tot"><span>Subtotal</span><span>${rs(total)}</span></div><div class="note">Delivery charges and payment confirmed on WhatsApp</div><button class="btn wa" id="send">${WAI}<span>Send order on WhatsApp</span></button>`;
+  $('#dbody').querySelectorAll('[data-q]').forEach(b => b.onclick = () => add(b.dataset.q, +b.dataset.d));
+  $('#dbody').querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { delete cart[b.dataset.rm]; save(); count(); drawCart(); });
+  $('#send').onclick = () => send(total);
+}
+function send(total) {
+  const v = id => document.getElementById(id).value.trim();
+  const n = v('cName'), ph = v('cPhone'), c = v('cCity'), ad = v('cAddr');
+  if (!n || !ph || !c || !ad) { $('#coMsg').innerHTML = '<p style="color:var(--rose);font-weight:600;margin:0">Please add your name, phone, city and address.</p>'; return; }
+  const lines = Object.keys(cart).map(id => { const p = products.find(x => x.id === id); return `• ${p.name} × ${cart[id]} = ${rs(p.price * cart[id])}`; });
+  const msg = `Assalam o Alaikum Noor-e-Sabun, I would like to order:\n${lines.join('\n')}\nSubtotal: ${rs(total)}\n\nName: ${n}\nPhone: ${ph}\nCity: ${c}\nAddress: ${ad}`;
+  $('#coMsg').innerHTML = `<p style="margin:0 0 6px;font-weight:700">Your order message is ready</p><div class="done" id="msgTxt"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent(msg)}">${WAI}<span>Open WhatsApp</span></a><button class="btn line" id="copy">Copy message</button></div><p class="note" style="margin-top:6px">If WhatsApp doesn't open, copy the message and send it to +92 332 1141774.</p>`;
+  $('#msgTxt').textContent = msg;
+  $('#copy').onclick = () => { const b = $('#copy'); navigator.clipboard.writeText(msg).then(() => b.textContent = 'Copied ✓').catch(() => { const r = document.createRange(); r.selectNodeContents($('#msgTxt')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Selected, copy it'; }); };
+  $('#coMsg').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+count();
+</script>
+</body>
+</html>
