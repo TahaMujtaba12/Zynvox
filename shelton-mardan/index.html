@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1c1412">
+<title>Shelton Restaurant Mardan | Prototype by Zynvox</title>
+<meta name="description" content="Shelton Restaurant, Mardan: Pakistani, Chinese and BBQ. Full menu, table booking, catering and Shelton's Memories marquee. Website prototype by Zynvox.">
+<style>
+:root{
+  --bg:#fbf7f2; --card:#fff; --sand:#f3ebe0; --line:#eadfce;
+  --ink:#231a16; --ink2:#4b3f38; --muted:#7c6e64;
+  --red:#a3201f; --red-h:#861a19; --red-soft:#f8e7e3; --gold:#c08a2e;
+  --dark:#1c1412; --dark2:#2a1f1b;
+  --wa:#25D366; --wa-h:#1EBE5A;
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,system-ui,sans-serif;
+  --shadow:0 12px 30px rgba(40,20,10,.14);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+h1,h2,h3{font-family:var(--serif);margin:0;letter-spacing:-.01em;text-wrap:balance}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px}
+.proto{background:var(--sand);color:var(--muted);font-size:12px;text-align:center;padding:6px 12px}
+header{position:sticky;top:0;z-index:30;background:var(--dark);color:#f6efe6}
+.hbar{display:flex;align-items:center;gap:18px;height:60px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.mark{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:17px}
+.logo b{font-family:var(--serif);font-size:20px;display:block;line-height:1;letter-spacing:.02em}
+.logo small{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#bfae9c}
+nav.main{display:flex;gap:24px;font-size:14px;flex:1;justify-content:center}
+nav.main a{text-decoration:none;color:#e6dacb}
+nav.main a:hover{color:#fff}
+.orderbtn{margin-left:auto;white-space:nowrap;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;display:flex;gap:8px;align-items:center}
+.orderbtn .n{background:var(--red);border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;font-size:12px;padding:0 6px}
+@media (max-width:860px){nav.main{display:none}}
+@media (max-width:420px){.logo small{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:12px 22px;border-radius:999px;border:1px solid transparent;text-decoration:none;font-size:15px;font-weight:600;transition:background .2s,transform .12s}
+.btn:active{transform:scale(.97)}
+.btn.red{background:var(--red);color:#fff}.btn.red:hover{background:var(--red-h)}
+.btn.line{border-color:rgba(255,255,255,.4);color:#fff;background:transparent}
+.btn.line.dk{border-color:var(--red);color:var(--red)}
+.btn.wa{background:var(--wa);color:#fff}.btn.wa:hover{background:var(--wa-h)}
+.wa-ic{width:19px;height:19px;flex:none}
+
+.hero{background:linear-gradient(180deg,var(--dark) 0%,var(--dark2) 100%);color:#f6efe6;padding:40px 0 46px}
+.hero .wrap{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:26px}.hero .txt{text-align:center}.hero .ctas,.hero .meta{justify-content:center}}
+.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.hero h1{font-size:clamp(38px,5.8vw,60px);line-height:1.05;margin:12px 0 14px}
+.hero h1 em{color:#f2c46d;font-style:italic}
+.hero p.lead{color:#d9ccbd;font-size:clamp(16px,1.9vw,18px);max-width:44ch;margin:0 0 22px}
+@media (max-width:860px){.hero p.lead{margin-inline:auto}}
+.ctas{display:flex;gap:10px;flex-wrap:wrap}
+.meta{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px;font-size:13.5px;color:#d9ccbd}
+.front{border-radius:20px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.4);aspect-ratio:876/620;background:#3a2b25}.front img{width:100%;height:100%;object-fit:cover}
+.collage{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:520px;justify-self:center;width:100%}
+.collage figure{margin:0;border-radius:14px;overflow:hidden;aspect-ratio:232/302;background:#3a2b25;box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.collage figure:nth-child(2){transform:translateY(-14px)}
+.collage figure:nth-child(5){transform:translateY(-14px)}
+.collage img{width:100%;height:100%;object-fit:cover}
+
+.strip{background:#fff;border-bottom:1px solid var(--line)}
+.strip .wrap{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding-block:16px}
+.strip div{text-align:center;font-size:12.5px;color:var(--muted)}
+.strip b{display:block;color:var(--ink);font-size:14px}
+@media (max-width:760px){.strip .wrap{grid-template-columns:1fr 1fr;row-gap:14px}.strip div:last-child{grid-column:1/-1}}
+
+section{padding:46px 0}
+.sh{text-align:center;margin-bottom:22px}
+.sh h2{font-size:clamp(28px,4vw,40px)}
+.sh p{color:var(--muted);margin:8px auto 0;max-width:56ch}
+
+.sig{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media (max-width:900px){.sig{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:600px){.sig{grid-template-columns:1fr 1fr;gap:10px}}
+.dish{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.dish .ph{aspect-ratio:232/302;max-height:300px;overflow:hidden;background:var(--sand)}
+.dish .ph img{width:100%;height:100%;object-fit:cover}
+.dish .b{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.dish h3{font-size:18px}
+.dish p{margin:0;font-size:13px;color:var(--muted)}
+.dish .row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px;gap:6px}
+.pr{font-weight:700;font-size:15px}
+.pr.ask{font-weight:600;color:var(--muted);font-size:13px}
+.add{background:var(--red);color:#fff;border:0;border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:600;white-space:nowrap}
+.add:hover{background:var(--red-h)}
+
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.gal figure{margin:0;border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:var(--sand)}.gal img{width:100%;height:100%;object-fit:cover}@media (max-width:700px){.gal{grid-template-columns:1fr 1fr;gap:8px}}
+.menuwrap{background:#fff;border-block:1px solid var(--line)}
+.mtools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.search{flex:1;min-width:200px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;font:inherit;font-size:15px;background:var(--bg)}
+.cats{display:flex;flex-wrap:wrap;gap:8px;padding:2px 2px 8px;margin-bottom:6px}
+@media (max-width:700px){.catwrap{position:relative}.cats{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-right:40px}.catwrap:after{content:"›";position:absolute;right:0;top:0;bottom:8px;width:44px;display:flex;align-items:center;justify-content:flex-end;padding-right:4px;font-size:24px;color:var(--red);background:linear-gradient(90deg,rgba(255,255,255,0),#fff 60%);pointer-events:none}}
+.cats::-webkit-scrollbar{display:none}
+.cat{flex:none;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:600}
+.cat[aria-pressed="true"]{background:var(--red);color:#fff;border-color:var(--red)}
+.mgroup{margin-top:18px}
+.mgroup h3{font-size:22px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:2px solid var(--red-soft);padding-bottom:6px;margin-bottom:4px}
+.mgroup h3 small{font-family:var(--sans);font-size:12px;color:var(--muted);font-weight:500}
+.items{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
+@media (max-width:760px){.items{grid-template-columns:1fr}}
+.it{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}
+.it .nm{font-weight:600;font-size:15px}
+.it .ur{display:block;font-size:13px;color:var(--muted);direction:rtl;text-align:left;unicode-bidi:plaintext}
+.it .q{font-size:12px;color:var(--muted);font-weight:500}
+.plus{width:34px;height:34px;border-radius:50%;border:1px solid var(--red);background:#fff;color:var(--red);font-size:18px;line-height:1;display:grid;place-items:center}
+.plus.on{background:var(--red);color:#fff}
+.mnote{font-size:13px;color:var(--muted);margin-top:16px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px}
+.panel h2{font-size:26px;margin-bottom:6px}
+.panel p.s{color:var(--muted);margin:0 0 14px;font-size:14.5px}
+.panel.dark{background:var(--dark);color:#f6efe6;border-color:var(--dark)}
+.panel.dark p.s{color:#cdbfae}
+form.f{display:grid;gap:10px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:460px){.f2{grid-template-columns:1fr}}
+form.f label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px}
+.panel.dark form.f label{color:#cdbfae}
+form.f input,form.f select,form.f textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 12px;font:inherit;font-size:16px;color:var(--ink)}
+form.f input:focus,form.f select:focus,form.f textarea:focus{outline:2px solid var(--red);border-color:transparent}
+.err{color:#e15b5b;font-size:13px;min-height:18px;font-weight:600}
+
+.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:860px){.revs{grid-template-columns:1fr}}
+.rev{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;font-family:var(--serif);font-size:18px;line-height:1.4}
+.rev cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:var(--muted);margin-top:10px}
+
+.visit{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
+@media (max-width:860px){.visit{grid-template-columns:1fr}}
+.hours{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:15px;margin:10px 0 14px}
+.phone{font-family:var(--serif);font-size:30px;text-decoration:none;display:inline-block;margin:6px 0 10px}
+.feat{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.feat span{background:var(--red-soft);color:var(--red);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:600}
+footer{background:var(--dark);color:#a99a8b;font-size:12.5px;padding:22px 0 96px}
+footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+
+.scrim{position:fixed;inset:0;background:rgba(28,20,18,.5);z-index:50}
+.drawer{position:fixed;z-index:60;top:0;right:0;height:100%;width:min(430px,100%);background:var(--bg);display:flex;flex-direction:column}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+.dh h2{font-size:22px}
+.x{width:38px;height:38px;border-radius:50%;border:0;background:#fff;font-size:20px}
+.dbody{flex:1;overflow:auto;padding:14px 16px;display:grid;gap:10px;align-content:start}
+.line{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.line .t{font-weight:600;font-size:14.5px}
+.line .p{color:var(--muted);font-size:13px}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
+.qty button{width:34px;height:34px;border:0;background:#fff;color:var(--red);font-size:18px}
+.qty span{min-width:28px;text-align:center;font-weight:700}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 6px;font-size:13.5px;font-weight:600;color:var(--ink)}
+.seg button[aria-pressed="true"]{border:2px solid var(--red);color:var(--red);padding:8px 5px}
+.dfoot{border-top:1px solid var(--line);padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));display:grid;gap:8px}
+.tot{display:flex;justify-content:space-between;font-weight:700;font-size:17px}
+.note{font-size:12.5px;color:var(--muted)}
+.done{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:13px;white-space:pre-wrap}
+.empty{text-align:center;color:var(--muted);padding:30px 8px}
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:var(--dark);color:#fff;padding:9px 16px;border-radius:12px;font-size:13.5px;z-index:70;box-shadow:var(--shadow)}
+</style>
+</head>
+<body>
+<div class="proto">Website prototype for Shelton Restaurant Mardan · prepared by Zynvox</div>
+
+<header><div class="wrap hbar">
+  <a class="logo" href="#top" aria-label="Shelton Restaurant home"><span class="mark">S</span><span><b>SHELTON</b><small>Restaurant · Mardan</small></span></a>
+  <nav class="main" aria-label="Main"><a href="#signature">Signature dishes</a><a href="#ambience">Ambience</a><a href="#menu">Menu</a><a href="#book">Book a table</a><a href="#events">Marquee &amp; catering</a><a href="#visit">Visit</a></nav>
+  <button class="orderbtn" id="openOrder" aria-label="Open my order">🧾 My order <span class="n" id="cnt">0</span></button>
+</div></header>
+
+<main id="top">
+  <section class="hero"><div class="wrap">
+    <div class="txt">
+      <div class="eyebrow">Pakistani · Chinese · BBQ · Platters</div>
+      <h1>Mardan's favourite <em>family dining.</em></h1>
+      <p class="lead">From the famous Shelton Special Rice and Soup to sizzling BBQ platters, handis and fresh fish. Dine in with family, take away, or book the hall for your next event.</p>
+      <div class="ctas"><a class="btn red" href="#menu">View full menu</a><a class="btn line" href="#book">Book a table</a></div>
+      <div class="meta"><span>🕚 Open daily 11 AM – 12 AM</span><span>📍 Nowshera Road, Erum Colony</span></div>
+    </div>
+    <div class="front"><img src="img/front.webp" alt="Shelton Restaurant building on Nowshera Road, Mardan" width="876" height="620" fetchpriority="high"></div>
+  </div></section>
+
+  <div class="strip"><div class="wrap">
+    <div><b>🍽️ Dine-in</b>Family seating</div>
+    <div><b>🥡 Takeaway</b>&amp; delivery</div>
+    <div><b>📅 Reservations</b>Book ahead</div>
+    <div><b>🎉 Catering</b>Events &amp; parties</div>
+    <div><b>⭐ 830+ reviews</b>on Google</div>
+  </div></div>
+
+  <section id="signature"><div class="wrap">
+    <div class="sh"><h2>Signature dishes</h2><p>The dishes our guests come back for. Tap <b>Add</b> to build your order.</p></div>
+    <div class="sig" id="sig"></div>
+  </div></section>
+
+  <section id="ambience" style="padding-top:0"><div class="wrap">
+    <div class="sh"><h2>Dine in comfort</h2><p>Family halls, private seating for groups and a dessert counter, all under one roof.</p></div>
+    <div class="gal">
+      <figure><img src="img/amb1.webp" alt="Dining hall with long family table" loading="lazy" decoding="async" width="608" height="456"></figure>
+      <figure><img src="img/amb3.webp" alt="Modern dining hall" loading="lazy" decoding="async" width="411" height="548"></figure>
+      <figure><img src="img/amb2.webp" alt="Lounge seating" loading="lazy" decoding="async" width="693" height="391"></figure>
+      <figure><img src="img/amb4.webp" alt="Dining room with teal chairs" loading="lazy" decoding="async" width="522" height="391"></figure>
+      <figure><img src="img/amb5.webp" alt="Family dining hall" loading="lazy" decoding="async" width="608" height="456"></figure>
+      <figure><img src="img/amb6.webp" alt="Dessert and cake counter" loading="lazy" decoding="async" width="696" height="392"></figure>
+    </div>
+  </div></section>
+
+  <section id="menu" class="menuwrap"><div class="wrap">
+    <div class="sh"><h2>Full menu</h2><p>Soups, rice, Chinese, BBQ, handis, mutton, seafood and more. Serving time 20–25 minutes.</p></div>
+    <div class="mtools"><input class="search" id="q" type="search" placeholder="Search the menu, e.g. handi, fish, rice" aria-label="Search the menu"></div>
+    <div class="catwrap"><div class="cats" id="cats" role="group" aria-label="Menu categories"></div></div>
+    <div id="mlist"></div>
+    <p class="mnote">Prices shown are from Shelton's menu cards. Items marked "Ask price" are confirmed by the restaurant. Prices may change.</p>
+  </div></section>
+
+  <section id="book"><div class="wrap two">
+    <div class="panel">
+      <h2>Book a table</h2>
+      <p class="s">Family dinner, office lunch or a birthday? Reserve your table in a minute.</p>
+      <form class="f" id="bookF" novalidate>
+        <div class="f2"><div><label for="bN">Name</label><input id="bN" autocomplete="name"></div><div><label for="bP">Phone</label><input id="bP" inputmode="tel" autocomplete="tel"></div></div>
+        <div class="f2"><div><label for="bD">Date</label><input id="bD" type="date"></div><div><label for="bT">Time</label><input id="bT" type="time" value="20:00"></div></div>
+        <div class="f2"><div><label for="bG">Guests</label><select id="bG"><option>2</option><option>3–4</option><option selected>5–8</option><option>9–15</option><option>16+</option></select></div><div><label for="bO">Occasion</label><select id="bO"><option>Family dinner</option><option>Birthday</option><option>Office / business</option><option>Iftar / buffet</option><option>Other</option></select></div></div>
+        <div class="err" id="bErr"></div>
+        <button class="btn wa" type="submit"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg><span>Send booking request</span></button>
+      </form>
+    </div>
+    <div class="panel dark" id="events">
+      <h2>Shelton's Memories marquee &amp; catering</h2>
+      <p class="s">Weddings, walimas, mehndis, birthdays and corporate events. Tell us your date and guest count for a quote.</p>
+      <form class="f" id="evF" novalidate>
+        <div class="f2"><div><label for="eN">Name</label><input id="eN" autocomplete="name"></div><div><label for="eP">Phone</label><input id="eP" inputmode="tel" autocomplete="tel"></div></div>
+        <div class="f2"><div><label for="eT">Event</label><select id="eT"><option>Wedding / Barat</option><option>Walima</option><option>Mehndi</option><option>Birthday</option><option>Corporate event</option><option>Outdoor catering</option></select></div><div><label for="eD">Date</label><input id="eD" type="date"></div></div>
+        <div><label for="eG">Number of guests</label><select id="eG"><option>Up to 100</option><option>100–250</option><option>250–500</option><option>500+</option></select></div>
+        <div class="err" id="eErr"></div>
+        <button class="btn wa" type="submit"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg><span>Get a quote</span></button>
+      </form>
+    </div>
+  </div></section>
+
+  <section style="padding-top:0"><div class="wrap">
+    <div class="sh"><h2>What guests say</h2><p>From Shelton's Google reviews.</p></div>
+    <div class="revs">
+      <div class="rev">“The Shelton Special Rice and Shelton Special Soup are must-try items and definitely worth it.”<cite>GOOGLE REVIEW</cite></div>
+      <div class="rev">“Best food are platter, chicken handi and much more.”<cite>GOOGLE REVIEW</cite></div>
+      <div class="rev">“A good taste of food, good quality, best quantity, with amazing taste of ice cream.”<cite>GOOGLE REVIEW</cite></div>
+    </div>
+  </div></section>
+
+  <section id="visit" style="padding-top:0"><div class="wrap visit" style="grid-template-columns:1fr;max-width:760px">
+    <div class="panel">
+      <h2>Visit us</h2>
+      <p class="s">Erum (Irum) Colony, Nowshera Road, near the Daewoo terminal, Mardan</p>
+      <div class="hours"><span>Every day</span><b>11:00 AM – 12:00 AM</b></div>
+      <a class="phone" href="tel:+92937874358">0937-874358</a>
+      <div class="ctas"><a class="btn red" href="tel:+92937874358">📞 Call now</a><a class="btn line dk" href="https://www.google.com/maps/search/?api=1&query=Shelton%20Restaurant%20Mardan&query_place_id=ChIJW12iEDLK3jgRsOqs-G4KRRg" target="_blank" rel="noopener">Directions</a></div>
+      <div class="feat"><span>Family friendly</span><span>Good for groups</span><span>Parking</span><span>Wheelchair accessible</span><span>Catering</span></div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="wrap"><span>© Shelton Restaurant Mardan · a TM Group restaurant</span><span>Prototype by Zynvox · zynvox.tech</span></div></footer>
+<a class="btn wa fab" id="fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg><span>WhatsApp</span></a>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dT" hidden>
+  <div class="dh"><h2 id="dT">My order</h2><button class="x" id="closeD" aria-label="Close">×</button></div>
+  <div class="dbody" id="dbody"></div>
+  <div class="dfoot" id="dfoot"></div>
+</aside>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* WhatsApp number used for orders and bookings (TM Group mobile from the group website). Replace with the restaurant's own WhatsApp number. */
+const WA = '923366111169', WAI = '<svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg>';
+const wa = t => 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t);
+document.getElementById('fab').href = wa('Assalam o Alaikum Shelton Restaurant Mardan, I have a question.');
+
+const SIG = [
+  ['Shahi Platter', 'img/platter.webp', 'Kabuli pulao with malai boti, seekh kabab, bater, fried champ and fish.'],
+  ['BBQ Platter', 'img/bbq.webp', 'Malai boti, chicken boti, seekh kabab and tikka over rice.'],
+  ['Hot & Sour Soup', 'img/soup.webp', 'Our classic, spicy and tangy. Perfect to start.'],
+  ['Chicken Biryani', 'img/biryani.webp', 'Fragrant rice with tender chicken.'],
+  ['Special Fried Fish', 'img/fish.webp', 'Crispy fried fish served with salad and lemon.'],
+  ['Malai Boti', 'img/malai.webp', 'Creamy, soft chicken boti from the grill.'],
+  ['Russian Salad', 'img/salad.webp', 'Creamy salad with fruit and vegetables.'],
+  ['Fresh Drinks', 'img/drink.webp', 'Fresh juices, lassi and 7up with fresh lime.']
+];
+// [name, urdu, price or null, note]
+const MENU = [
+  ['Platters', [["Shelton's Special Platter",'شیلٹن سپیشل پلیٹر',7950,'Kabuli pulao, malai boti 6, seekh kabab 6, bater 6, fried champ 6, fish 6, special handi, daal mash, cold drink 1.5 L, naan basket, raita / salad'],['Turkish Platter (Half)','ترکش پلیٹر ہاف',2800,'Pulao / rice, green boti, Turkish special boti, Turkish anda kabab, reshmi kabab, special fish, hummus / Russian salad, naan'],['Turkish Platter (Full)','ترکش پلیٹر فل',5000,'Full: green boti 8, Turkish special boti 8, anda kabab 4, reshmi kabab 4, special fish 1, naan 2'],['Afghani Platter (Half)','افغانی پلیٹر ہاف',2800,'Kabuli pulao, Afghani boti, malai boti, special Afghani kabab, reshmi kabab, finger fish, bater'],['Afghani Platter (Full)','افغانی پلیٹر فل',5000,'Full: Afghani boti 8, malai boti 8, special Afghani kabab 4, reshmi kabab 4, finger fish 4, bater 4'],['Shahi Platter','شاہی پلیٹر']]],
+  ['Soups', [['Shelton Special Soup','شیلٹن سپیشل سوپ'],['Shelton Special Ch-Veg Soup','شیلٹن سپیشل چکن ویجیٹیبل سوپ'],['Special Sea Food Soup','سپیشل سی فوڈ سوپ'],['Fish Soup','فش سوپ',null,'White / red sauce'],['Ch-Veg Special Soup','چکن ویجیٹیبل سوپ'],['Hot & Sour Soup','ہاٹ اینڈ ساور سوپ'],['Chicken Corn Soup','چکن کارن سوپ'],['Chicken Almond Special Soup','چکن آلمنڈ سپیشل سوپ'],['Prawn Almond Special Soup','پران آلمنڈ سپیشل سوپ'],['Chicken Thai Soup','چکن تھائی سوپ'],['Chicken Vegetable Soup','چکن ویجیٹیبل سوپ'],['Chicken Noodle Soup','چکن نوڈلز سوپ']]],
+  ['Rice', [['Shelton Special Rice','شیلٹن سپیشل رائس'],['Chicken Fried Rice','چکن فرائیڈ رائس'],['Egg Fried Rice','ایگ فرائیڈ رائس'],['Chicken Vegetable Rice','چکن ویجیٹیبل رائس'],['Vegetable Fried Rice','ویجیٹیبل فرائیڈ رائس'],['Chicken Tomato Rice','چکن ٹماٹو رائس'],['Beef Tomato Rice','بیف ٹماٹو رائس'],['Chicken C.C Rice','چکن سی سی رائس'],['Beef C.C Rice','بیف سی سی رائس'],['Chicken Masala Rice','چکن مصالحہ رائس'],['Beef Masala Rice','بیف مصالحہ رائس'],['Chicken Chilli Rice','چکن چلی رائس'],['Beef Chilli Rice','بیف چلی رائس']]],
+  ['Chinese', [['Shelton Special Chicken','شیلٹن سپیشل چکن'],['Chicken Manchurian','چکن منچورین'],['Chicken Garlic','چکن گارلک'],['Chicken Mushroom Garlic','چکن مشروم گارلک'],['Chicken Szechuan','چکن سیچوان'],['Sweet & Sour Chicken','سویٹ اینڈ ساور چکن'],['Chicken with Almond','چکن ود آلمنڈ'],['Chicken with Pineapple','چکن ود پائن ایپل'],['Chicken with Lime','چکن ود لائم'],['Chicken with Mix Vegetable','چکن ود مکس ویجیٹیبل'],['Chicken Chillies with Sauce','چکن چلی ود ساس'],['Chicken Chillies in Hole','چکن چلی ان ہول'],['Chicken Shashlik with Rice','چکن شاشلک ود رائس'],['Italian Chicken with Rice','اٹالین چکن ود رائس'],['Beef with Mixed Vegetable','بیف ود مکس ویجیٹیبل'],['Beef Onion & Green Chilli','بیف اونین اینڈ گرین چلی'],['American Chopsuey','امریکن چوپسی'],['Shelton Special Chopsuey','شیلٹن سپیشل چوپسی'],['Spring Fried Chicken','سپرنگ فرائیڈ چکن'],['Chicken Chilli Dry','چکن چلی ڈرائی'],['Beef Chilli Dry','بیف چلی ڈرائی'],['Finger Fried Chicken','فنگر فرائیڈ چکن'],['Dhaka Chicken','ڈھاکہ چکن'],['Chicken Adobo','چکن ادوبو'],['Chicken Chops','چکن چوپس'],['Chicken Drumstick','چکن ڈرم سٹک']]],
+  ['Chow Mein', [['Shelton Special Chow Mein','شیلٹن سپیشل چاؤمین'],['Chicken Chow Mein','چکن چاؤمین'],['Thai Chow Mein','تھائی چاؤمین'],['Beef Chow Mein','بیف چاؤمین'],['Vegetable Chow Mein','ویجیٹیبل چاؤمین']]],
+  ['Seafood', [['Finger Fish','فنگر فش'],['Dhaka Fish','ڈھاکہ فش'],['Special Fried Fish (Crispy)','سپیشل فرائیڈ فش کرسپی'],['Fish Chilli Dry','فش چلی ڈرائی'],['Fish Manchurian','فش منچورین'],['Special Fried Prawn','سپیشل فرائیڈ پران'],['Garlic Prawn','گارلک پران'],['Sher Mai Fish','شیر مائی فش']]],
+  ['BBQ', [['Mutton Seekh','مٹن سیخ',null,'1 kg'],['Malai Boti','ملائی بوٹی',null,'1 plate'],['Chicken Boti','چکن بوٹی',null,'1 plate'],['Beef Seekh Kabab','بیف سیخ کباب',null,'4 pieces'],['Chicken Seekh Kabab','چکن سیخ کباب',null,'4 pieces'],['Cheese Kabab','چیز کباب',null,'4 pieces'],['Chicken Tikka','چکن تکہ',null,'1 piece'],['Chicken Achari Tikka','چکن اچاری تکہ',null,'1 piece'],['Bater','بٹیر',null,'4 pieces'],['Fish Tikka','فش تکہ',null,'5 pieces'],['Grilled Fish (Shermai)','گرل فش شیرمائی',null,'1 kg']]],
+  ['Special Handis', [['Shelton Special Handi','شیلٹن سپیشل ہانڈی'],['Chicken Handi','چکن ہانڈی',630],['Chicken Cheese Handi','چکن چیز ہانڈی',650],['Chicken Achari Handi','چکن اچاری ہانڈی',650],['Chicken Makhani','چکن مکھنی',650],['Chicken Shahi Zeera','چکن شاہی زیرہ',650],['Mughali Handi','مغلئی ہانڈی',680],['Peanut Butter Handi','پینٹ بٹر ہانڈی'],['Mutton Handi','مٹن ہانڈی',900],['Mutton Cheese Handi','مٹن چیز ہانڈی',900],['Mutton Achari','مٹن اچاری',900]]],
+  ['Mutton & Roasts', [['Lamb Leg Roast','لیمب لیگ روسٹ',1950],['Full Bakra Roast','فل بکرا روسٹ',16000,'On demand, with rice'],['Special Steam Foil Mutton','سپیشل سٹیم فوائل مٹن',1200],['Mutton Jalfrezi','مٹن جلفریزی',650],['Mutton Ginger','مٹن جنجر',650],['Mutton Qorma','مٹن قورمہ',550,'Single serving'],['Mutton Masala','مٹن مصالحہ',550,'Single serving'],['Mutton Hara Masala','مٹن ہرا مصالحہ',550],['Brain Masala','برین مصالحہ',500],['Special Fried Mutton','سپیشل فرائیڈ مٹن',1180]]],
+  ['Vegetable & Daal', [['Palak Paneer','پالک پنیر',290],['Peas Paneer','پیس پنیر',290],['Shahi Daal','شاہی دال',300],['Daal Mash','دال ماش',270],['Mix Vegetable','مکس ویجیٹیبل',270],['Daal Makhani','دال مکھنی',300]]],
+  ['Biryani & Pulao', [['Chicken Biryani','چکن بریانی'],['Mutton Biryani','مٹن بریانی'],['Fish Biryani','فش بریانی'],['Vegetable Biryani','ویجیٹیبل بریانی'],['Kabuli Pulao','کابلی پلاؤ']]],
+  ['Salads', [['Mix Fruit Salad','مکس فروٹ سلاد'],['Russian Salad','رشین سلاد'],['Fresh Salad','فریش سلاد'],['Raita','رائتہ'],['Italian Salad','اٹالین سلاد'],['Kachumar Salad','کچومر سلاد']]],
+  ['Breads', [['Naan','نان'],['Naan Basket','نان باسکٹ']]],
+  ['Desserts', [['Shelton Special Ice Cream','شیلٹن سپیشل'],['Tutti Frutti','ٹوٹی فروٹی'],['Kulfa','قلفہ'],['Plain Ice Cream','پلین آئسکریم']]],
+  ['Drinks', [['Cold Drink (Can)','کولڈ ڈرنک'],['Diet Cold Drink','ڈائٹ کولڈ ڈرنک'],['Mineral Water','منرل واٹر'],['Lassi','لسی'],['7up with Fresh Lime','سیون اپ ود فریش لائم'],['Fresh Juice','فریش جوس']]]
+];
+const PRICE = {}; MENU.forEach(([, its]) => its.forEach(([n, , p]) => { if (p) PRICE[n] = p; }));
+const $ = s => document.querySelector(s);
+const rs = n => 'Rs ' + n.toLocaleString('en-PK');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let order = {};
+try { order = JSON.parse(localStorage.getItem('shelton_order') || '{}') || {}; } catch (e) { order = {}; }
+const save = () => { try { localStorage.setItem('shelton_order', JSON.stringify(order)); } catch (e) {} };
+function toast(t) { const el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => el.hidden = true, 1800); }
+
+$('#sig').innerHTML = SIG.map(([n, img, d]) => `<article class="dish"><div class="ph"><img src="${img}" alt="${esc(n)} at Shelton" loading="lazy" decoding="async" width="232" height="302"></div><div class="b"><h3>${esc(n)}</h3><p>${esc(d)}</p><div class="row">${PRICE[n] ? `<span class="pr">${rs(PRICE[n])}</span>` : '<span class="pr ask">Ask price</span>'}<button class="add" data-add="${esc(n)}">+ Add</button></div></div></article>`).join('');
+
+let cat = 'Platters', q = '';
+const cats = ['All', ...MENU.map(m => m[0])];
+$('#cats').innerHTML = cats.map(c => `<button class="cat" data-cat="${esc(c)}" aria-pressed="${c === cat}">${esc(c)}</button>`).join('');
+$('#cats').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (!b) return; cat = b.dataset.cat; $('#cats').querySelectorAll('.cat').forEach(x => x.setAttribute('aria-pressed', x === b)); renderMenu(); });
+$('#q').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); if (q && cat !== 'All') { cat = 'All'; $('#cats').querySelectorAll('.cat').forEach(x => x.setAttribute('aria-pressed', x.dataset.cat === 'All')); } renderMenu(); });
+function renderMenu() {
+  const groups = MENU.filter(([c]) => cat === 'All' || c === cat).map(([c, its]) => [c, its.filter(([n, u, , note]) => !q || (n + ' ' + (note || '')).toLowerCase().includes(q) || u.includes(q))]).filter(([, its]) => its.length);
+  $('#mlist').innerHTML = groups.length ? groups.map(([c, its]) => `<div class="mgroup"><h3>${esc(c)} <small>${its.length} items</small></h3><div class="items">${its.map(([n, u, p, note]) => `<div class="it"><div><span class="nm">${esc(n)}</span>${note ? ` <span class="q">· ${esc(note)}</span>` : ''}<span class="ur">${u}</span></div>${p ? `<span class="pr">${rs(p)}</span>` : '<span class="pr ask">Ask price</span>'}<button class="plus ${order[n] ? 'on' : ''}" data-add="${esc(n)}" aria-label="Add ${esc(n)}">${order[n] ? order[n] : '+'}</button></div>`).join('')}</div></div>`).join('') : '<p class="empty">No dishes match your search.</p>';
+}
+
+document.addEventListener('click', e => { const a = e.target.closest('[data-add]'); if (!a) return; const n = a.dataset.add; order[n] = (order[n] || 0) + 1; save(); count(); renderMenu(); toast(`${n} added to your order`); if (!$('#drawer').hidden) draw(); });
+function count() { $('#cnt').textContent = Object.values(order).reduce((a, b) => a + b, 0); }
+
+let mode = 'Takeaway';
+function show() { $('#scrim').hidden = false; $('#drawer').hidden = false; document.body.style.overflow = 'hidden'; }
+function hide() { $('#scrim').hidden = true; $('#drawer').hidden = true; document.body.style.overflow = ''; }
+$('#openOrder').onclick = () => { draw(); show(); }; $('#closeD').onclick = hide; $('#scrim').onclick = hide;
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hide(); });
+const keep = {};
+function draw() {
+  ['oN', 'oP', 'oA', 'oT'].forEach(k => { const el = document.getElementById(k); if (el) keep[k] = el.value; });
+  const ids = Object.keys(order);
+  if (!ids.length) { $('#dbody').innerHTML = '<p class="empty">Your order is empty.<br>Add dishes from the menu.</p>'; $('#dfoot').innerHTML = '<a class="btn red" href="#menu" id="goM">Browse menu</a>'; $('#goM').onclick = hide; return; }
+  let tot = 0, unknown = 0;
+  $('#dbody').innerHTML = ids.map(n => { const p = PRICE[n], qn = order[n]; if (p) tot += p * qn; else unknown++;
+    return `<div class="line"><div><div class="t">${esc(n)}</div><div class="p">${p ? rs(p) + ' × ' + qn : 'Price confirmed by restaurant'}</div></div><div class="qty"><button data-q="${esc(n)}" data-d="-1" aria-label="Decrease">−</button><span>${qn}</span><button data-q="${esc(n)}" data-d="1" aria-label="Increase">+</button></div></div>`; }).join('') +
+    `<form class="f" id="oF" novalidate style="margin-top:6px">
+      <div><label>Order type</label><div class="seg">${['Takeaway', 'Delivery', 'Dine-in'].map(m => `<button type="button" data-m="${m}" aria-pressed="${m === mode}">${m}</button>`).join('')}</div></div>
+      <div><label for="oN">Name</label><input id="oN" autocomplete="name"></div>
+      <div><label for="oP">Phone</label><input id="oP" inputmode="tel" autocomplete="tel"></div>
+      <div id="oAw" ${mode === 'Delivery' ? '' : 'hidden'}><label for="oA">Delivery address</label><textarea id="oA" rows="2"></textarea></div>
+      <div><label for="oT">${mode === 'Dine-in' ? 'Arrival time' : 'Pickup / delivery time'}</label><input id="oT" type="time" value="20:00"></div>
+    </form><div class="err" id="oErr"></div><div id="oMsg"></div>`;
+  Object.entries(keep).forEach(([k, v]) => { const el = document.getElementById(k); if (el && v) el.value = v; });
+  $('#dfoot').innerHTML = `<div class="tot"><span>Subtotal${unknown ? '*' : ''}</span><span>${rs(tot)}</span></div>${unknown ? `<div class="note">* Plus ${unknown} item${unknown > 1 ? 's' : ''} priced by the restaurant on confirmation.</div>` : ''}<button class="btn wa" id="send">${WAI}<span>Send order on WhatsApp</span></button>`;
+  $('#dbody').querySelectorAll('[data-q]').forEach(b => b.onclick = () => { const n = b.dataset.q; order[n] += +b.dataset.d; if (order[n] <= 0) delete order[n]; save(); count(); renderMenu(); draw(); });
+  $('#dbody').querySelectorAll('[data-m]').forEach(b => b.onclick = () => { mode = b.dataset.m; draw(); });
+  $('#send').onclick = () => {
+    const v = id => (document.getElementById(id) || {}).value?.trim() || '';
+    if (!v('oN') || !v('oP') || (mode === 'Delivery' && !v('oA'))) { $('#oErr').textContent = 'Please add your name and phone' + (mode === 'Delivery' ? ' and address.' : '.'); return; }
+    $('#oErr').textContent = '';
+    const lines = ids.map(n => `• ${n} × ${order[n]}${PRICE[n] ? ' = ' + rs(PRICE[n] * order[n]) : ''}`);
+    const msg = `Assalam o Alaikum Shelton Restaurant, my order (${mode}):\n${lines.join('\n')}\nSubtotal: ${rs(tot)}${unknown ? ' + items priced by restaurant' : ''}\n\nName: ${v('oN')}\nPhone: ${v('oP')}${mode === 'Delivery' ? '\nAddress: ' + v('oA') : ''}\nTime: ${v('oT')}`;
+    $('#oMsg').innerHTML = `<p style="margin:6px 0;font-weight:700">Your order message is ready</p><div class="done" id="mt"></div><div style="margin-top:8px"><a class="btn wa" target="_blank" rel="noopener" href="${wa(msg)}">${WAI}<span>Open WhatsApp</span></a></div>`;
+    $('#mt').textContent = msg; $('#oMsg').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+}
+
+const today = new Date().toISOString().slice(0, 10);
+['bD', 'eD'].forEach(id => { document.getElementById(id).min = today; });
+$('#bookF').onsubmit = e => { e.preventDefault(); const v = id => document.getElementById(id).value.trim();
+  if (!v('bN') || !v('bP') || !v('bD')) { $('#bErr').textContent = 'Please add your name, phone and date.'; return; } $('#bErr').textContent = '';
+  window.open(wa(`Assalam o Alaikum Shelton Restaurant, I would like to book a table.\nName: ${v('bN')}\nPhone: ${v('bP')}\nDate: ${v('bD')}\nTime: ${v('bT')}\nGuests: ${v('bG')}\nOccasion: ${v('bO')}`), '_blank', 'noopener'); };
+$('#evF').onsubmit = e => { e.preventDefault(); const v = id => document.getElementById(id).value.trim();
+  if (!v('eN') || !v('eP') || !v('eD')) { $('#eErr').textContent = 'Please add your name, phone and event date.'; return; } $('#eErr').textContent = '';
+  window.open(wa(`Assalam o Alaikum, I would like a quote for Shelton's Memories / catering.\nEvent: ${v('eT')}\nDate: ${v('eD')}\nGuests: ${v('eG')}\nName: ${v('eN')}\nPhone: ${v('eP')}`), '_blank', 'noopener'); };
+
+renderMenu(); count();
+</script>
+</body>
+</html>
