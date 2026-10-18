@@ -305,7 +305,7 @@ footer a{color:var(--muted)}
 
 <footer><span>© PK Real Estate · Islamabad</span><span><a href="#">Privacy Policy</a> · <a href="#">Terms</a></span><span>Prototype by Zynvox · zynvox.tech</span></footer>
 <a class="btn wa fab" href="https://wa.me/923124334000?text=Assalam%20o%20Alaikum%2C%20I%20am%20interested%20in%20a%20plot." target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg><span>WhatsApp</span></a>
-<div class="scrollhint" id="hint">Scroll to fly in</div>
+
 
 <script src="three.min.js"></script>
 <script>
@@ -521,12 +521,10 @@ sections.forEach(s => { const a = document.createElement('a'); a.href = '#' + s.
   function updateTargets() {
     const [i, t] = chapterProgress();
     const j = Math.min(i + 1, K.length - 1);
-    const k = ease(Math.max(0, (t - .55) / .45));
-    tp.lerpVectors(tmpA.set(...K[i][0]), tmpB.set(...K[j][0]), k);
-    tt.lerpVectors(tmpA.set(...K[i][1]), tmpB.set(...K[j][1]), k);
-    if (i === 1) tt.lerp(socFocus, .55 * (1 - k));
+    // camera stays fixed: no scroll-driven movement
+    tp.set(...K[0][0]); tt.set(...K[0][1]);
     document.querySelectorAll('#progress a').forEach((a, n) => a.classList.toggle('on', n === i));
-    $('#hint').style.opacity = scrollY > 40 ? 0 : 1;
+    
   }
   addEventListener('scroll', updateTargets, { passive: true });
 
@@ -600,7 +598,7 @@ sections.forEach(s => { const a = document.createElement('a'); a.href = '#' + s.
     const dt = Math.min(.05, (now - last) / 1000); last = now;
     const k = reduce ? 1 : 1 - Math.pow(.0025, dt);
     cp.lerp(tp, k); ct.lerp(tt, k);
-    const drift = reduce ? 0 : Math.sin(now / 5200) * 2.2;
+    const drift = 0;
     cam.position.set(cp.x + drift, cp.y, cp.z); cam.lookAt(ct);
     sun.target.position.set(0, 0, 0);
     renderer.render(scene, cam);
