@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#111111">
+<title>AVA Beauty Lux Lounge · WhatsApp Assistant Demo | Zynvox</title>
+<meta name="description" content="Interactive demo of a WhatsApp appointment assistant for AVA Beauty Lux Lounge, Grays. Prepared by Zynvox. Sample conversation, not connected to the salon's WhatsApp.">
+<style>
+:root{
+  --ink:#141414; --ink2:#3d3d3d; --muted:#6b6b6b; --line:#e5e1da; --bg:#f6f4f0; --card:#fff;
+  --moss:#4d6b3c; --moss-soft:#e9efe4; --gold:#a8874a;
+  --wa-head:#008069; --wa-bg:#efeae2; --wa-out:#d9fdd3; --wa-in:#ffffff; --wa-btn:#00a884; --wa:#25D366;
+  --amber:#b45309; --amber-soft:#fef3c7; --ok:#15803d; --ok-soft:#dcfce7; --bad:#b91c1c;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,system-ui,sans-serif;
+  --serif:Georgia,'Times New Roman',serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--moss);outline-offset:2px}
+.demo{background:#111;color:#d8d2c6;font-size:12px;text-align:center;padding:7px 12px}
+.demo b{color:#fff}
+.top{max-width:1180px;margin:0 auto;padding:22px 16px 6px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:46px;height:46px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-family:var(--serif);font-size:16px;letter-spacing:.08em}
+.brand h1{font-family:var(--serif);font-size:clamp(20px,3vw,26px);margin:0;font-weight:600;letter-spacing:.02em}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.by{font-size:12px;color:var(--muted)}
+.intro{max-width:1180px;margin:0 auto;padding:4px 16px 14px;color:var(--ink2);font-size:14.5px}
+.tabs{display:none;max-width:1180px;margin:0 auto;padding:0 16px 10px;gap:8px}
+.tab{flex:1;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px;font-weight:600;font-size:14px}
+.tab[aria-pressed="true"]{background:#111;color:#fff;border-color:#111}
+.stage{max-width:1180px;margin:0 auto;padding:0 16px 40px;display:grid;grid-template-columns:400px 1fr;gap:22px;align-items:start}
+@media (max-width:900px){.stage{grid-template-columns:1fr}.tabs{display:flex}.stage>.hide-m{display:none}}
+
+/* phone */
+.phone{background:#111;border-radius:38px;padding:10px;box-shadow:0 24px 60px rgba(0,0,0,.25);position:sticky;top:12px}
+@media (max-width:900px){.phone{position:static;border-radius:26px;padding:6px}}
+.screen{border-radius:30px;overflow:hidden;background:var(--wa-bg);display:flex;flex-direction:column;height:min(760px,calc(100vh - 60px));min-height:560px}
+@media (max-width:900px){.screen{border-radius:22px;height:calc(100svh - 190px);min-height:520px}}
+.wah{background:var(--wa-head);color:#fff;display:flex;align-items:center;gap:10px;padding:12px 14px}
+.wah .av{width:38px;height:38px;border-radius:50%;background:#111;display:grid;place-items:center;font-family:var(--serif);font-size:12px;letter-spacing:.06em;border:2px solid rgba(255,255,255,.3)}
+.wah b{display:block;font-size:15.5px}
+.wah span{font-size:12px;opacity:.85}
+.wah .rs{margin-left:auto;background:rgba(255,255,255,.18);border:0;color:#fff;border-radius:999px;padding:5px 10px;font-size:12px}
+.chat{flex:1;overflow-y:auto;padding:12px 10px 8px;display:flex;flex-direction:column;gap:6px;background-image:radial-gradient(rgba(0,0,0,.035) 1px,transparent 1px);background-size:14px 14px}
+.day{align-self:center;background:#fff;border-radius:8px;padding:4px 10px;font-size:11.5px;color:var(--muted);box-shadow:0 1px 1px rgba(0,0,0,.06);margin:4px 0}
+.sys{align-self:center;background:#fff7d6;color:#5b4a14;border-radius:8px;padding:6px 10px;font-size:11.5px;text-align:center;max-width:90%}
+.msg{max-width:84%;padding:7px 10px 18px;border-radius:10px;font-size:14.5px;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.08);white-space:pre-wrap;word-wrap:break-word;animation:pop .18s ease-out}
+.msg.in{background:var(--wa-in);align-self:flex-start;border-top-left-radius:2px}
+.msg.out{background:var(--wa-out);align-self:flex-end;border-top-right-radius:2px}
+.msg .sp{display:inline-block;width:44px;height:1px}.msg.out .sp{width:64px}
+.msg time{position:absolute;right:8px;bottom:3px;font-size:10.5px;color:#667781}
+.msg.out time:after{content:" ✓✓";color:#53bdeb}
+.msg b{font-weight:700}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.msg{animation:none}}
+.btns{align-self:flex-start;max-width:84%;width:84%;display:grid;gap:4px;margin-top:-2px}
+.qb{background:#fff;border:0;border-radius:10px;padding:9px 10px;color:#027eb5;font-weight:600;font-size:14px;box-shadow:0 1px 1px rgba(0,0,0,.08);text-align:center}
+.qb:hover{background:#f5f6f6}
+.qb.wa{background:#25D366;color:#fff;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px}.qb.wa:hover{background:#1EBE5A}.wa-ic{width:18px;height:18px;flex:none}
+.qb:disabled{color:#9aa4a9;cursor:default}
+.typing{align-self:flex-start;background:#fff;border-radius:10px;padding:10px 12px;box-shadow:0 1px 1px rgba(0,0,0,.08);display:flex;gap:4px}
+.typing i{width:6px;height:6px;border-radius:50%;background:#9aa4a9;animation:bl 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,60%,100%{opacity:.3}30%{opacity:1}}
+.compose{display:flex;gap:8px;padding:8px;background:#f0f2f5;align-items:center}
+.compose input{flex:1;border:0;border-radius:999px;padding:11px 14px;background:#fff;font-size:15px;min-width:0}
+.compose input:focus{outline:2px solid var(--wa-btn)}
+.send{width:44px;height:44px;border-radius:50%;border:0;background:var(--wa-btn);color:#fff;display:grid;place-items:center;flex:none}
+
+/* salon side */
+.side{display:grid;gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.card h2{font-family:var(--serif);font-size:21px;margin:0 0 4px;font-weight:600}
+.card p.s{margin:0 0 12px;color:var(--muted);font-size:13.5px}
+.empty{border:2px dashed var(--line);border-radius:14px;padding:22px;text-align:center;color:var(--muted);font-size:14px}
+.req{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.req .h{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 14px;background:#faf8f4;border-bottom:1px solid var(--line)}
+.req .h b{font-size:15px}
+.pill{display:inline-block;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+.p-pend{background:var(--amber-soft);color:var(--amber)}.p-ok{background:var(--ok-soft);color:var(--ok)}.p-alt{background:#e0ecff;color:#1d4ed8}.p-no{background:#fee2e2;color:var(--bad)}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:6px 12px;padding:14px;font-size:14px}
+.kv span{color:var(--muted)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 14px}
+.b{border:1px solid transparent;border-radius:999px;padding:9px 14px;font-weight:600;font-size:13.5px}
+.b.ok{background:var(--ok);color:#fff}.b.alt{background:#fff;border-color:#1d4ed8;color:#1d4ed8}.b.no{background:#fff;border-color:var(--bad);color:var(--bad)}
+.b:disabled{opacity:.45;cursor:default}
+.log{display:grid;gap:8px;font-size:13.5px}
+.log div{display:grid;grid-template-columns:22px 1fr;gap:8px;color:var(--ink2)}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.feat{grid-template-columns:1fr}}
+.feat div{background:var(--moss-soft);border-radius:12px;padding:12px;font-size:13.5px;color:var(--ink2)}
+.feat b{display:block;color:var(--ink);font-size:14px;margin-bottom:2px}
+.note{font-size:12.5px;color:var(--muted);line-height:1.5}
+.qs{margin:8px 0 0;padding-left:18px;font-size:13.5px;color:var(--ink2)}
+.qs li{margin:3px 0}
+footer{max-width:1180px;margin:0 auto;padding:10px 16px 40px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="demo"><b>Interactive demo by Zynvox</b> · Sample conversation · Not connected to AVA's real WhatsApp or the specialists' diaries</div>
+
+<div class="top">
+  <div class="brand"><div class="logo">AVA</div><div><h1>AVA Beauty Lux Lounge</h1><p>WhatsApp appointment assistant · concept demo</p></div></div>
+  <div class="by">Prepared by Zynvox · zynvox.tech</div>
+</div>
+<p class="intro">Try it as one of your customers.</p>
+
+<div class="tabs" role="tablist"><button class="tab" id="tabC" aria-pressed="true">💬 Customer view</button><button class="tab" id="tabS" aria-pressed="false">💼 Your view <span id="badge"></span></button></div>
+
+<div class="stage">
+  <div class="phone" id="phoneCol">
+    <div class="screen">
+      <div class="wah"><div class="av">AVA</div><div><b>AVA Beauty Lux Lounge</b><span>Business account</span></div><button class="rs" id="restart" aria-label="Restart demo">↺ Restart</button></div>
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <div class="compose" id="compose"><input id="inp" placeholder="Type a message" autocomplete="off" aria-label="Type a message" enterkeyhint="send"><button type="button" class="send" id="sendBtn" aria-label="Send">➤</button></div>
+    </div>
+  </div>
+
+  <div class="side hide-m" id="sideCol">
+    <div class="card">
+      <h2>What you receive</h2>
+      <p class="s">Every request arrives organised in one message. You stay in control of your own diary.</p>
+      <div id="reqs"><div class="empty">No requests yet.<br>Request an appointment in the chat and you'll see it arrive here.</div></div>
+    </div>
+    <div class="card">
+      <h2>What the assistant did for you</h2>
+      <p class="s">Everything below happened automatically, without you lifting a finger.</p>
+      <div class="log" id="log"><div><span>•</span><span>Waiting for the first customer message…</span></div></div>
+    </div>
+    <div class="card">
+      <h2>What this assistant can do for you</h2>
+      <div class="feat">
+        <div><b>💬 24/7 instant replies</b>Your customers get answers on hours, location, parking and FAQs at any time, even while you're with a client.</div>
+        <div><b>🔎 Specialist finder</b>Each customer is sent to the right specialist for hair, scalp, nails, beauty or massage.</div>
+        <div><b>📅 Appointment requests</b>You get the treatment, preferred day and time, name and number in one tidy message.</div>
+        <div><b>⏳ Pending until you approve</b>Nothing is confirmed until you say yes. You keep your own diary.</div>
+        <div><b>🔔 Reminders</b>Your customers get a reminder before their appointment, so fewer no-shows.</div>
+        <div><b>🌍 English &amp; Romanian</b>It can reply in your customer's language, just like your website.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer><span>Demo prepared for AVA Beauty Lux Lounge, 1A Southend Road, Grays RM17 5NH</span><span>Zynvox · zynvox.tech</span></footer>
+
+<script>
+/* ---------- Public salon data (from avabeautyluxlounge.co.uk) ---------- */
+const SPEC = {
+  aliona:   { name: 'Aliona Onisim', role: 'Hairstylist & colourist (16 years)', as: 'hairstylist & colourist, with 16 years\' experience', wa: '447553182703' },
+  victoria: { name: 'Victoria Roxana', role: 'Hair & scalp care specialist', as: 'hair & scalp care specialist', wa: '447947111798' },
+  maria:    { name: 'Maria Codruța', role: 'Beautician & aesthetician', as: 'beautician & aesthetician', wa: '447886249136' },
+  delia:    { name: 'Delia Enache', role: 'Massage & skin therapist (VTCT Level 3)', as: 'massage & skin therapist (VTCT Level 3)', wa: '447778893333' },
+  gabriella:{ name: 'Gabriella Hudescu', role: 'Nail technician & trainer', as: 'nail technician & trainer', wa: '447958582030' }
+};
+const CATS = [
+  { id: 'hair', icon: '💇‍♀️', label: 'Hair', spec: 'aliona', items: ["Women's cut & style", "Men's cut", "Children's cut", 'Balayage', 'AirTouch', 'Highlights', 'Professional colour', 'Styling'] },
+  { id: 'scalp', icon: '🌿', label: 'Hair & scalp treatments', spec: 'victoria', items: ['Nanoplasty', 'Floractive hair botox', 'Scalp detox', 'Force Therapy 3 Steps', 'Deep hydration treatment', 'Reconstruction & repair', 'Personalised consultation'] },
+  { id: 'nails', icon: '💅', label: 'Nails', spec: 'gabriella', items: ['Classic manicure', 'Classic pedicure', 'Gel polish / Shellac', 'BIAB & builder gel', 'Soft-gel extensions', 'Nail art', 'Nail removal', 'Broken nail repair'] },
+  { id: 'beauty', icon: '✨', label: 'Beauty & facials', spec: 'maria', items: ['Facial cleansing', 'Complete facial with LED mask', 'Mesotherapy & dermapen facial', 'Make-up', 'Brow shaping & tint', 'Lash & brow lamination', 'Strip lashes', 'Waxing', 'Laser hair removal', 'Body treatments (cryo, RF, ultrasound)'], extra: { 'Skin Booster facial': 'delia', 'Hyaluron Pen (needle-free)': 'delia' } },
+  { id: 'massage', icon: '💆‍♀️', label: 'Massage', spec: 'delia', items: ['Therapeutic massage', 'Relaxing massage', 'Reflexology', 'Indian head massage', 'Classic facial massage', 'Deep body massage (anti-cellulite)'] }
+];
+const WAICON = '<svg class="wa-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg>';
+const waLink = (n, t) => `https://wa.me/${n}?text=${encodeURIComponent(t)}`;
+const SALON_WA = '447553182703';
+const HOURS = 'Monday – Saturday: 9:00 – 19:00\nSunday: 10:00 – 17:00';
+const ADDRESS = '1A Southend Road, Grays, Essex RM17 5NH\n(first floor, up the stairs from the street door)';
+
+/* ---------- Helpers ---------- */
+const $ = s => document.querySelector(s);
+const chat = $('#chat');
+const now = () => new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const fmt = s => esc(s).replace(/\*(.+?)\*/g, '<b>$1</b>');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function scroll() { chat.scrollTop = chat.scrollHeight; }
+function add(html, cls) { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; chat.appendChild(d); scroll(); return d; }
+function userSay(t) { add(`${esc(t)}<span class="sp"></span><time>${now()}</time>`, 'msg out'); }
+let busy = false;
+async function bot(t, buttons) {
+  busy = true;
+  const ty = add('<i></i><i></i><i></i>', 'typing'); await sleep(reduce ? 50 : Math.min(1500, 450 + t.length * 5)); ty.remove();
+  add(`${fmt(t)}<span class="sp"></span><time>${now()}</time>`, 'msg in');
+  if (buttons && buttons.length) {
+    const box = add(buttons.map((b, i) => typeof b[1] === 'string' ? `<a class="qb wa" href="${b[1]}" target="_blank" rel="noopener">${WAICON}${esc(b[0])}</a>` : `<button class="qb" data-i="${i}">${esc(b[0])}</button>`).join(''), 'btns');
+    box.querySelectorAll('button.qb').forEach(btn => btn.onclick = () => {
+      if (busy) return; box.querySelectorAll('.qb').forEach(x => x.disabled = true);
+      const [label, fn] = buttons[+btn.dataset.i]; userSay(label.replace(/^\S+\s/, m => /\p{Extended_Pictographic}/u.test(m) ? '' : m)); fn();
+    });
+  }
+  busy = false;
+}
+function log(icon, t) { const l = $('#log'); if (l.dataset.started !== '1') { l.innerHTML = ''; l.dataset.started = '1'; } const d = document.createElement('div'); d.innerHTML = `<span>${icon}</span><span>${t}</span>`; l.prepend(d); }
+
+/* ---------- Conversation engine ---------- */
+let reqCount = 0, msgCount = 0, req = null;
+const ctx = { awaiting: null, name: null, offer: null };
+const BOOKSTEPS = ['svc', 'date', 'time', 'name', 'phone', 'note', 'confirm', 'change'];
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const fname = n => String(n).split(' ')[0];
+const capName = s => s.trim().toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
+const withName = () => ctx.name ? `, ${fname(ctx.name)}` : '';
+const hiName = () => ctx.name ? ` ${fname(ctx.name)}` : '';
+const findCat = id => CATS.find(c => c.id === id);
+const catOfSpec = spec => CATS.find(c => c.spec === spec);
+const sFirst = spec => fname(SPEC[spec].name);
+const SAMPLE_PHONE = '+44 7700 900123 (sample)';
+
+/* ---- Understanding: treatments ---- */
+const SVC = [
+  [/\bbalayage\b/, 'Balayage', 'aliona'],
+  [/air ?touch/, 'AirTouch', 'aliona'],
+  [/high ?lights?/, 'Highlights', 'aliona'],
+  [/barber|\b(men'?s|mens|gents?|male|husband|boyfriend|partner)\b.{0,25}\b(cut|haircut|trim|hair)\b|\b(cut|haircut|trim)\b.{0,25}\b(men|man|husband|boyfriend|him)\b/, "Men's cut", 'aliona'],
+  [/\b(kids?|child|children|son|daughter|boy|girl|toddler|year old|yr old|little one)\b.{0,25}\b(cut|haircut|trim|hair)\b|\b(cut|haircut|trim)\b.{0,25}\b(kids?|child|children|son|daughter|boy|girl)\b/, "Children's cut", 'aliona'],
+  [/nanoplast/, 'Nanoplasty', 'victoria'],
+  [/hair ?botox|floractive/, 'Floractive hair botox', 'victoria'],
+  [/force therapy/, 'Force Therapy 3 Steps', 'victoria'],
+  [/scalp|dandruff|itchy head|oily roots/, 'Scalp detox', 'victoria'],
+  [/hair ?loss|thinning|losing (my )?hair|hair (is )?falling/, 'Personalised consultation', 'victoria'],
+  [/damaged|breakage|bleach damage|reconstruct|repair (my )?hair|hair (repair|damage)/, 'Reconstruction & repair', 'victoria'],
+  [/(dry|frizzy|frizz|brittle) hair|hair (is )?(so |really |very )?(dry|frizzy)|hydrat/, 'Deep hydration treatment', 'victoria'],
+  [/\b(colour|dye|roots|grey hair|gray hair|toner|tint my hair|hair tint)\b/, 'Professional colour', 'aliona'],
+  [/blow ?dry|updo|curls|hair up|style my hair|hair styling|\bstyling\b/, 'Styling', 'aliona'],
+  [/hair ?cut|\bcut\b|\btrim\b|fringe/, "Women's cut & style", 'aliona'],
+  [/biab|builder/, 'BIAB & builder gel', 'gabriella'],
+  [/(nail|gel)s? extension|extension.{0,10}nails|soft ?gel/, 'Soft-gel extensions', 'gabriella'],
+  [/nail art|french|baby boomer|chrome|ombre|ombré|glitter|cat ?eye|rhinestone|nail design/, 'Nail art', 'gabriella'],
+  [/broken nail|nail repair|snapped (a |my )?nail/, 'Broken nail repair', 'gabriella'],
+  [/(gel|nails?|shellac).{0,15}(off|removal|removed|remove)|soak ?off|remove (my )?(gel|nails)/, 'Nail removal', 'gabriella'],
+  [/\bgel\b|shellac/, 'Gel polish / Shellac', 'gabriella'],
+  [/pedicure|toes|toenails?|feet done/, 'Classic pedicure', 'gabriella'],
+  [/manicure|nails done|do my nails/, 'Classic manicure', 'gabriella'],
+  [/skin ?booster/, 'Skin Booster facial', 'delia'],
+  [/hyaluron|lip filler|lips|needle.?free/, 'Hyaluron Pen (needle-free)', 'delia', 'It\'s a needle-free treatment.'],
+  [/\bled\b/, 'Complete facial with LED mask', 'maria'],
+  [/derma ?pen|micro ?needling|meso/, 'Mesotherapy & dermapen facial', 'maria'],
+  [/lash lift|lamination/, 'Lash & brow lamination', 'maria'],
+  [/\bbrows?\b/, 'Brow shaping & tint', 'maria'],
+  [/\blash/, 'Strip lashes', 'maria'],
+  [/make ?up|bridal|wedding|prom|party look/, 'Make-up', 'maria'],
+  [/laser/, 'Laser hair removal', 'maria'],
+  [/\bwax|bikini|brazilian|underarm|leg hair/, 'Waxing', 'maria'],
+  [/cryo|radio ?freq|\brf\b|ultrasound|infrared|body (contour|sculpt|treatment)|tummy|inch loss/, 'Body treatments (cryo, RF, ultrasound)', 'maria'],
+  [/reflexology/, 'Reflexology', 'delia'],
+  [/indian head|head massage/, 'Indian head massage', 'delia'],
+  [/facial massage|face massage/, 'Classic facial massage', 'delia'],
+  [/cellulite|deep body/, 'Deep body massage (anti-cellulite)', 'delia'],
+  [/(back|neck|shoulders?) (pain|ache|hurts?|is killing)|sore|knots|tension|therapeutic|deep tissue|sports massage/, 'Therapeutic massage', 'delia'],
+  [/relaxing|pamper|de-?stress|stress/, 'Relaxing massage', 'delia'],
+  [/facial|acne|pores|glowing skin|skin glow|deep clean/, 'Facial cleansing', 'maria']
+];
+const CATW = [[/\bnails?\b/, 'nails'], [/\bmassage\b/, 'massage'], [/hair treatment|treatment for my hair/, 'scalp'], [/\bhair\b|hairdresser|hair ?stylist/, 'hair'], [/\b(beauty|skin|beautician)\b/, 'beauty']];
+const SPECW = { aliona: /\baliona\b/, victoria: /\b(victoria|roxana)\b/, maria: /\b(maria|codruta|codruța)\b/, delia: /\bdelia\b/, gabriella: /\b(gabriella|gabriela|gabi|gaby)\b/ };
+const NOTLISTED = /hair extensions?|\bweave\b|\bwigs?\b|braids?|tattoo|piercing|spray ?tan|teeth whiten\w*|threading|(eye)?lash extensions?|microblading|botox injection|eyebrow tattoo|keratin/;
+
+/* ---- Understanding: dates, times, names, numbers ---- */
+const today0 = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+const MON = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+const PHONE_RE = /\+?\d[\d\s()-]{8,}\d/g;
+function parseDate(t) {
+  t = t.replace(PHONE_RE, ' ');
+  const T = today0(), plus = n => { const d = new Date(T); d.setDate(d.getDate() + n); return d; };
+  if (/day after tomorrow/.test(t)) return { d: plus(2) };
+  if (/\b(today|tonight|this (morning|afternoon|evening))\b/.test(t)) return { d: plus(0) };
+  if (/\btomorrow\b/.test(t)) return { d: plus(1) };
+  const DRE = [/\bsun(day)?s?\b/, /\bmon(day)?s?\b/, /\btue(s|sday)?s?\b/, /\bwed(s|nesday)?s?\b/, /\bthu(r|rs|rsday)?s?\b/, /\bfri(day)?s?\b/, /\bsat(urday)?s?\b/];
+  for (let i = 0; i < 7; i++) if (DRE[i].test(t)) { let diff = (i - T.getDay() + 7) % 7; if (new RegExp('\\bnext\\s+' + DRE[i].source.slice(2)).test(t) || (diff === 0 && /\bnext\b/.test(t))) diff += 7; return { d: plus(diff) }; }
+  if (/\bweekend\b/.test(t)) return { d: plus((6 - T.getDay() + 7) % 7) };
+  if (/\bnext week\b/.test(t)) return { vague: 'next week' };
+  let m, day, mon = null;
+  if ((m = t.match(/\b(\d{1,2})(?:st|nd|rd|th)?\s+(?:of\s+)?(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\b/))) { day = +m[1]; mon = MON.indexOf(m[2]); }
+  else if ((m = t.match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{1,2})(?:st|nd|rd|th)?\b/))) { day = +m[2]; mon = MON.indexOf(m[1]); }
+  else if ((m = t.match(/\b(\d{1,2})[\/-](\d{1,2})(?:[\/-]\d{2,4})?\b/))) { day = +m[1]; mon = +m[2] - 1; }
+  else if ((m = t.match(/\b(?:the\s+)?(\d{1,2})(st|nd|rd|th)\b/))) { day = +m[1]; }
+  if (day && day <= 31 && (mon === null || (mon >= 0 && mon < 12))) {
+    let d = new Date(T.getFullYear(), mon === null ? T.getMonth() : mon, day);
+    if (d < T) { if (mon === null) d = new Date(T.getFullYear(), T.getMonth() + 1, day); else d.setFullYear(d.getFullYear() + 1); }
+    return { d };
+  }
+  return null;
+}
+function parseTime(t, loose) {
+  t = t.replace(PHONE_RE, ' ');
+  { const b = t.match(loose ? /(?:^|\b(?:today|tomorrow|day|mon|tue|wed|thu|fri|sat|sun)[a-z]*\s+)(\d{1,2})[\s?!.]*$/ : /\b(?:today|tomorrow|mon|tue|wed|thu|fri|sat|sun)[a-z]*\s+(\d{1,2})[\s?!.]*$/); if (b && +b[1] >= 1 && +b[1] <= 12) t = t.replace(/(\d{1,2})([\s?!.]*)$/, 'at $1$2'); }
+  if (/\b(any ?time|flexible|whenever|don'?t mind|doesn'?t matter)\b/.test(t)) return { label: 'Any time (flexible)', h: null };
+  if (/\b(noon|midday|lunch ?time)\b/.test(t)) return { label: '12:00', h: 12 };
+  let m = t.match(/\b(\d{1,2})[:.](\d{2})\s*(am|pm)?\b/) || t.match(/\b(\d{1,2})\s*(am|pm|o'?clock)\b/) || t.match(/\b(?:at|around|about|after|before|by)\s+(\d{1,2})\b(?!\s*(?:st|nd|rd|th|\/|-|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))/);
+  if (m) {
+    let h = +m[1], mi = 0, ap = null;
+    if (m[2] && /^\d{2}$/.test(m[2])) { mi = +m[2]; ap = m[3] || null; } else if (m[2] && /am|pm/.test(m[2])) ap = m[2];
+    if (h > 23 || mi > 59) return null;
+    if (ap === 'pm' && h < 12) h += 12; if (ap === 'am' && h === 12) h = 0; if (!ap && h >= 1 && h <= 7) h += 12;
+    return { label: `${h}:${String(mi).padStart(2, '0')}`, h: h + mi / 60 };
+  }
+  if (/\bmorning\b/.test(t)) return { label: '9:00 – 12:00 (morning)', h: null };
+  if (/\bafternoon\b/.test(t)) return { label: '12:00 – 15:00 (afternoon)', h: null };
+  if (/\b(evening|after work|late afternoon|end of the day)\b/.test(t)) return { label: '15:00 – 19:00 (late afternoon)', h: null };
+  return null;
+}
+const NAMESTOP = new Set('looking interested wondering trying after free available not a an so just here running late sorry good fine ok okay well great coming going booked new back home on in at the very really still having about from with and can could would will i you to for thinking hoping planning sure glad happy calling texting messaging asking keen ready done tired busy pregnant allergic urgent stuck outside downstairs nearly almost only also hoping currently struggling unhappy disappointed'.split(' '));
+function parseName(raw) {
+  const m = raw.match(/\b(?:my name is|my name's|name is|i'm|i am|im|this is|it's|its|call me)\s+([A-Za-zÀ-ž'-]+)(?:\s+([A-Za-zÀ-ž'-]+))?/i);
+  if (!m || NAMESTOP.has(m[1].toLowerCase())) return null;
+  const casual = /^(i'm|i am|im|this is|it's|its)/i.test(m[0]);
+  if (casual && !/^[A-ZÀ-Ž]/.test(m[1]) && raw.trim().split(/\s+/).length > 4) return null;
+  let n = m[1]; if (m[2] && !NAMESTOP.has(m[2].toLowerCase()) && /^[A-ZÀ-Ž]/.test(m[2])) n += ' ' + m[2];
+  return capName(n);
+}
+function parsePhone(raw) { const m = raw.match(PHONE_RE); if (!m) return null; const d = m[0].replace(/\D/g, ''); return d.length >= 10 && d.length <= 13 ? m[0].trim() : null; }
+const TYPO = [[/\bu\b/g, 'you'], [/\br\b/g, 'are'], [/\b(pls|plz|plez|pleaseee)\b/g, 'please'], [/\b(tmrw|tmr|tmrow|tomoz|2moro|2morrow|tommorow|tomorow|tommorrow|tmw)\b/g, 'tomorrow'], [/\b(appt|apointment|appoinment|appointmnt|apppointment|appoitment)\b/g, 'appointment'], [/\bmani\b/g, 'manicure'], [/\bpedi\b/g, 'pedicure'], [/\bwknd\b/g, 'weekend'], [/\b(thx|thnx|thanx|tnx|thnks|thanku)\b/g, 'thanks'], [/\bwanna\b/g, 'want to'], [/\bur\b/g, 'your'], [/\bim\b/g, "i'm"], [/\bid like\b/g, "i'd like"], [/\bcolor\b/g, 'colour'], [/\b(balyage|balayge|baylage|balayag)\b/g, 'balayage'], [/\b(massge|masage|messaage|massag|massaje)\b/g, 'massage'], [/\b(nials|nale|nailz)\b/g, 'nails'], [/\beye ?brows?\b/g, 'brows'], [/\beye ?lash(es)?\b/g, 'lash'], [/\bhrs\b/g, 'hours'], [/\bwat\b/g, 'what'], [/\bwen\b/g, 'when'], [/\bcud\b/g, 'could']];
+function norm(raw) { let t = raw.toLowerCase().replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim(); for (const [a, b] of TYPO) t = t.replace(a, b); return t; }
+function extract(t, raw) {
+  const E = {};
+  for (const [re, name, spec, note] of SVC) if (re.test(t)) { E.svc = { name, spec, note }; break; }
+  if (!E.svc) for (const [re, id] of CATW) if (re.test(t)) { E.cat = findCat(id); break; }
+  for (const k in SPECW) if (SPECW[k].test(t)) { E.spec = k; break; }
+  const d = parseDate(t); if (d) E.date = d;
+  const tm = parseTime(t, ['date', 'time', 'confirm', 'change', 'offer'].includes(ctx.awaiting)); if (tm) E.time = tm;
+  const n = parseName(raw); if (n) E.name = n;
+  const p = parsePhone(raw); if (p) E.phone = p;
+  return E;
+}
+
+/* ---- UK opening status ---- */
+function ukNow() { const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', weekday: 'short', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date()).map(x => [x.type, x.value])); return { day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday), h: +p.hour + (+p.minute) / 60 }; }
+const hoursFor = day => day === 0 ? [10, 17] : [9, 19];
+function openStatus() {
+  const { day, h } = ukNow(), [o, c] = hoursFor(day);
+  if (h >= o && h < c) return `We're open right now, until ${c}:00 today.`;
+  if (h < o) return `We're not open yet. We open at ${o}:00 today.`;
+  return `We've closed for today. We open again tomorrow at ${hoursFor((day + 1) % 7)[0]}:00.`;
+}
+
+/* ---- Menus and answers ---- */
+const menuBtns = () => [
+  ['📅 Request an appointment', () => startBooking()],
+  ['🔎 Find a specialist', finder],
+  ['🕘 Opening hours & location', hours],
+  ['❓ Common questions', faq],
+  ['💬 Talk to the salon', human]
+];
+async function menu(t) { ctx.awaiting = null; await bot(t || 'How can I help you today?', menuBtns()); }
+async function welcome() {
+  add('Today', 'day');
+  add('🔒 Demo conversation by Zynvox · sample data · not the salon\'s real WhatsApp', 'sys');
+  await sleep(300);
+  await bot('Hi there, welcome to *AVA Beauty Lux Lounge* ✨\nI\'m the lounge\'s virtual assistant. We have five independent specialists for hair, scalp care, nails, beauty and massage.');
+  await bot('Just type your question the way you\'d normally text us, or tap an option below 😊', menuBtns());
+  log('👋', 'Your customer was welcomed instantly, at any time of day.');
+}
+async function hours(E = {}) {
+  let t;
+  if (E.date && E.date.d) { const [o, c] = hoursFor(E.date.d.getDay()); t = `On *${dlabel(E.date.d)}* we're open ${o}:00 – ${c}:00 😊`; }
+  else t = `${openStatus()}\n\n🕘 *Opening hours*\n${HOURS}\n\n📍 *Address*\n${ADDRESS}\n\n🚗 Free parking · ☕ Hot & cold drinks · 🚆 Close to bus and train`;
+  await bot(t, ctx.awaiting ? [] : [['📅 Request an appointment', () => startBooking()], ['🏠 Main menu', () => menu('Anything else I can help with?')]]);
+  log('🕘', 'Answered your customer\'s question about hours and location.');
+}
+async function faq() {
+  await bot('Here are the questions we get asked most:', [
+    ['🚗 Is there parking?', () => answer('Yes, there\'s *free parking* 🚗 We\'re on the first floor at 1A Southend Road, up the stairs from the street door.')],
+    ['🚶 Do you take walk-ins?', () => answer('*Walk-ins are welcome* whenever a specialist is free. If you\'d like to be sure of a time, it\'s best to send an appointment request first.')],
+    ['💷 How much do treatments cost?', () => answer('Each specialist sets her own prices, so I don\'t want to quote you the wrong figure. Send an appointment request and your specialist will confirm the price with you before anything is booked.')],
+    ['🧴 Do you sell products?', () => answer('Yes, we sell *Nashi Argan* hair care products in the lounge.')],
+    ['🏠 Main menu', () => menu('Anything else I can help with?')]
+  ]);
+}
+async function answer(t) { await bot(t, ctx.awaiting ? [] : [['📅 Request an appointment', () => startBooking()], ['❓ Another question', faq], ['🏠 Main menu', () => menu('Anything else I can help with?')]]); log('❓', 'Answered a common question so you didn\'t have to.'); }
+async function finder() {
+  await bot('What kind of treatment are you after? I\'ll point you to the right specialist.', CATS.map(c => [`${c.icon} ${c.label}`, () => showSpec(c)]));
+}
+async function showSpec(c) {
+  const s = SPEC[c.spec];
+  let t = `For *${c.label.toLowerCase()}*, you'll want *${s.name}*, our ${s.as}.\n\nShe does: ${c.items.slice(0, 6).join(', ')} and more.`;
+  if (c.extra) t += `\n\n(Skin Booster facials and the Hyaluron Pen are with *${SPEC.delia.name}*.)`;
+  await bot(t + '\n\nWould you like me to send her an appointment request, or would you rather message her directly?', [[`📅 Request with ${fname(s.name)}`, () => startBooking({ cat: c })], [`WhatsApp ${fname(s.name)} directly`, waLink(s.wa, `Hi ${fname(s.name)}, I'd like to ask about ${c.label.toLowerCase()} at AVA Beauty Lux Lounge.`)], ['🔎 Another treatment', finder]]);
+  log('🔎', `Sent your customer to ${s.name} for ${c.label.toLowerCase()}.`);
+}
+async function showSpecById(spec) { const c = catOfSpec(spec); return showSpec(c); }
+async function team() {
+  await bot('We have five independent specialists, each with her own diary:\n\n💇‍♀️ *Aliona*: haircuts, colour, balayage\n🌿 *Victoria*: hair & scalp treatments\n✨ *Maria*: facials, brows, lashes, make-up, waxing, laser\n💆‍♀️ *Delia*: massage, Skin Booster, Hyaluron Pen\n💅 *Gabriella*: nails\n\nWho would you like to know more about?', Object.keys(SPEC).map(k => [fname(SPEC[k].name), () => showSpecById(k)]));
+}
+async function services() {
+  await bot('Here\'s what we offer:\n\n💇‍♀️ *Hair*: cuts, colour, balayage, AirTouch, highlights, styling\n🌿 *Hair & scalp*: nanoplasty, hair botox, scalp detox, repair\n💅 *Nails*: manicure, pedicure, gel, BIAB, extensions, nail art\n✨ *Beauty*: facials, LED, dermapen, make-up, brows, lashes, waxing, laser\n💆‍♀️ *Massage*: therapeutic, relaxing, reflexology, Indian head\n\nIs there something you have in mind?', ctx.awaiting ? [] : CATS.map(c => [`${c.icon} ${c.label}`, () => showSpec(c)]));
+}
+async function human() {
+  ctx.awaiting = null;
+  await bot(`Of course${withName()}! I'll pass you over to the team now and someone will reply here as soon as they can 😊\n\n(Demo note: in the live version the salon gets the whole conversation, so nobody has to repeat themselves.)`, [['WhatsApp the salon', waLink(SALON_WA, 'Hi AVA Beauty Lux Lounge, I have a question.')]]);
+  forward('Asked to speak to a person', false, 'Wants to talk to you');
+}
+function forward(text, priority, title) {
+  msgCount++;
+  addRequest({ kind: 'msg', id: 'MSG-' + msgCount, title: title || 'Question for you', text, name: ctx.name, priority });
+  setBadge();
+  log(priority ? '⚠️' : '📩', `${priority ? 'Flagged as priority' : 'Passed to you'}: “${esc(text)}”`);
+}
+async function aboutSvc(svc, E = {}, q = true, t = '') {
+  const s = SPEC[svc.spec];
+  ctx.awaiting = 'offer'; ctx.offer = { ...E, svc };
+  const pain = /pain|ache|hurt|killing|sore|stress/.test(t);
+  const open = pain ? 'Oh no, sorry to hear that! I\'d recommend' : q ? pick(['Yes, we do!', 'We certainly do 😊', 'Yes!']) : pick(['Lovely!', 'Of course!']);
+  const tail = (E.date || E.time) ? `\n\nShall I send her a request${E.date && E.date.d ? ' for ' + dlabel(E.date.d) : ''}${E.time ? ' at ' + E.time.label : ''}?` : '\n\nWould you like me to send her an appointment request?';
+  await bot(`${open} *${svc.name}*${pain ? ' with' : ' is done by'} *${s.name}*, our ${s.as}.${svc.note ? ' ' + svc.note : ''}${tail}`, [['📅 Yes please', () => { const o = ctx.offer; ctx.offer = null; startBooking(o, 'Wonderful 😊'); }], ['Not right now', () => { ctx.awaiting = null; bot('No problem at all! Is there anything else I can help with?'); }], [`WhatsApp ${fname(s.name)} directly`, waLink(s.wa, `Hi ${fname(s.name)}, I'd like to ask about ${svc.name} at AVA Beauty Lux Lounge.`)]]);
+  log('🔎', `Explained ${svc.name} and pointed your customer to ${s.name}.`);
+}
+
+/* ---- Booking (slot filling) ---- */
+function newReq() { return { id: 'REQ-' + (1001 + reqCount) }; }
+function applyE(E) {
+  if (E.svc) { req.service = E.svc.name; req.spec = E.svc.spec; req.cat = catOfSpec(E.svc.spec); }
+  else if (E.cat && !req.service) req.cat = E.cat;
+  else if (E.spec && !req.service) req.cat = catOfSpec(E.spec);
+  if (E.date && E.date.d) { req.date = E.date.d; }
+  if (E.time) { req.time = E.time.label; req.timeH = E.time.h; }
+  if (E.name) ctx.name = E.name;
+  if (E.phone) req.phone = E.phone;
+}
+async function startBooking(E = {}, ack) {
+  req = newReq();
+  applyE(E);
+  let a = ack || pick(['Of course! Let\'s get that sorted for you 😊', 'Lovely, I can help with that!', 'Happy to help with that 😊']);
+  if (req.service) a += ` I've got *${req.service}* with *${sFirst(req.spec)}*${req.date ? ' on ' + dlabel(req.date) : ''}${req.time ? ' at ' + req.time : ''}.`;
+  await next(a);
+}
+function nextDays() { const out = [], d = today0(); for (let i = 1; out.length < 6; i++) { const x = new Date(d); x.setDate(d.getDate() + i); out.push(x); } return out; }
+const dlabel = d => d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+function checks() {
+  const msgs = [];
+  if (req.date && req.date < today0()) { msgs.push('That date has already passed, so let\'s pick another day.'); req.date = null; }
+  if (req.date && req.time) {
+    const sun = req.date.getDay() === 0, [o, c] = hoursFor(req.date.getDay());
+    if (req.timeH != null && (req.timeH < o || req.timeH >= c)) { msgs.push(`Just so you know, on ${sun ? 'Sundays' : req.date.toLocaleDateString('en-GB', { weekday: 'long' }) + 's'} we're open ${o}:00 – ${c}:00, so ${req.time} is outside our hours.`); req.time = null; req.timeH = null; }
+    else if (sun && /^9:00 – 12:00/.test(req.time)) req.time = '10:00 – 12:00 (morning)';
+  }
+  return msgs.join('\n');
+}
+async function next(prefix = '') {
+  const warn = checks();
+  const P = [prefix, warn].filter(Boolean).join('\n\n');
+  const lead = P ? P + '\n\n' : '';
+  if (!req.service) {
+    ctx.awaiting = 'svc';
+    if (req.cat) {
+      const c = req.cat, items = [...c.items, ...Object.keys(c.extra || {})];
+      return bot(`${lead}Which ${c.label.toLowerCase()} treatment would you like?`, items.map(i => [i, () => { req.service = i; req.spec = (c.extra && c.extra[i]) || c.spec; next(ackSvc()); }]).concat([['↩ Other treatments', () => { req.cat = null; next(); }]]));
+    }
+    return bot(`${lead}What treatment are you thinking of? You can type it (like "gel nails" or "balayage") or pick below.`, CATS.map(c => [`${c.icon} ${c.label}`, () => { req.cat = c; next(); }]));
+  }
+  if (!req.date) {
+    ctx.awaiting = 'date';
+    return bot(`${lead}Which day would suit you best? You can type something like "Saturday" or "the 28th".`, nextDays().map(d => [`📆 ${dlabel(d)}`, () => { req.date = d; next(); }]));
+  }
+  if (!req.time) {
+    ctx.awaiting = 'time';
+    const sun = req.date.getDay() === 0;
+    const slots = sun ? ['10:00 – 12:00 (morning)', '12:00 – 14:00 (midday)', '14:00 – 17:00 (afternoon)'] : ['9:00 – 12:00 (morning)', '12:00 – 15:00 (afternoon)', '15:00 – 19:00 (late afternoon)'];
+    return bot(`${lead}And what time works for you on *${dlabel(req.date)}*? Type a time like "2pm", or pick a part of the day.`, slots.map(s => [`🕐 ${s}`, () => { req.time = s; req.timeH = null; next(); }]).concat([['📆 A different day', () => { req.date = null; req.time = null; next(); }]]));
+  }
+  if (!req.name) {
+    if (ctx.name) req.name = ctx.name;
+    else { ctx.awaiting = 'name'; $('#inp').placeholder = 'Type your name'; return bot(`${lead}Perfect. And what name should I put the request under?`); }
+  }
+  if (!req.phone) {
+    ctx.awaiting = 'phone'; $('#inp').placeholder = 'Type a message';
+    return bot(`${lead || `Thanks, ${fname(req.name)}! `}Is this WhatsApp number the best one for ${sFirst(req.spec)} to reach you on?`, [['✅ Yes, this number', () => { req.phone = SAMPLE_PHONE; next(); }], ['✏️ A different number', () => { ctx.awaiting = 'phone'; $('#inp').placeholder = 'e.g. 07700 900123'; bot('No problem, just type the number here.'); }]]);
+  }
+  if (req.note === undefined) {
+    ctx.awaiting = 'note'; $('#inp').placeholder = 'Type a message';
+    return bot(`${lead}Is there anything ${sFirst(req.spec)} should know before your visit? For example, if it's your first time, any allergies, or a look you have in mind.`, [['👍 No, that\'s everything', () => { req.note = ''; next(); }]]);
+  }
+  ctx.awaiting = 'confirm'; $('#inp').placeholder = 'Type a message';
+  return bot(`${lead}Here's your request, ${fname(req.name)}:\n\n💆 *Treatment:* ${req.service}\n👩 *Specialist:* ${SPEC[req.spec].name}\n📆 *Preferred day:* ${dlabel(req.date)}\n🕐 *Preferred time:* ${req.time}\n🙋 *Name:* ${req.name}\n📱 *Number:* ${req.phone}${req.note ? `\n📝 *Note:* ${req.note}` : ''}${req.resched ? `\n🔁 *Replaces:* ${req.resched}` : ''}\n\nShall I send this to ${sFirst(req.spec)}?`, [['📨 Yes, send it', sendRequest], ['✏️ Change something', changeMenu]]);
+}
+const ackSvc = () => `Great choice! *${req.service}* is with *${SPEC[req.spec].name}*, our ${SPEC[req.spec].as}.`;
+async function changeMenu() {
+  ctx.awaiting = 'change';
+  await bot('Of course, what would you like to change? You can also just type it, like "make it 3pm instead".', [['💆 Treatment', () => { req.service = null; req.cat = null; next(); }], ['📆 Day', () => { req.date = null; next(); }], ['🕐 Time', () => { req.time = null; next(); }], ['🙋 Name', () => { req.name = null; ctx.name = null; next(); }], ['📱 Number', () => { req.phone = null; next(); }], ['📝 Note', () => { req.note = undefined; next(); }]]);
+}
+async function sendRequest() {
+  if (!req || ctx.awaiting !== 'confirm') return;
+  reqCount++; ctx.awaiting = null;
+  const r = req; req = null;
+  if (r.resched) { const old = requests.find(x => x.id === r.resched); if (old) old.status = 'Reschedule requested'; }
+  addRequest({ ...r, status: 'Pending' });
+  await bot(`Done! Your request has been sent to *${SPEC[r.spec].name}* 💌\n\n⏳ *Please note your appointment isn't confirmed yet.* ${sFirst(r.spec)} will check her diary and message you to confirm the time, or suggest the closest one she has.\n\nYour reference is ${r.id}. Is there anything else I can help with?`);
+  log('📨', `New ${r.resched ? 'reschedule ' : ''}request ${r.id} organised and sent to you (${SPEC[r.spec].name}).`);
+  setBadge();
+}
+async function doCancel(r) {
+  ctx.awaiting = null; r.status = 'Cancellation requested'; renderReqs(); setBadge();
+  await bot(`All done. I've let ${sFirst(r.spec)} know straight away. Would you like to pick another day instead?`, [['📅 Book another day', () => startBooking({ svc: { name: r.service, spec: r.spec } })], ['No, thank you', () => bot('No problem at all. We hope to see you soon 💕')]]);
+  log('🚫', `Your customer cancelled ${r.id}. You were told straight away, so the slot can go to someone else.`);
+}
+const lastReq = () => requests.find(r => r.kind !== 'msg' && ['Pending', 'Confirmed', 'New time suggested'].includes(r.status));
+
+/* ---- Handling a typed message ---- */
+const YES = /^(yes|yeah|yea|yep|yup|ya|yh|sure|ok|okay|okk|correct|right|perfect|that's right|thats right|sounds good|looks good|go ahead|send( it)?|please do|definitely|absolutely|of course|da|please|yes please)\b/;
+const NO = /^(no|nope|nah|not really|no thanks|no thank you|nothing|none|that's all|thats all|that's it|thats it|all good|n\/a|nothing else)\b/;
+const isQuestion = (t, raw) => /\?\s*$/.test(raw) || /^(do|does|is|are|can|could|what|what's|whats|where|where's|wheres|when|how|hows|which|who|why|will|would|should|any|have you|has)\b/.test(t);
+
+async function handleAwaiting(t, raw, E) {
+  const q = isQuestion(t, raw);
+  switch (ctx.awaiting) {
+    case 'svc':
+      if (E.svc || E.cat || E.spec) { applyE(E); await next(E.svc ? ackSvc() : ''); return true; }
+      return false;
+    case 'date':
+      if (E.date && E.date.d) { applyE(E); await next(E.time ? `Lovely, ${dlabel(req.date)} at ${req.time} 👍` : ''); return true; }
+      if (E.date && E.date.vague) { await bot(`Sure! Which day ${E.date.vague} works best for you?`, nextDays().map(d => [`📆 ${dlabel(d)}`, () => { req.date = d; next(); }])); return true; }
+      if (E.time) { applyE(E); await next('Got it 👍'); return true; }
+      return false;
+    case 'time':
+      if (E.time || (E.date && E.date.d)) { applyE(E); const w = checks(); await next(w || (E.time && req.time && E.time.h != null ? `${req.time} 👍` : '')); return true; }
+      return false;
+    case 'name': {
+      let n = E.name;
+      const words = raw.trim().split(/\s+/);
+      if (!n && !q && /^[\p{L}' .-]{2,40}$/u.test(raw.trim()) && words.length <= 3 && !YES.test(t) && !NO.test(t) && !/\b(hi|hello|hey|thanks|park|price|open|book|cancel)\b/.test(t)) n = capName(raw);
+      if (n) { ctx.name = n; req.name = n; await next(pick([`Lovely to meet you, ${fname(n)}! 😊`, `Thank you, ${fname(n)}!`])); return true; }
+      return false;
+    }
+    case 'phone':
+      if (E.phone) { req.phone = E.phone; await next('Got it 👍'); return true; }
+      if (YES.test(t) || /this (one|number)|same/.test(t)) { req.phone = SAMPLE_PHONE; await next(); return true; }
+      if (NO.test(t) || /different|another/.test(t)) { $('#inp').placeholder = 'e.g. 07700 900123'; await bot('No problem, just type the best number to reach you on.'); return true; }
+      return false;
+    case 'note':
+      if (NO.test(t)) { req.note = ''; await next(); return true; }
+      if (!q || /allerg|pregnan|sensitive|first time/.test(t)) { req.note = raw.slice(0, 200); await next(`Thanks, I've added that as a note for ${sFirst(req.spec)} 📝`); return true; }
+      return false;
+    case 'confirm':
+      if (E.svc || (E.date && E.date.d) || E.time || E.phone) { applyE(E); await next('No problem, I\'ve updated that 👍'); return true; }
+      if (YES.test(t)) { await sendRequest(); return true; }
+      if (NO.test(t) || /change|wrong|edit|mistake|actually/.test(t)) { await changeMenu(); return true; }
+      return false;
+    case 'change':
+      if (E.svc || E.cat || (E.date && E.date.d) || E.time || E.phone) { if (E.cat && !E.svc) { req.service = null; } applyE(E); await next('Done 👍'); return true; }
+      if (/treatment|service/.test(t)) { req.service = null; req.cat = null; await next(); return true; }
+      if (/\b(day|date)\b/.test(t)) { req.date = null; await next(); return true; }
+      if (/\btime\b/.test(t)) { req.time = null; await next(); return true; }
+      if (/\bname\b/.test(t)) { req.name = null; ctx.name = null; await next(); return true; }
+      if (/number|phone/.test(t)) { req.phone = null; await next(); return true; }
+      if (/note/.test(t)) { req.note = undefined; await next(); return true; }
+      if (NO.test(t)) { ctx.awaiting = 'confirm'; await next(); return true; }
+      return false;
+    case 'offer':
+      if (YES.test(t) || /\bbook\b/.test(t) || (E.date && E.date.d) || E.time) { const o = ctx.offer || {}; ctx.offer = null; await startBooking({ ...o, ...E, svc: E.svc || o.svc }, 'Wonderful 😊'); return true; }
+      if (NO.test(t) || /not (right )?now|maybe later|later/.test(t)) { ctx.awaiting = null; ctx.offer = null; await bot(pick(['No problem at all! Is there anything else I can help with?', 'Of course, no pressure 😊 Anything else I can help you with?'])); return true; }
+      return false;
+    case 'cancelconfirm':
+      if (YES.test(t) || /cancel/.test(t)) { await doCancel(ctx.cancelR); return true; }
+      if (NO.test(t) || /keep/.test(t)) { ctx.awaiting = null; await bot('Great, I\'ll leave it as it is 😊'); return true; }
+      return false;
+    case 'cancelinfo':
+      if (q && !E.date && !E.spec) return false;
+      ctx.awaiting = null; forward(`${ctx.cancelKind}: ${raw}`, false, ctx.cancelKind + ' request');
+      await bot(`Thank you${withName()}. I've passed that straight to the team, and they'll ${ctx.cancelKind === 'Reschedule' ? 'offer you a new time' : 'confirm the cancellation'} here.${ctx.cancelKind === 'Reschedule' ? ' Is there anything else I can help with?' : ' Would you like to book another day instead?'}`, ctx.cancelKind === 'Reschedule' ? [] : [['📅 Book another day', () => startBooking()], ['No, thank you', () => bot('No problem at all. We hope to see you soon 💕')]]);
+      return true;
+  }
+  return false;
+}
+
+async function intents(t, raw, E) {
+  const inBooking = req && BOOKSTEPS.includes(ctx.awaiting);
+  const R = 'resume';
+  // People and problems first
+  if (/\b(speak|talk|chat)\b.{0,15}\b(to|with)\b.{0,12}\b(someone|somebody|human|person|real|staff|owner|manager|team|aliona|victoria|maria|delia|gabriella)\b|real person|\bhuman\b|call me( back)?|ring me/.test(t)) { await human(); return true; }
+  if (/not happy|unhappy|disappointed|complain|complaint|bad experience|terrible|awful|ruined|refund|angry|upset|rude|worst/.test(t)) {
+    ctx.awaiting = null;
+    await bot(`I'm really sorry to hear that${withName()}. That's not the experience we want for anyone. I've flagged this to the team as a priority, and someone will get back to you personally as soon as possible.\n\nIf there's anything you'd like to add, just write it here and I'll make sure they see it.`);
+    forward(raw, true, 'Unhappy customer');
+    return true;
+  }
+  if (/\bcancel/.test(t)) {
+    const r = lastReq();
+    if (r) {
+      ctx.awaiting = 'cancelconfirm'; ctx.cancelR = r;
+      await bot(`Sorry you can't make it${withName()}. Would you like me to cancel your *${r.service}* request with ${sFirst(r.spec)} on ${dlabel(r.date)}?`, [['Yes, cancel it', () => doCancel(r)], ['No, keep it', () => { ctx.awaiting = null; bot('Great, I\'ll leave it as it is 😊'); }]]);
+    } else { ctx.cancelKind = 'Cancellation'; ctx.awaiting = 'cancelinfo'; await bot('Of course. Could you tell me your name, which specialist you\'re booked with and the day of your appointment? I\'ll pass it straight on.'); }
+    return true;
+  }
+  if (/reschedule|re-schedule|change (my |the )?(appointment|booking|time|day)|move (my )?(appointment|booking)|different (day|time)|can'?t make it/.test(t)) {
+    const r = lastReq();
+    if (r) { req = { id: 'REQ-' + (1001 + reqCount), service: r.service, spec: r.spec, cat: catOfSpec(r.spec), name: r.name, phone: r.phone, note: r.note, resched: r.id }; applyE({ date: E.date, time: E.time }); await next(`No problem at all${withName()}! Let's find a better time for your ${r.service} with ${sFirst(r.spec)}.`); }
+    else { ctx.cancelKind = 'Reschedule'; ctx.awaiting = 'cancelinfo'; await bot('Of course! Could you tell me your name, who you\'re booked with and your current appointment day? I\'ll pass it to your specialist so she can offer you a new time.'); }
+    return true;
+  }
+  if (/running late|be late|i'll be late|stuck in traffic|\btraffic\b|(\d+|few|couple of) ?min(ute)?s? late|on my way|parking now/.test(t)) {
+    const r = lastReq();
+    await bot(`Thank you so much for letting us know${withName()}! I've told ${r ? sFirst(r.spec) : 'the team'} straight away. Please take care on the way 🚗`);
+    log('⏰', `Your customer said they're running late. You were told instantly.`);
+    return true;
+  }
+  if (/are you (a )?(bot|robot|real|human|ai|person)|is this (a )?(bot|real|automated)|who am i (talking|speaking)/.test(t)) { await bot('I\'m AVA\'s virtual assistant 🤖 I can answer questions and set up appointment requests any time of day. If you\'d rather speak to a person, just say so and I\'ll pass you to the team.'); return R; }
+  if (/how are (you|things)|how's it going|hows it going|you ok\b|you alright/.test(t)) { await bot(pick(['I\'m very well, thank you for asking! 😊 How can I help you today?', 'All good here, thank you! How can I help you today? 😊'])); return R; }
+  if (/^(thanks|thank you|thank u|cheers|many thanks|ta|merci|multumesc|mulțumesc)\b|thank you so much|thanks a lot/.test(t)) { await bot(pick(['You\'re very welcome! 😊', 'My pleasure!', 'Anytime! 💕']) + (inBooking ? '' : ' Is there anything else I can help with?')); return R; }
+  if (/\b(bye|goodbye|see you|see ya|good night|have a (good|nice|lovely) (day|evening|one|weekend))\b|^(no,? )?(thanks,? )?(nothing else|that'?s all|thats all|that'?s it|thats it)/.test(t)) { ctx.awaiting = null; req = null; await bot(`Thank you for messaging AVA Beauty Lux Lounge${withName()}! Have a lovely day 💕`); return true; }
+  // Romanian
+  if (/\b(buna|bună|salut|vorbiti|vorbiți|romana|română|programare|vreau|aveti|aveți)\b/.test(t)) { await bot('Bună! 😊 Ne puteți scrie și în română. Cu ce vă putem ajuta? Puteți cere o programare, afla programul sau găsi specialista potrivită.\n\n(Demo: the live assistant can reply in English or Romanian.)', ctx.awaiting ? [] : menuBtns()); return R; }
+  // Practical questions
+  if (/availab|free (today|tomorrow|slot|space)|any (slots|space|spaces|appointments|availability)|fully booked|fit me in|squeeze me in|got space/.test(t)) {
+    ctx.awaiting = 'offer'; ctx.offer = E;
+    await bot(`Each specialist manages her own diary, so I can't see live availability from here. What I can do is send your preferred day and time straight to her, and she'll confirm or offer the nearest time she has. Shall I do that${withName()}?`, [['📅 Yes please', () => startBooking(E, 'Lovely 😊')], ['Not right now', () => { ctx.awaiting = null; bot('No problem! Anything else I can help with?'); }]]);
+    return true;
+  }
+  if (/how long|duration|take long|how much time/.test(t)) { await answer(`It depends on the treatment and on you (for example hair length or the look you'd like), so ${E.svc ? sFirst(E.svc.spec) : req && req.spec ? sFirst(req.spec) : 'your specialist'} will tell you how long to allow when she confirms your appointment.`); return R; }
+  if (/(your|salon'?s?|the) (number|phone|contact|whatsapp)|contact (you|details|number)|phone number|call you|email/.test(t)) { await bot('You can reach the lounge on *+44 7553 182703* (call or WhatsApp) 📱\n\nEach specialist also has her own WhatsApp. Just tell me the treatment and I\'ll give you the right one.', [['WhatsApp the salon', waLink(SALON_WA, 'Hi AVA Beauty Lux Lounge, I have a question.')]]); return R; }
+  if (/price|cost|how much|£|charge|expensive|cheap|rates|price ?list|fee/.test(t)) {
+    const who = E.svc ? SPEC[E.svc.spec].name : E.spec ? SPEC[E.spec].name : null;
+    if (who) { ctx.awaiting = 'offer'; ctx.offer = E; await bot(`Prices${E.svc ? ' for *' + E.svc.name + '*' : ''} are set by ${who} herself and depend on exactly what you'd like, so I don't want to give you the wrong figure.\n\nWould you like me to send her a request? She'll confirm the price with you before anything is booked.`, [['📅 Yes please', () => startBooking(E, 'Lovely 😊')], [`WhatsApp ${fname(who)} directly`, waLink(SPEC[E.svc ? E.svc.spec : E.spec].wa, `Hi ${fname(who)}, could you tell me the price for ${E.svc ? E.svc.name : 'a treatment'}?`)]]); }
+    else await answer('Each specialist sets her own prices, so I don\'t want to quote you the wrong figure. Tell me which treatment you\'re interested in and I\'ll point you to the right person, or send a request and she\'ll confirm the price before anything is booked.');
+    return R;
+  }
+  if (/deposit|\bpay\b|payment|card|cash|contactless|klarna/.test(t)) { await answer('Payments and deposits are arranged by each specialist, so yours will let you know exactly how it works when she confirms your appointment.'); return R; }
+  if (/open (now|today|right now)|are you open|still open|what time do you (close|open|finish|shut)|closing time|close today|open (on|this)|open at/.test(t)) { await hours(E); return R; }
+  if (/\b(hours|opening|timings?|when are you open|what time are you)\b/.test(t)) { await hours(E); return R; }
+  if (/\bpark/.test(t)) { await answer('Yes, there\'s *free parking* 🚗 We\'re on the first floor at 1A Southend Road, up the stairs from the street door.'); return R; }
+  if (/\b(bus|train|station|c2c|public transport)\b/.test(t)) { await answer('We\'re close to both bus and train links, so it\'s easy to reach us without a car 🚆\n\n📍 ' + ADDRESS.replace('\n', ' ')); return R; }
+  if (/where|address|location|find you|directions|postcode|how do i get|\bmap\b|which floor/.test(t)) { await answer(`📍 We're at *1A Southend Road, Grays, Essex RM17 5NH*, on the first floor, up the stairs from the street door.\n\n🚗 Free parking · 🚆 Close to bus and train`); return R; }
+  if (/walk ?-?ins?|without (an )?appointment|just (come|pop|turn up)|drop in|pop in/.test(t)) { await answer('*Walk-ins are welcome* whenever a specialist is free 😊 If you\'d like to be sure of a time, I can send an appointment request for you.'); return R; }
+  if (/wheelchair|stairs|\blift\b|elevator|disab|pram|buggy|mobility/.test(t)) { await bot('We\'re on the first floor, up a flight of stairs. If stairs are difficult for you, I\'ll let the team know so they can talk you through the best option.'); forward(raw, false, 'Access question'); return R; }
+  if (/pregnan|allerg|patch test|sensitive skin|eczema|medical|breastfeed|medication/.test(t)) {
+    const extra = inBooking ? ' I\'ve also added it as a note to your request.' : '';
+    if (inBooking) req.note = (req.note ? req.note + ' · ' : '') + raw.slice(0, 120);
+    await bot(`Thank you for telling us, that's really helpful. Your specialist will talk it through with you and advise before any treatment, to make sure it's right for you.${extra}`);
+    return R;
+  }
+  if (/gift|voucher|present for/.test(t)) { await bot('What a lovely idea 🎁 Let me check with the team about gift vouchers, and someone will reply to you here shortly.'); forward(raw, false, 'Gift voucher question'); return R; }
+  if (/\b(product|products|shampoo|nashi|argan|hair oil|sell)\b/.test(t)) { await answer('Yes, we sell *Nashi Argan* hair care products in the lounge. Your stylist can recommend what\'s best for your hair.'); return R; }
+  if (/\b(drink|coffee|tea|waiting area|wait)\b/.test(t)) { await answer('Yes! We offer hot and cold drinks, and there\'s a comfortable waiting area ☕'); return R; }
+  if (/private|discreet/.test(t)) { await answer('Yes, the lounge is private and discreet, so you can relax and enjoy your treatment 😊'); return R; }
+  if (/who (works|is there)|which specialist|specialists|your team|\bstaff\b|therapists|stylists/.test(t) && !E.svc && !E.cat) { await team(); return true; }
+  if (NOTLISTED.test(t)) { const what = t.match(NOTLISTED)[0]; await bot(`I can't see ${what} on our treatment list, so I'd rather check with the team than give you the wrong answer. I've passed your question on, and someone will reply here shortly 😊`); forward(raw, false, 'Treatment question'); return R; }
+  // Booking and treatments
+  const wantsBooking = /\b(book|booking|appointment|reserve|schedule|slot|come in|can i (have|get|come)|could i (have|get|come)|i'd like|i would like|i want|want to|looking for|need (a|an|my|to|some)|get (my|a|an|some)|do my)\b/.test(t);
+  if (inBooking && ((E.svc && !isQuestion(t, raw)) || E.date || E.time || E.phone)) { applyE(E); await next('Got it 👍'); return true; }
+  if (inBooking && NO.test(t)) { req = null; ctx.awaiting = null; await bot('No problem, I\'ve stopped that request for now. Is there anything else I can help with?', menuBtns()); return true; }
+  if (inBooking && YES.test(t)) { await next(); return true; }
+  if (inBooking && req.service && !isQuestion(t, raw) && t.split(' ').length > 1) { req.note = (req.note ? req.note + ' · ' : '') + raw.slice(0, 160); await bot(`Thanks, I've noted that for ${sFirst(req.spec)} 📝`); return R; }
+  if (wantsBooking && (E.svc || E.cat || E.spec || E.date || E.time || /\b(book|booking|appointment)\b/.test(t))) { await startBooking(E); return true; }
+  if (E.svc) { await aboutSvc(E.svc, E, isQuestion(t, raw), t); return true; }
+  if (E.cat) { await showSpec(E.cat); return true; }
+  if (E.spec) { await showSpecById(E.spec); return true; }
+  if (/what (do you|services|treatments|can you)|services|treatments|\bmenu\b|what do you offer/.test(t)) { await services(); return R; }
+  if (E.date && !inBooking) { await hours(E); return true; }
+  if (/^(ok|okay|k|kk|cool|alright|great|perfect|lovely|nice|amazing|brilliant|awesome|fab|wonderful|good|sounds good|noted)[!. ]*$/.test(t)) { await bot(pick(['😊 Just let me know if there\'s anything else you need.', 'Great! I\'m here if you need anything else 💕'])); return R; }
+  if (YES.test(t) || NO.test(t)) { await bot('Sorry, I\'m not quite sure what that\'s for 😅 What can I help you with?', ctx.awaiting ? [] : menuBtns()); return R; }
+  // Unknown: never guess
+  if (t.length < 3 || !/[aeiouy]/.test(t) || (!/\s/.test(t) && t.length <= 6)) { await bot('Sorry, I didn\'t quite catch that 😅 Could you say it another way?'); return R; }
+  await bot(pick([`That's a good question${withName()}! I don't want to give you the wrong answer, so I've passed it to the team and someone will reply here shortly 😊`, `Thanks for asking! I'm not 100% sure on that one, so I've sent your question to the team. They'll get back to you here as soon as they can.`]));
+  forward(raw, false);
+  return R;
+}
+
+const GREET = /^(hi+|hello+|hey+|hiya|helo|heya|good (morning|afternoon|evening)|salam|assalam\w*|yo|howdy|greetings)\b[\s,!.]*(there|guys|ladies|ava)?[\s,!.]*/;
+async function handle(raw) {
+  let t = norm(raw);
+  const E = extract(t, raw);
+  if (E.name && !ctx.name) ctx.name = E.name;
+  const g = t.match(GREET);
+  if (g) {
+    const rest = t.slice(g[0].length).replace(/^(my name is|my name's|i'm|i am|it's|this is)\s+[a-zà-ž'-]+[\s,.!]*/, '').trim();
+    if (!rest) { await bot(`Hi${hiName()}! 😊 Welcome to AVA Beauty Lux Lounge. How can I help you today?`, ctx.awaiting ? [] : menuBtns()); return; }
+    await bot(`Hi${hiName()}! 😊`);
+    t = rest; Object.assign(E, { svc: undefined, cat: undefined, date: undefined, time: undefined }, extract(t, raw));
+  }
+  if (ctx.awaiting && await handleAwaiting(t, raw, E)) return;
+  const wasBooking = req && BOOKSTEPS.includes(ctx.awaiting);
+  const res = await intents(t, raw, E);
+  if (res === 'resume' && wasBooking && req && BOOKSTEPS.includes(ctx.awaiting)) { await sleep(150); await next(pick(['Now, back to your booking 😊', 'Shall we carry on with your request?'])); }
+}
+
+let queue = Promise.resolve();
+$('#inp').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); handleSend(); } });
+$('#sendBtn').addEventListener('click', () => handleSend());
+function handleSend() {
+  const v = $('#inp').value.trim(); if (!v) return; $('#inp').value = ''; userSay(v.slice(0, 500));
+  queue = queue.then(() => handle(v.slice(0, 500))).catch(err => console.error(err));
+}
+
+/* ---------- Your side ---------- */
+const requests = [];
+function addRequest(r) { requests.unshift(r); renderReqs(); }
+function renderReqs() {
+  const box = $('#reqs');
+  if (!requests.length) { box.innerHTML = '<div class="empty">No requests yet.<br>Request an appointment in the chat and you\'ll see it arrive here.</div>'; return; }
+  box.innerHTML = requests.map((r, i) => {
+    if (r.kind === 'msg') return `<div class="req" style="margin-bottom:12px"><div class="h"><b>💬 ${esc(r.title)}</b><span class="pill ${r.priority ? 'p-no' : 'p-pend'}">${r.priority ? '⚠️ Priority' : 'Needs your reply'}</span></div><div class="kv"><span>From</span><b>${esc(r.name || 'Customer')}</b><span>Message</span><b>${esc(r.text)}</b></div><p class="note" style="padding:0 14px 14px;margin:0">You reply on WhatsApp as normal, with the whole conversation in front of you.</p></div>`;
+    const cls = { Pending: 'p-pend', Confirmed: 'p-ok', 'New time suggested': 'p-alt', Declined: 'p-no', 'Cancellation requested': 'p-no', 'Reschedule requested': 'p-alt' }[r.status];
+    const open = r.status === 'Pending';
+    return `<div class="req" style="margin-bottom:12px"><div class="h"><b>📨 ${r.resched ? 'Reschedule request' : 'New request'} · ${r.id}</b><span class="pill ${cls}">${open ? '⏳ Pending approval' : r.status}</span></div>
+    <div class="kv"><span>For</span><b>${esc(SPEC[r.spec].name)}</b><span>Treatment</span><b>${esc(r.service)}</b><span>Preferred day</span><b>${dlabel(r.date)}</b><span>Preferred time</span><b>${esc(r.time)}</b><span>Customer</span><b>${esc(r.name)}</b><span>Number</span><b>${esc(r.phone)}</b>${r.note ? `<span>Note</span><b>${esc(r.note)}</b>` : ''}${r.resched ? `<span>Replaces</span><b>${r.resched}</b>` : ''}</div>
+    <div class="acts"><button class="b ok" data-a="ok" data-i="${i}" ${open ? '' : 'disabled'}>✅ Confirm</button><button class="b alt" data-a="alt" data-i="${i}" ${open ? '' : 'disabled'}>🔁 Suggest another time</button><button class="b no" data-a="no" data-i="${i}" ${open ? '' : 'disabled'}>✖ Decline</button></div></div>`;
+  }).join('');
+  box.querySelectorAll('[data-a]').forEach(b => b.onclick = () => decide(+b.dataset.i, b.dataset.a));
+}
+async function decide(i, a) {
+  const r = requests[i], s = SPEC[r.spec], first = fname(s.name);
+  if (a === 'ok') {
+    const t = r.timeH != null ? r.time : ((r.time.match(/^\d{1,2}:\d{2}/) || [])[0] || null);
+    r.status = 'Confirmed'; renderReqs(); setBadge();
+    await bot(`✅ *Confirmed!* Hi ${fname(r.name)}, ${first} has booked you in.\n\n💆 ${r.service} with ${s.name}\n📆 ${dlabel(r.date)}${t ? ' at ' + t : ''}\n📍 ${ADDRESS.split('\n')[0]}\n\nWe'll send you a reminder the day before. If anything changes, just message here 😊`);
+    log('✅', `You confirmed ${r.id}. Your customer got the confirmation and a reminder is set for the day before.`);
+  } else if (a === 'alt') {
+    r.status = 'New time suggested'; renderReqs(); setBadge();
+    const d = new Date(r.date); d.setDate(d.getDate() + 1);
+    await bot(`Hi ${fname(r.name)}, ${first} here 😊 I'm fully booked at that time. Could you do *${dlabel(d)} at 11:00* instead?`, [['👍 Yes, that works', async () => { r.status = 'Confirmed'; renderReqs(); await bot(`✅ *Confirmed!* ${r.service} with ${s.name} on ${dlabel(d)} at 11:00. See you then!`); log('✅', `Your customer accepted the new time. ${r.id} is confirmed.`); }], ['📆 Another day please', () => bot(`No problem, ${first} will message you with a few more options shortly.`)]]);
+    log('🔁', `You suggested another time for ${r.id}.`);
+  } else {
+    r.status = 'Declined'; renderReqs(); setBadge();
+    await bot(`Sorry ${fname(r.name)}, ${first} isn't able to fit that one in. Would you like to try another day?`, [['📅 Request another day', () => startBooking({ svc: { name: r.service, spec: r.spec } })], ['🏠 Main menu', () => menu('Anything else I can help with?')]]);
+    log('✖', `You declined ${r.id}. Your customer was offered another day.`);
+  }
+  if (innerWidth <= 900) showTab('C');
+}
+function setBadge() { const n = requests.filter(r => r.status === 'Pending' || r.kind === 'msg').length; $('#badge').textContent = n ? `(${n})` : ''; }
+
+/* Tabs (mobile) */
+function showTab(t) {
+  $('#tabC').setAttribute('aria-pressed', t === 'C'); $('#tabS').setAttribute('aria-pressed', t === 'S');
+  $('#phoneCol').classList.toggle('hide-m', t !== 'C'); $('#sideCol').classList.toggle('hide-m', t !== 'S');
+  scrollTo({ top: 0 });
+}
+$('#tabC').onclick = () => showTab('C'); $('#tabS').onclick = () => showTab('S');
+$('#restart').onclick = () => { chat.innerHTML = ''; req = null; Object.assign(ctx, { awaiting: null, name: null, offer: null }); $('#inp').placeholder = 'Type a message'; welcome(); };
+welcome();
+</script>
+</body>
+</html>
