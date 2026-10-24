@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Muntaha Jewellers, POS & Management (Demo by Zynvox)</title>
+<meta name="description" content="Working demo by Zynvox: jewellery POS and shop management for gold, silver and diamond jewellers in Pakistan. Sample data only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --velvet:#4a1520;--velvet2:#5f1c29;--velvet3:#732535;
+  --gold:#b0852b;--gold2:#d4ab55;--gold-soft:#f7efdd;
+  --bg:#f1f2f4;--paper:#ffffff;--ink:#1b1a1d;--ink2:#46434b;--mute:#77737d;--line:#e1dfe4;--wash:#f7f7f9;
+  --ok:#1d8a5b;--ok-soft:#e1f3ea;--warn:#a86a07;--warn-soft:#fbefd9;--bad:#b4362f;--bad-soft:#f8e2e0;--blue:#2b5fa8;--blue-soft:#e3ecf8;
+  --display:'Marcellus',Georgia,serif;--body:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14.5px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.urdu{font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq','Urdu Typesetting',serif;direction:rtl}
+h1,h2,h3{margin:0;font-weight:600}
+.demo{background:#26090f;color:#e8c9cf;font-size:12.5px;text-align:center;padding:7px 12px}
+.demo b{color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:8px 14px;font-weight:700;font-size:13.5px}
+.btn:hover{border-color:var(--mute)}
+.btn.pri{background:var(--velvet);border-color:var(--velvet);color:#fff}
+.btn.pri:hover{background:var(--velvet2)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.bad{color:var(--bad);border-color:#ecc4c0}
+.btn.sm{padding:5px 10px;font-size:12.5px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.wide{width:100%}
+.inp{width:100%;border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:8px 11px}
+.inp:focus{outline:2px solid color-mix(in srgb,var(--gold) 40%,transparent);border-color:var(--gold)}
+.field{display:grid;gap:5px;margin-bottom:12px}
+.field label{font-weight:700;font-size:12.5px;color:var(--ink2)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:600px){.grid3{grid-template-columns:1fr 1fr}}
+.chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:700;background:var(--wash);color:var(--ink2);border:1px solid var(--line);white-space:nowrap}
+.c-ok{background:var(--ok-soft);color:var(--ok);border-color:transparent}.c-warn{background:var(--warn-soft);color:var(--warn);border-color:transparent}.c-bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}.c-blue{background:var(--blue-soft);color:var(--blue);border-color:transparent}.c-gold{background:var(--gold-soft);color:#7d5a12;border-color:transparent}
+.err{color:var(--bad);font-size:12.5px}
+
+/* Shell */
+.shell{display:grid;grid-template-columns:228px 1fr;min-height:calc(100vh - 32px)}
+.rail{background:var(--velvet);color:#e8d4d8;padding:16px 10px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
+.brand{display:flex;gap:10px;align-items:center;padding:4px 8px 16px}
+.brand .mk{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--gold2);display:grid;place-items:center;font-family:var(--display);color:var(--gold2);font-size:19px}
+.brand b{display:block;font-family:var(--display);color:#fff;font-size:18px;font-weight:400;letter-spacing:.02em}
+.brand small{color:#c9a6ad;font-size:11.5px}
+.nav button{width:100%;display:flex;gap:10px;align-items:center;border:0;background:none;color:#e0c5ca;padding:9px 10px;border-radius:9px;font-weight:600;text-align:left;font-size:14px}
+.nav button:hover{background:var(--velvet2);color:#fff}
+.nav button[aria-current="page"]{background:var(--velvet3);color:#fff;box-shadow:inset 3px 0 0 var(--gold2)}
+.nav svg{width:18px;height:18px;flex:none}
+.nav .grp{color:#b48b93;font-size:11.5px;font-weight:700;padding:12px 10px 4px}
+.rail .foot{margin-top:auto;padding:12px 8px 4px;border-top:1px solid #6a2633;font-size:12px;color:#c9a6ad}
+.top{position:sticky;top:0;z-index:6;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.top h1{font-family:var(--display);font-weight:400;font-size:24px}
+.top .sp{flex:1}
+.ratebar{display:flex;gap:6px;flex-wrap:wrap}
+.rate{border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-size:12px;background:var(--wash);line-height:1.25}
+.rate b{display:block;font-size:13.5px}
+.rate.g{border-color:#ead7ab;background:var(--gold-soft)}
+.menu{display:none}
+.page{padding:20px 22px 70px;max-width:1300px}
+@media(max-width:960px){
+  .shell{grid-template-columns:1fr}
+  .rail{position:fixed;left:0;top:0;bottom:0;width:250px;z-index:40;transform:translateX(-100%);transition:transform .2s}
+  .rail.open{transform:none}
+  .menu{display:inline-flex}
+  .top{padding:10px 14px}.page{padding:14px 14px 70px}
+  .ratebar{order:5;width:100%;overflow-x:auto;flex-wrap:nowrap}
+}
+.scrim{position:fixed;inset:0;background:rgba(30,8,12,.4);z-index:35}
+
+/* Cards & tables */
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px}
+.panel h2{font-size:16px;font-weight:800}
+.panel .sub{color:var(--mute);font-size:13px;margin:2px 0 12px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+@media(max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px}
+.kpi small{color:var(--mute);font-weight:700;font-size:12px}
+.kpi b{display:block;font-size:22px;font-weight:800;margin:4px 0 2px;letter-spacing:-.01em}
+.kpi span{font-size:12.5px;color:var(--ink2)}
+.two{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;margin-bottom:14px}
+.two.even{grid-template-columns:1fr 1fr}
+@media(max-width:1000px){.two,.two.even{grid-template-columns:1fr}}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--wash);color:var(--mute);font-size:12px;font-weight:700}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.toolbar .inp{max-width:250px}
+.toolbar select.inp{max-width:170px}
+.toolbar .sp{flex:1}
+.empty{text-align:center;color:var(--mute);padding:26px}
+
+/* Sarafa board */
+.board{background:var(--velvet);color:#f3e3e6;border-radius:16px;padding:16px 18px;display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+@media(max-width:800px){.board{grid-template-columns:1fr}}
+.board h2{font-family:var(--display);font-weight:400;font-size:22px;color:#fff}
+.board .sub{color:#d2acb3;font-size:12.5px}
+.btable{width:100%;border-collapse:collapse;margin-top:10px}
+.btable td,.btable th{border-bottom:1px solid #6a2633;padding:7px 4px;font-size:13.5px;color:#f3e3e6}
+.btable th{background:none;color:#c9a6ad;font-weight:700;font-size:12px}
+.btable td.big{font-size:17px;font-weight:800;color:var(--gold2)}
+.spark svg{width:100%;height:130px;display:block}
+
+/* POS */
+.pos{display:grid;grid-template-columns:1fr 410px;gap:14px;align-items:start}
+@media(max-width:1100px){.pos{grid-template-columns:1fr}}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.item{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:left;display:flex;flex-direction:column;gap:6px}
+.item:hover{border-color:var(--gold)}
+.item[disabled]{opacity:.45}
+.item .pic{height:74px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold-soft),#fff)}
+.item .pic.s{background:linear-gradient(135deg,#eceef2,#fff)}
+.item .pic.d{background:linear-gradient(135deg,#e6eef8,#fff)}
+.item .pic svg{width:44px;height:44px}
+.item b{font-size:13.5px;line-height:1.25}
+.item small{color:var(--mute);font-size:12px}
+.item .pr{font-weight:800;font-size:14px}
+.cart{background:var(--paper);border:1px solid var(--line);border-radius:14px;position:sticky;top:76px;display:flex;flex-direction:column;max-height:calc(100vh - 96px)}
+.cart .hd{padding:12px 14px;border-bottom:1px solid var(--line)}
+.cart .bd{padding:10px 14px;overflow-y:auto;flex:1}
+.cart .ft{padding:12px 14px;border-top:1px solid var(--line);background:var(--wash);border-radius:0 0 14px 14px}
+.line{border:1px solid var(--line);border-radius:10px;padding:9px 10px;margin-bottom:8px}
+.line .t{display:flex;justify-content:space-between;gap:8px}
+.line .t b{font-size:13.5px}
+.break{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:12.5px;color:var(--ink2);margin-top:6px}
+.break .r{text-align:right}
+.tot{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:13.5px}
+.tot .r{text-align:right}
+.tot .g{font-size:18px;font-weight:800;border-top:1px solid var(--line);padding-top:6px;margin-top:2px}
+.weigh{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.weigh .inp{padding:6px 8px;text-align:center}
+.weigh label{font-size:11.5px;color:var(--mute);font-weight:700;text-align:center;display:block}
+
+/* Orders kanban */
+.kan{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:1000px){.kan{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.kan{grid-template-columns:1fr}}
+.col{background:var(--wash);border:1px solid var(--line);border-radius:12px;padding:10px;min-height:120px}
+.col h3{font-size:13px;font-weight:800;margin-bottom:8px;display:flex;justify-content:space-between}
+.oc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px;margin-bottom:8px;font-size:13px}
+.oc b{display:block;font-size:13.5px}
+.oc small{color:var(--mute);display:block}
+
+/* Modal & toast */
+.modal{position:fixed;inset:0;background:rgba(30,8,12,.45);display:grid;place-items:center;padding:14px;z-index:50}
+.mbox{background:var(--paper);border-radius:16px;width:100%;max-width:520px;padding:20px;max-height:calc(100vh - 28px);overflow:auto;box-shadow:0 30px 80px rgba(30,8,12,.35)}
+.mbox.wide{max-width:760px}
+.mbox h3{font-size:19px;font-weight:800;margin-bottom:2px}
+.mbox .sub{color:var(--mute);font-size:13px;margin:0 0 14px}
+.mact{display:flex;gap:8px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap}
+.toasts{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:grid;gap:8px;z-index:60;justify-items:center}
+.toast{background:var(--velvet);color:#fff;border-radius:999px;padding:9px 18px;font-weight:700;font-size:13.5px;box-shadow:0 10px 30px rgba(30,8,12,.3)}
+
+/* Invoice */
+.inv{border:1px solid var(--line);border-radius:12px;padding:18px;font-size:13px}
+.inv .ih{display:flex;justify-content:space-between;gap:12px;border-bottom:2px solid var(--gold);padding-bottom:10px;margin-bottom:10px}
+.inv .ih h2{font-family:var(--display);font-weight:400;font-size:24px;color:var(--velvet)}
+.inv table th{background:var(--gold-soft);color:#5e430c}
+.inv .fb{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font-size:12px;color:var(--mute);flex-wrap:wrap}
+.tag{width:250px;border:1px dashed var(--mute);border-radius:8px;padding:10px;font-size:12px;background:#fff}
+.bars{display:flex;height:34px;gap:1px;margin:6px 0}
+.bars i{background:#111;flex:none}
+
+.shell>div,.two>*,.board>*,.pos>*,.kpis>*{min-width:0}
+td.num,td .num,.inv td.r{white-space:nowrap}
+.rate{white-space:nowrap;flex:none}
+@media(min-width:961px){.top{flex-wrap:nowrap}.top h1{white-space:nowrap;flex:none}.ratebar{flex:0 1 auto;min-width:0}.top .sp{flex:1 1 0;min-width:0}#role{flex:none}}
+@media(min-width:961px) and (max-width:1250px){.rate{padding:3px 7px;font-size:11px}.top h1{font-size:21px}}
+.mbox.wide{max-width:900px}
+@media(max-width:560px){
+  .kpis{grid-template-columns:1fr}
+  .btable th:nth-child(3),.btable td:nth-child(3){display:none}
+  .btable td.big{font-size:15px}
+  .grid2{grid-template-columns:1fr}
+  .top h1{font-size:20px}
+  .inv .ih{flex-direction:column}
+}
+@media print{
+  body *{visibility:hidden}
+  #printArea,#printArea *{visibility:visible}
+  #printArea{position:absolute;left:0;top:0;width:100%}
+}
+</style>
+</head>
+<body>
+<div class="demo"><b>Working demo by Zynvox.</b> Sample data only. Gold and silver rates are example figures, not today's market rates.</div>
+
+<div class="shell">
+  <aside class="rail" id="rail">
+    <div class="brand"><div class="mk">M</div><div><b>Muntaha Jewellers</b><small>Gold, silver &amp; diamond</small></div></div>
+    <nav class="nav" id="nav">
+      <button data-v="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Dashboard</button>
+      <button data-v="pos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>New sale (POS)</button>
+      <div class="grp">Stock</div>
+      <button data-v="stock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg>Inventory &amp; tags</button>
+      <button data-v="exchange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9h13l-3-3M20 15H7l3 3"/></svg>Old gold &amp; buyback</button>
+      <button data-v="memo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h10v18l-5-3-5 3z"/></svg>Memo &amp; consignment</button>
+      <button data-v="audit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2M8 8v8M11 8v8M14 8v8M17 8v8"/></svg>Stock audit (RFID)</button>
+      <button data-v="rates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg>Daily rates</button>
+      <div class="grp">Work</div>
+      <button data-v="orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Orders &amp; repairs</button>
+      <button data-v="karigar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6Z"/></svg>Karigar</button>
+      <div class="grp">Money</div>
+      <button data-v="customers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg>Customers &amp; khata</button>
+      <button data-v="plans"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M12 8c-2-4-6-4-6-1s6 1 6 1Zm0 0c2-4 6-4 6-1s-6 1-6 1Z"/></svg>Plans, schemes &amp; gifts</button>
+      <button data-v="cash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>Cash book</button>
+      <button data-v="reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Reports</button>
+      <div class="grp">Tools</div>
+      <button data-v="zakat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M9 12h6M12 9v6"/></svg>Weight calculator</button>
+      <button data-v="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.9-1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 3 15.1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 9 4.6V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Settings</button>
+    </nav>
+    <div class="foot">Logged in as <b id="whoami" style="color:#fff">Owner</b><br>Demo build by Zynvox</div>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+  <div>
+    <header class="top">
+      <button class="btn menu" id="menuBtn" aria-label="Open menu">☰</button>
+      <h1 id="ttl">Dashboard</h1>
+      <div class="ratebar" id="ratebar"></div>
+      <span class="sp"></span>
+      <select class="inp" id="role" style="width:auto" aria-label="Switch user role"><option value="owner">Owner</option><option value="sales">Salesman</option><option value="acct">Accountant</option></select>
+    </header>
+    <main class="page" id="page"></main>
+  </div>
+</div>
+
+<div class="modal" id="modal" hidden><div class="mbox" id="mbox" role="dialog" aria-modal="true"></div></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div id="printArea" hidden></div>
+
+<script>
+/* ================= Units & money ================= */
+const TOLA = 11.6638, MASHA = TOLA / 12, RATTI = MASHA / 8;
+const PUR = { '24K': 1, '22K': 0.916, '21K': 0.875, '18K': 0.75 };
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const rs = n => 'Rs ' + Math.round(n).toLocaleString('en-IN');
+const g2 = n => (+n).toFixed(3).replace(/\.?0+$/, '') + ' g';
+function tmr(g) { let t = Math.floor(g / TOLA), r = g - t * TOLA, m = Math.floor(r / MASHA); r -= m * MASHA; const ra = Math.round(r / RATTI); return { t, m, r: ra }; }
+const tmrStr = g => { const x = tmr(g); return `${x.t} tola ${x.m} masha ${x.r} ratti`; };
+const today = () => new Date().toISOString().slice(0, 10);
+const fdate = d => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+function toast(t) { const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; $('#toasts').appendChild(d); setTimeout(() => d.remove(), 3000); }
+function modal(h, wide) { $('#mbox').className = 'mbox' + (wide ? ' wide' : ''); $('#mbox').innerHTML = h; $('#modal').hidden = false; const f = $('#mbox').querySelector('input,select,button.pri'); f && f.focus(); }
+function close() { $('#modal').hidden = true; }
+$('#modal').addEventListener('click', e => { if (e.target.id === 'modal' || e.target.closest('[data-x]')) close(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+/* ================= Pricing engine ================= */
+function perGram(metal, karat) { if (metal === 'silver') return S.rate.silver / TOLA; if (metal === 'platinum') return S.rate.platinum / TOLA; return S.rate['24K'] / TOLA * (PUR[karat] || 1); }
+function rateTola(k) { return k === 'silver' ? S.rate.silver : k === 'PT950' ? S.rate.platinum : S.rate['24K'] * PUR[k]; }
+const net = it => Math.max(0, it.gross - it.stone);
+function itemPrice(it, raw) {
+  const w = net(it), metalV = w * perGram(it.metal, it.karat);
+  let making = it.mType === 'g' ? w * it.mVal : it.mType === 'pct' ? metalV * it.mVal / 100 : it.mVal;
+  const stones = (it.stones || []).reduce((a, s) => a + (s.perCt ? s.ct * s.perCt : s.price || 0), 0);
+  const sub = metalV + making + stones, tax = raw ? 0 : sub * S.set.taxPct / 100;
+  return { metalV, making, stones, tax, total: sub + tax, w };
+}
+
+/* ================= Sample data ================= */
+const S = {
+  role: 'owner',
+  shop: { name: 'Muntaha Jewellers', tagline: 'Gold, silver & diamond', phone: '+92 3xx xxxxxxx (sample)', address: 'Shop address (sample)', ntn: 'NTN (sample)' },
+  rate: { '24K': 395000, silver: 4600, platinum: 110000, date: today() },   // per tola, sample
+  rateHist: [],
+  set: { making22: 750, making18: 900, silverMaking: 120, oldDed: 8, taxPct: 0, oldDedSilver: 10 },
+  items: [], sales: [], customers: [], orders: [], karigars: [], kissue: [], cash: [], oldgold: [], cart: [], cartCust: null, invNo: 2041
+};
+(function seedRates() { let r = 381000; for (let i = 29; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); r += Math.round((Math.sin(i * 1.3) * 1800) + 520); S.rateHist.push({ date: d.toISOString().slice(0, 10), r24: i === 0 ? S.rate['24K'] : r, sil: 4400 + Math.round(Math.sin(i) * 90 + (30 - i) * 7) }); } })();
+const IT = (code, name, cat, metal, karat, gross, stone, mType, mVal, stones, extra = {}) => ({ code, name, cat, metal, karat, gross, stone, mType, mVal, stones, status: 'In stock', added: today(), cost: 0, ...extra });
+S.items = [
+  IT('MJ-1001', 'Kundan bridal necklace set', 'Necklace sets', 'gold', '22K', 58.32, 4.10, 'g', 850, [{ t: 'Kundan & pearls', price: 18000 }]),
+  IT('MJ-1002', 'Plain gold bangles (pair)', 'Bangles', 'gold', '22K', 23.33, 0, 'g', 700, []),
+  IT('MJ-1003', 'Jhumka earrings', 'Earrings', 'gold', '22K', 9.85, 0.6, 'g', 900, [{ t: 'Zircon', price: 1500 }]),
+  IT('MJ-1004', 'Gents ring, Aqeeq', 'Rings', 'gold', '21K', 7.10, 1.2, 'g', 650, [{ t: 'Aqeeq stone', price: 3500 }]),
+  IT('MJ-1005', 'Ladies chain', 'Chains', 'gold', '22K', 11.66, 0, 'g', 600, []),
+  IT('MJ-1006', 'Gold kara bracelet', 'Bracelets', 'gold', '22K', 17.50, 0, 'g', 700, []),
+  IT('MJ-1007', 'Baby gold bali', 'Earrings', 'gold', '22K', 2.35, 0, 'fixed', 1800, []),
+  IT('MJ-1008', 'Locket with Ayat', 'Pendants', 'gold', '21K', 4.20, 0, 'g', 800, []),
+  IT('MJ-1009', 'Solitaire ring 0.50 ct', 'Diamond', 'gold', '18K', 3.80, 0.10, 'pct', 12, [{ t: 'Diamond 0.50 ct, G/VS1, IGI cert (sample)', ct: 0.50, perCt: 450000 }]),
+  IT('MJ-1010', 'Diamond tennis bracelet', 'Diamond', 'gold', '18K', 12.40, 0.62, 'pct', 14, [{ t: 'Diamonds 3.10 ct total, H/SI1', ct: 3.10, perCt: 260000 }]),
+  IT('MJ-1011', 'Diamond studs 0.30 ct pair', 'Diamond', 'gold', '18K', 2.20, 0.06, 'pct', 12, [{ t: 'Diamonds 0.30 ct, F/VS2', ct: 0.30, perCt: 380000 }]),
+  IT('MJ-1012', 'Bridal maang tikka', 'Necklace sets', 'gold', '22K', 8.40, 1.0, 'g', 900, [{ t: 'Polki & pearls', price: 6500 }]),
+  IT('MJ-1013', 'Gold nose pin', 'Rings', 'gold', '18K', 0.55, 0.02, 'fixed', 900, [{ t: 'Diamond chip', ct: 0.02, perCt: 300000 }]),
+  IT('MJ-1014', 'Heavy rani haar', 'Necklace sets', 'gold', '22K', 93.31, 6.2, 'g', 800, [{ t: 'Stones & enamel', price: 22000 }]),
+  IT('MJ-1015', 'Silver payal (pair)', 'Silver', 'silver', '925', 35.0, 0, 'g', 120, []),
+  IT('MJ-1016', 'Silver kara, gents', 'Silver', 'silver', '925', 46.65, 0, 'g', 110, []),
+  IT('MJ-1017', 'Silver ring, Feroza', 'Silver', 'silver', '925', 8.2, 1.4, 'fixed', 900, [{ t: 'Feroza stone', price: 2500 }]),
+  IT('MJ-1018', 'Silver anklet bells', 'Silver', 'silver', '925', 28.0, 0, 'g', 120, []),
+  IT('MJ-1019', 'Gold bangles set (4 pcs)', 'Bangles', 'gold', '21K', 46.66, 0, 'g', 650, []),
+  IT('MJ-1020', 'Pendant set with chain', 'Pendants', 'gold', '22K', 13.10, 0.8, 'g', 850, [{ t: 'Rubies (sample)', price: 7000 }]),
+  IT('MJ-1021', 'Platinum band, gents', 'Rings', 'platinum', 'PT950', 9.0, 0, 'g', 1200, []),
+  IT('MJ-1022', 'Emerald necklace (on memo)', 'Necklace sets', 'gold', '18K', 21.5, 6.0, 'pct', 15, [{ t: 'Emeralds 8.2 ct total', ct: 8.2, perCt: 95000 }], { memo: 'in' })
+];
+S.items.forEach((it, i) => { it.cost = Math.round(itemPrice(it, true).total * (0.9 - (i % 4) * 0.01)); });
+S.customers = [
+  { id: 'C1', name: 'Mrs Ayesha Khan', phone: '0300 1234567', city: 'Lahore', khata: 0, advance: 150000, gold: 0, dob: '1988-11-02', notes: 'Bridal order for daughter, Feb' },
+  { id: 'C2', name: 'Mr Bilal Ahmed', phone: '0321 7654321', city: 'Lahore', khata: 85000, advance: 0, gold: 0, dob: '1979-10-28', notes: 'Pays in two parts' },
+  { id: 'C3', name: 'Mrs Sana Tariq', phone: '0333 5551122', city: 'Kasur', khata: 0, advance: 0, gold: 11.66, dob: '1992-03-15', notes: 'Gold kept in deposit: 1 tola 22K' },
+  { id: 'C4', name: 'Mr Hamza Raza', phone: '0345 9988776', city: 'Lahore', khata: 0, advance: 0, gold: 0, dob: '1990-10-30', notes: '' },
+  { id: 'C5', name: 'Mrs Rabia Sheikh', phone: '0301 4433221', city: 'Sheikhupura', khata: 42000, advance: 0, gold: 0, dob: '1985-07-20', notes: 'Monthly installment Rs 14,000' }
+];
+S.karigars = [{ id: 'K1', name: 'Ustad Rafiq', skill: 'Kundan & bridal', phone: '0300 0001111', wastage: 2.5, labour: 700 }, { id: 'K2', name: 'Imran Setter', skill: 'Diamond setting', phone: '0300 0002222', wastage: 1.5, labour: 1200 }, { id: 'K3', name: 'Akram Polish', skill: 'Polish & repair', phone: '0300 0003333', wastage: 0.5, labour: 300 }];
+const dIn = n => { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+S.orders = [
+  { id: 'OR-301', type: 'Custom', cust: 'C1', desc: 'Bridal set, 22K, design from photo', karat: '22K', estWt: 70, advCash: 150000, advGold: 0, karigar: 'K1', due: dIn(18), stage: 'With karigar' },
+  { id: 'OR-302', type: 'Custom', cust: 'C4', desc: 'Gents ring with name, 21K', karat: '21K', estWt: 8, advCash: 20000, advGold: 0, karigar: 'K1', due: dIn(6), stage: 'Booked' },
+  { id: 'RP-118', type: 'Repair', cust: 'C3', desc: 'Chain hook repair + polish', karat: '22K', estWt: 11.2, advCash: 0, advGold: 0, karigar: 'K3', due: dIn(1), stage: 'Ready', charge: 1500 },
+  { id: 'RP-119', type: 'Repair', cust: 'C5', desc: 'Resize ring, size 14 to 16', karat: '21K', estWt: 4.1, advCash: 500, advGold: 0, karigar: 'K3', due: dIn(2), stage: 'With karigar', charge: 1200 }
+];
+S.kissue = [{ id: 'KI-51', karigar: 'K1', date: dIn(-6), issued: 72.0, karat: '22K', order: 'OR-301', received: 0, recvWt: 0, status: 'Open' }, { id: 'KI-50', karigar: 'K2', date: dIn(-12), issued: 14.0, karat: '18K', order: '', received: 1, recvWt: 13.75, status: 'Closed' }];
+S.cash = [{ date: today(), desc: 'Opening balance', inn: 250000, out: 0 }, { date: today(), desc: 'Karigar labour, Ustad Rafiq', inn: 0, out: 18000 }];
+S.oldgold = [{ id: 'OG-77', date: dIn(-2), cust: 'Walk-in', wt: 15.2, karat: '22K', tested: 91.6, ded: 8, value: 0, mode: 'Exchanged' }];
+(function seedSales() {
+  const picks = [['MJ-1002', 'C2', -1], ['MJ-1011', 'C4', -3], ['MJ-1018', '', -1], ['MJ-1005', 'C5', 0]];
+  picks.forEach(([code, cust, d], i) => { const it = S.items.find(x => x.code === code); const p = itemPrice(it); it.status = 'Sold'; S.sales.push({ no: 'INV-' + (2037 + i), date: dIn(d), cust, lines: [{ code, name: it.name, karat: it.karat, metal: it.metal, net: net(it), price: p }], disc: 0, oldAdj: 0, paid: p.total, method: i % 2 ? 'Card' : 'Cash', profit: p.total - it.cost }); });
+})();
+
+/* ================= Navigation ================= */
+const VIEWS = { dash: 'Dashboard', pos: 'New sale', stock: 'Inventory & tags', exchange: 'Old gold & buyback', rates: 'Daily rates', orders: 'Orders & repairs', karigar: 'Karigar', customers: 'Customers & khata', cash: 'Cash book', reports: 'Reports', zakat: 'Weight calculator', settings: 'Settings', memo: 'Memo & consignment', audit: 'Stock audit', plans: 'Plans, schemes & gifts' };
+const RESTRICT = { sales: ['cash', 'reports', 'settings', 'karigar', 'rates'], acct: ['pos', 'settings', 'audit'] };
+let view = 'dash';
+function go(v) {
+  if ((RESTRICT[S.role] || []).includes(v)) { toast(`The ${roleName()} role can't open ${VIEWS[v]}`); return; }
+  view = v; $$('#nav button').forEach(b => b.dataset.v === v ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'));
+  $('#ttl').textContent = VIEWS[v]; closeRail(); render(); scrollTo({ top: 0 });
+}
+const roleName = () => ({ owner: 'Owner', sales: 'Salesman', acct: 'Accountant' }[S.role]);
+function render() { rateBar(); ({ dash: vDash, pos: vPos, stock: vStock, exchange: vExchange, rates: vRates, orders: vOrders, karigar: vKarigar, customers: vCustomers, cash: vCash, reports: vReports, zakat: vZakat, settings: vSettings, memo: vMemo, audit: vAudit, plans: vPlans })[view](); }
+$('#nav').addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (b) go(b.dataset.v); });
+$('#menuBtn').onclick = () => { $('#rail').classList.add('open'); $('#scrim').hidden = false; };
+function closeRail() { $('#rail').classList.remove('open'); $('#scrim').hidden = true; }
+$('#scrim').onclick = closeRail;
+$('#role').onchange = e => { S.role = e.target.value; $('#whoami').textContent = roleName(); $$('#nav button[data-v]').forEach(b => b.style.opacity = (RESTRICT[S.role] || []).includes(b.dataset.v) ? .4 : 1); toast(`Switched to ${roleName()}. ${S.role === 'sales' ? 'Cost and profit are hidden.' : ''}`); if ((RESTRICT[S.role] || []).includes(view)) go('dash'); else render(); };
+document.addEventListener('click', e => { const g = e.target.closest('[data-go]'); if (g) { close(); go(g.dataset.go); } });
+function rateBar() {
+  $('#ratebar').innerHTML = ['24K', '22K', '21K', '18K'].map(k => `<div class="rate g"><span>${k} gold / tola</span><b class="num">${rs(rateTola(k))}</b></div>`).join('') + `<div class="rate"><span>Silver / tola</span><b class="num">${rs(S.rate.silver)}</b></div><div class="rate"><span>Platinum / tola</span><b class="num">${rs(S.rate.platinum)}</b></div>`;
+}
+const showProfit = () => S.role !== 'sales';
+const custName = id => (S.customers.find(c => c.id === id) || {}).name || 'Walk-in customer';
+
+/* ================= Icons for items ================= */
+function pic(it) {
+  const col = it.metal === 'silver' ? '#8a8f99' : it.metal === 'platinum' ? '#5f6b7a' : it.cat === 'Diamond' ? '#4a78b8' : '#b0852b';
+  const shapes = { Rings: '<circle cx="24" cy="28" r="11" fill="none" stroke-width="3"/><path d="M18 15l6-7 6 7z" stroke-width="2"/>', Bangles: '<circle cx="20" cy="24" r="11" fill="none" stroke-width="3"/><circle cx="29" cy="24" r="11" fill="none" stroke-width="3"/>', Earrings: '<path d="M18 8v8M30 8v8" stroke-width="2"/><path d="M12 30a6 6 0 0 0 12 0l-6-14zM24 30a6 6 0 0 0 12 0l-6-14z" stroke-width="2"/>', Chains: '<path d="M8 14q16 30 32 0" fill="none" stroke-width="3" stroke-dasharray="4 3"/>', Bracelets: '<ellipse cx="24" cy="24" rx="15" ry="9" fill="none" stroke-width="3"/>', Pendants: '<path d="M10 10q14 14 28 0" fill="none" stroke-width="2"/><path d="M24 17l7 10-7 11-7-11z" stroke-width="2"/>', 'Necklace sets': '<path d="M8 10q16 32 32 0" fill="none" stroke-width="3"/><circle cx="24" cy="32" r="5" stroke-width="2"/><circle cx="15" cy="25" r="3"/><circle cx="33" cy="25" r="3"/>', Diamond: '<path d="M10 18l6-8h16l6 8-14 20z" fill="none" stroke-width="2.5"/><path d="M10 18h28M20 10l-4 8 8 20 8-20-4-8" fill="none" stroke-width="1.5"/>', Silver: '<circle cx="24" cy="24" r="12" fill="none" stroke-width="3"/><circle cx="24" cy="24" r="5" stroke-width="2"/>' };
+  return `<svg viewBox="0 0 48 48" stroke="${col}" fill="${col}" fill-opacity=".15">${shapes[it.cat] || shapes.Rings}</svg>`;
+}
+
+/* ================= Dashboard ================= */
+function vDash() {
+  const tSales = S.sales.filter(s => s.date === today()), tVal = tSales.reduce((a, s) => a + s.paid, 0);
+  const inStock = S.items.filter(i => i.status === 'In stock'), goldWt = inStock.filter(i => i.metal === 'gold').reduce((a, i) => a + net(i), 0), silWt = inStock.filter(i => i.metal === 'silver').reduce((a, i) => a + net(i), 0);
+  const stockVal = inStock.reduce((a, i) => a + itemPrice(i, true).total, 0), khata = S.customers.reduce((a, c) => a + c.khata, 0);
+  const due = S.orders.filter(o => o.stage !== 'Delivered' && (new Date(o.due) - new Date()) / 864e5 <= 3);
+  const bdays = S.customers.filter(c => { const d = new Date(c.dob); const n = new Date(); const t = new Date(n.getFullYear(), d.getMonth(), d.getDate()); const diff = (t - n) / 864e5; return diff >= -1 && diff <= 10; });
+  $('#page').innerHTML = `
+  <div class="board">
+    <div><h2>Today's sarafa rates</h2><div class="sub">Updated ${fdate(S.rate.date)}. Every price in the shop recalculates from these rates. <a href="#" data-go="rates" style="color:var(--gold2)">Update rates</a></div>
+      <table class="btable"><thead><tr><th>Metal</th><th class="r">Per tola</th><th class="r">Per 10 g</th><th class="r">Per gram</th></tr></thead><tbody>
+      ${['24K', '22K', '21K', '18K'].map(k => `<tr><td>${k} gold</td><td class="r big num">${rs(rateTola(k))}</td><td class="r num">${rs(rateTola(k) / TOLA * 10)}</td><td class="r num">${rs(rateTola(k) / TOLA)}</td></tr>`).join('')}
+      <tr><td>Silver</td><td class="r big num">${rs(S.rate.silver)}</td><td class="r num">${rs(S.rate.silver / TOLA * 10)}</td><td class="r num">${rs(S.rate.silver / TOLA)}</td></tr><tr><td>Platinum PT950</td><td class="r big num">${rs(S.rate.platinum)}</td><td class="r num">${rs(S.rate.platinum / TOLA * 10)}</td><td class="r num">${rs(S.rate.platinum / TOLA)}</td></tr></tbody></table></div>
+    <div class="spark"><div class="sub" style="margin-top:4px">24K gold per tola, last 30 days (sample)</div>${spark(S.rateHist.map(r => r.r24), '#d4ab55')}</div>
+  </div>
+  <div class="kpis" style="margin-top:14px">
+    <div class="kpi"><small>Sales today</small><b class="num">${rs(tVal)}</b><span>${tSales.length} invoice${tSales.length === 1 ? '' : 's'}</span></div>
+    <div class="kpi"><small>Gold in stock</small><b class="num">${tmr(goldWt).t} tola ${tmr(goldWt).m} masha</b><span>${g2(goldWt)} net, ${inStock.filter(i => i.metal === 'gold').length} pieces</span></div>
+    <div class="kpi"><small>Stock value at today's rate</small><b class="num">${rs(stockVal)}</b><span>Silver ${g2(silWt)}</span></div>
+    <div class="kpi"><small>Khata receivable</small><b class="num">${rs(khata)}</b><span>${S.customers.filter(c => c.khata > 0).length} customers owe</span></div>
+  </div>
+  <div class="two">
+    <div class="panel"><div class="row" style="justify-content:space-between"><div><h2>Recent invoices</h2><p class="sub">Latest sales across the counter.</p></div><button class="btn pri" data-go="pos">New sale</button></div>
+      <div class="tw"><table><thead><tr><th>Invoice</th><th>Date</th><th>Customer</th><th>Items</th><th class="r">Amount</th>${showProfit() ? '<th class="r">Profit</th>' : ''}<th></th></tr></thead><tbody>
+      ${S.sales.slice().reverse().slice(0, 6).map(s => `<tr><td><b>${s.no}</b></td><td>${fdate(s.date)}</td><td>${esc(custName(s.cust))}</td><td>${s.lines.length}</td><td class="r num">${rs(s.paid)}</td>${showProfit() ? `<td class="r num" style="color:var(--ok)">${rs(s.profit)}</td>` : ''}<td><button class="btn sm" data-inv="${s.no}">View</button></td></tr>`).join('')}
+      </tbody></table></div></div>
+    <div class="panel"><h2>Needs attention</h2><p class="sub">Orders due soon and customer occasions.</p>
+      ${due.map(o => `<div class="line"><div class="t"><b>${o.id}: ${esc(o.desc)}</b><span class="chip ${o.stage === 'Ready' ? 'c-ok' : 'c-warn'}">${o.stage}</span></div><small style="color:var(--mute)">${esc(custName(o.cust))}, due ${fdate(o.due)}</small></div>`).join('') || '<p class="sub">No orders due in the next 3 days.</p>'}
+      ${S.customers.filter(c => { const d = new Date(c.anniv), n = new Date(), t = new Date(n.getFullYear(), d.getMonth(), d.getDate()), x = (t - n) / 864e5; return x >= -1 && x <= 14; }).map(c => `<div class="line"><div class="t"><b>Anniversary soon: ${esc(c.name)}</b><button class="btn sm" data-wa="${c.id}">Send wish</button></div><small style="color:var(--mute)">Suggest: ${esc(c.styles)}</small></div>`).join('')}
+      ${S.customers.filter(c => (new Date(today()) - new Date(c.cleaned)) / 864e5 > 180).map(c => `<div class="line"><div class="t"><b>Free cleaning due: ${esc(c.name)}</b><button class="btn sm" data-wa="${c.id}">Invite</button></div><small style="color:var(--mute)">Last cleaned ${fdate(c.cleaned)}</small></div>`).join('')}
+      ${S.plans.filter(p => p.next && (new Date(p.next) - new Date()) / 864e5 <= 7 && (p.type !== 'Installment' || p.paid < p.total) && (p.type !== 'Gold savings' || p.paidMonths < p.months)).map(p => `<div class="line"><div class="t"><b>${p.type} due: ${esc(custName(p.cust))}</b><span class="chip c-blue">${p.id}</span></div><small style="color:var(--mute)">${rs(p.monthly)} due ${fdate(p.next)}</small></div>`).join('')}
+      ${bdays.map(c => `<div class="line"><div class="t"><b>Birthday soon: ${esc(c.name)}</b><button class="btn sm" data-wa="${c.id}">Send wish</button></div><small style="color:var(--mute)">${fdate(new Date(new Date().getFullYear(), new Date(c.dob).getMonth(), new Date(c.dob).getDate()))}</small></div>`).join('')}
+    </div>
+  </div>`;
+}
+function spark(vals, col) {
+  const W = 400, H = 130, P = 6, mx = Math.max(...vals), mn = Math.min(...vals), x = i => P + i * (W - 2 * P) / (vals.length - 1), y = v => H - P - (v - mn) / ((mx - mn) || 1) * (H - 2 * P - 14);
+  const d = vals.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Rate trend"><path d="${d} L${x(vals.length - 1)} ${H} L${x(0)} ${H}Z" fill="${col}" fill-opacity=".14"/><path d="${d}" fill="none" stroke="${col}" stroke-width="2.2" vector-effect="non-scaling-stroke"/></svg><div class="row" style="justify-content:space-between;font-size:12px;color:#d2acb3"><span>Low ${rs(mn)}</span><span>High ${rs(mx)}</span></div>`;
+}
+document.addEventListener('click', e => { const w = e.target.closest('[data-wa]'); if (w) { const c = S.customers.find(x => x.id === w.dataset.wa); toast(`WhatsApp wish prepared for ${c.name} (demo)`); } });
+
+/* ================= POS ================= */
+let posFilter = 'All', posQ = '';
+function vPos() {
+  const cats = ['All', ...new Set(S.items.map(i => i.cat))];
+  $('#page').innerHTML = `<div class="pos">
+   <div>
+    <div class="toolbar"><input class="inp" id="pq" placeholder="Scan tag or search name / code" value="${esc(posQ)}" aria-label="Search items"><select class="inp" id="pc" aria-label="Category">${cats.map(c => `<option ${c === posFilter ? 'selected' : ''}>${c}</option>`).join('')}</select><span class="sp"></span><button class="btn" id="manual">Weigh custom item</button></div>
+    <div class="items" id="items"></div>
+   </div>
+   <aside class="cart">
+    <div class="hd"><div class="row" style="justify-content:space-between"><h2 style="font-size:16px;font-weight:800">Current bill</h2><span class="chip c-gold">INV-${S.invNo}</span></div>
+      <div class="field" style="margin:10px 0 0"><select class="inp" id="cc" aria-label="Customer"><option value="">Walk-in customer</option>${S.customers.map(c => `<option value="${c.id}" ${S.cartCust === c.id ? 'selected' : ''}>${esc(c.name)}, ${c.phone}</option>`).join('')}</select></div>
+      <div class="grid2" style="margin-top:8px"><select class="inp" id="sp" aria-label="Salesperson">${S.staff.map(x => `<option value="${x.id}" ${S.cartSp === x.id ? 'selected' : ''}>Sold by ${esc(x.name)}</option>`).join('')}</select><span class="sub" style="margin:0;align-self:center;font-size:12px" id="custInfo"></span></div></div>
+    <div class="bd" id="cartLines"></div>
+    <div class="ft" id="cartFoot"></div>
+   </aside></div>`;
+  $('#pq').oninput = e => { posQ = e.target.value; renderItems(); };
+  $('#pq').onkeydown = e => { if (e.key === 'Enter') { const it = S.items.find(i => i.code.toLowerCase() === posQ.trim().toLowerCase()); if (it) { addToCart(it.code); posQ = ''; e.target.value = ''; renderItems(); } } };
+  $('#pc').onchange = e => { posFilter = e.target.value; renderItems(); };
+  $('#cc').onchange = e => { S.cartCust = e.target.value || null; renderCart(); };
+  $('#sp').onchange = e => { S.cartSp = e.target.value; };
+  $('#manual').onclick = manualItem;
+  renderItems(); renderCart();
+}
+function renderItems() {
+  const q = posQ.trim().toLowerCase();
+  const list = S.items.filter(i => inBranch(i) && (posFilter === 'All' || i.cat === posFilter) && (!q || (i.code + ' ' + i.name).toLowerCase().includes(q)));
+  $('#items').innerHTML = list.map(i => { const inCart = S.cart.some(c => c.code === i.code), dis = i.status !== 'In stock' || inCart; return `<button class="item" data-add="${i.code}" ${dis ? 'disabled' : ''}><div class="pic ${i.metal === 'silver' ? 's' : i.cat === 'Diamond' ? 'd' : ''}">${pic(i)}</div><b>${esc(i.name)}</b><small>${i.code}, ${i.metal === 'silver' ? 'Silver 925' : i.metal === 'platinum' ? 'Platinum' : i.karat}, ${g2(net(i))}${i.memo === 'in' ? ', on memo' : ''}</small><span class="pr num">${i.status !== 'In stock' ? i.status : inCart ? 'In bill' : rs(itemPrice(i).total)}</span></button>`; }).join('') || '<div class="empty">No items match. Try another search or category.</div>';
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-add]'); if (b && !b.disabled) addToCart(b.dataset.add); });
+function addToCart(code) { const it = S.items.find(i => i.code === code); if (!it || it.status !== 'In stock' || S.cart.some(c => c.code === code)) return; S.cart.push({ code, it: { ...it, stones: (it.stones || []).map(s => ({ ...s })) } }); renderItems(); renderCart(); toast(`${it.name} added`); }
+function cartTotals() {
+  const lines = S.cart.map(c => ({ c, p: itemPrice(c.it) }));
+  const sub = lines.reduce((a, l) => a + l.p.total, 0), disc = +(S.disc || 0), old = +(S.oldAdj || 0);
+  const adv = S.cartCust ? (S.customers.find(x => x.id === S.cartCust).advance || 0) : 0, useAdv = S.useAdv ? Math.min(adv, Math.max(0, sub - disc - old)) : 0;
+  return { lines, sub, disc, old, adv, useAdv, due: Math.max(0, sub - disc - old - useAdv) };
+}
+function renderCart() {
+  if (!$('#cartLines')) return;
+  const T = cartTotals();
+  $('#cartLines').innerHTML = T.lines.length ? T.lines.map(({ c, p }, i) => `<div class="line"><div class="t"><b>${esc(c.it.name)}</b><button class="btn sm bad" data-rm="${i}" aria-label="Remove">✕</button></div>
+    <small style="color:var(--mute)">${c.it.code}, ${c.it.metal === 'silver' ? 'Silver' : c.it.karat}, net ${g2(p.w)} (${tmrStr(p.w)})</small>
+    <div class="break"><span>${c.it.metal === 'silver' ? 'Silver' : 'Gold'} value at ${rs(perGram(c.it.metal, c.it.karat))}/g</span><span class="r num">${rs(p.metalV)}</span>
+    <span>Making ${c.it.mType === 'g' ? `Rs ${c.it.mVal}/g` : c.it.mType === 'pct' ? c.it.mVal + '%' : 'fixed'} <button class="btn sm" data-mk="${i}" style="padding:1px 7px;font-size:11.5px">edit</button></span><span class="r num">${rs(p.making)}</span>
+    ${p.stones ? `<span>Stones / diamonds</span><span class="r num">${rs(p.stones)}</span>` : ''}${p.tax ? `<span>Sales tax ${S.set.taxPct}%</span><span class="r num">${rs(p.tax)}</span>` : ''}
+    <span><b>Item total</b></span><span class="r num"><b>${rs(p.total)}</b></span></div></div>`).join('') : '<div class="empty">Tap an item or scan its tag to start a bill.</div>';
+  $('#cartFoot').innerHTML = `<div class="tot"><span>Subtotal</span><span class="r num">${rs(T.sub)}</span>
+    <span>Discount</span><span class="r"><input class="inp num" id="disc" type="number" min="0" value="${S.disc || ''}" placeholder="0" style="width:110px;padding:4px 8px;text-align:right"></span>
+    <span>Old gold adjusted <button class="btn sm" id="oldBtn" style="padding:1px 7px;font-size:11.5px">add</button></span><span class="r num">${T.old ? '− ' + rs(T.old) : rs(0)}</span>
+    ${T.adv ? `<span><label><input type="checkbox" id="useAdv" ${S.useAdv ? 'checked' : ''}> Use advance (${rs(T.adv)})</label></span><span class="r num">${T.useAdv ? '− ' + rs(T.useAdv) : ''}</span>` : ''}
+    <span class="g">Amount due</span><span class="r g num">${rs(T.due)}</span></div>
+    <div class="grid2" style="margin-top:10px"><select class="inp" id="method" aria-label="Payment method">${['Cash', 'Card / NFC', 'Raast QR', 'JazzCash', 'Easypaisa', 'Bank transfer', 'Split cash + card', 'Gift card', 'Store credit', 'Installment plan', 'Khata (credit)'].map(m => `<option ${S.cartMethod === m ? 'selected' : ''}>${m}</option>`).join('')}</select><input class="inp num" id="paid" type="number" placeholder="Amount received" value="${T.due ? Math.round(S.cartMethod === 'Installment plan' ? T.due * 0.2 : T.due) : ''}" aria-label="Amount received"></div>
+    <button class="btn pri wide" id="checkout" style="margin-top:10px" ${T.lines.length ? '' : 'disabled'}>Complete sale and print invoice</button>`;
+  $('#disc').onchange = e => { S.disc = Math.max(0, +e.target.value || 0); renderCart(); };
+  $('#oldBtn').onclick = () => oldGoldModal(true);
+  if ($('#useAdv')) $('#useAdv').onchange = e => { S.useAdv = e.target.checked; renderCart(); };
+  $('#checkout').onclick = () => checkout();
+  $('#method').onchange = e => { S.cartMethod = e.target.value; const d = cartTotals().due; if (S.cartMethod === 'Installment plan') { $('#paid').value = Math.round(d * 0.2); toast('20% deposit filled in. Change it if needed.'); } else if (S.cartMethod !== 'Khata (credit)') $('#paid').value = d; };
+  const cu = S.cartCust && S.customers.find(x => x.id === S.cartCust); if ($('#custInfo')) $('#custInfo').textContent = cu ? `Ring ${cu.ring}, ${cu.points} pts, credit ${rs(cu.credit || 0)}` : '';
+  $$('[data-rm]').forEach(b => b.onclick = () => { S.cart.splice(+b.dataset.rm, 1); renderItems(); renderCart(); });
+  $$('[data-mk]').forEach(b => b.onclick = () => editMaking(+b.dataset.mk));
+}
+function editMaking(i) {
+  const it = S.cart[i].it;
+  modal(`<h3>Making charges</h3><p class="sub">${esc(it.name)}. Change for this bill only, for example after bargaining.</p><div class="grid2"><div class="field"><label for="mt">Type</label><select class="inp" id="mt"><option value="g" ${it.mType === 'g' ? 'selected' : ''}>Rs per gram</option><option value="pct" ${it.mType === 'pct' ? 'selected' : ''}>% of metal value</option><option value="fixed" ${it.mType === 'fixed' ? 'selected' : ''}>Fixed amount</option></select></div><div class="field"><label for="mv">Value</label><input class="inp num" id="mv" type="number" value="${it.mVal}"></div></div><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="mSave">Apply</button></div>`);
+  $('#mSave').onclick = () => { it.mType = $('#mt').value; it.mVal = Math.max(0, +$('#mv').value || 0); close(); renderCart(); toast('Making charges updated'); };
+}
+function manualItem() {
+  modal(`<h3>Weigh a custom item</h3><p class="sub">For an item without a tag. Enter the weight in tola, masha, ratti or grams.</p>
+   <div class="grid2"><div class="field"><label for="mn">Item name</label><input class="inp" id="mn" value="Gold ring (custom)"></div><div class="field"><label for="mk">Metal</label><select class="inp" id="mk"><option>22K</option><option>21K</option><option>18K</option><option>24K</option><option value="silver">Silver</option></select></div></div>
+   <div class="weigh"><div><label for="wt">Tola</label><input class="inp num" id="wt" type="number" min="0" value="0"></div><div><label for="wm">Masha</label><input class="inp num" id="wm" type="number" min="0" max="11" value="6"></div><div><label for="wr">Ratti</label><input class="inp num" id="wr" type="number" min="0" max="7" value="0"></div><div><label for="wg">Grams</label><input class="inp num" id="wg" type="number" min="0" step="0.001"></div></div>
+   <div class="grid2" style="margin-top:12px"><div class="field"><label for="ms">Stone weight (g)</label><input class="inp num" id="ms" type="number" min="0" step="0.01" value="0"></div><div class="field"><label for="mm">Making (Rs per gram)</label><input class="inp num" id="mm" type="number" min="0" value="${S.set.making22}"></div></div>
+   <p id="mprev" class="num" style="font-weight:700"></p><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="mAdd">Add to bill</button></div>`);
+  const sync = from => { if (from === 'tmr') $('#wg').value = ((+$('#wt').value || 0) * TOLA + (+$('#wm').value || 0) * MASHA + (+$('#wr').value || 0) * RATTI).toFixed(3); else { const x = tmr(+$('#wg').value || 0); $('#wt').value = x.t; $('#wm').value = x.m; $('#wr').value = x.r; } const k = $('#mk').value, it = { gross: +$('#wg').value || 0, stone: +$('#ms').value || 0, metal: k === 'silver' ? 'silver' : 'gold', karat: k === 'silver' ? '925' : k, mType: 'g', mVal: +$('#mm').value || 0, stones: [] }; $('#mprev').textContent = `Net ${g2(net(it))}, price ${rs(itemPrice(it).total)}`; return it; };
+  ['wt', 'wm', 'wr'].forEach(id => $('#' + id).oninput = () => sync('tmr')); $('#wg').oninput = () => sync('g'); ['mk', 'ms', 'mm'].forEach(id => $('#' + id).oninput = () => sync('tmr')); sync('tmr');
+  $('#mAdd').onclick = () => { const it = sync('tmr'); if (it.gross <= 0) { toast('Enter a weight first'); return; } const code = 'CU-' + (100 + S.cart.length + S.sales.length); const full = { code, name: $('#mn').value || 'Custom item', cat: 'Custom', status: 'In stock', cost: Math.round(itemPrice(it, true).total * .9), ...it }; S.items.push(full); close(); addToCart(code); };
+}
+function checkout(opt = {}) {
+  const T = cartTotals(); if (!T.lines.length) return;
+  const method = $('#method').value, paidIn = +$('#paid').value || 0, cu = S.cartCust ? S.customers.find(x => x.id === S.cartCust) : null;
+  if (['Raast QR', 'JazzCash', 'Easypaisa'].includes(method) && !opt.qr) { qrModal(method, T.due, () => checkout({ qr: true })); return; }
+  if (method === 'Gift card' && !opt.gift) { giftRedeem(T.due, g => checkout({ gift: g })); return; }
+  if (method === 'Store credit') { if (!cu) { toast('Choose the customer whose store credit to use'); return; } if ((cu.credit || 0) < T.due) { toast(`Store credit is ${rs(cu.credit || 0)}, not enough for this bill`); return; } }
+  const full = ['Gift card', 'Store credit', 'Raast QR', 'JazzCash', 'Easypaisa'].includes(method);
+  let credit = method === 'Khata (credit)' ? T.due : full ? 0 : Math.max(0, T.due - paidIn);
+  if (method === 'Installment plan' && !cu) { toast('Choose a customer for the installment plan'); return; }
+  if (method === 'Installment plan' && credit <= 0) { toast('Enter a deposit smaller than the bill. The rest goes on the plan.'); return; }
+  if (credit > 0 && !cu) { toast('Choose a customer to put a balance on khata'); return; }
+  const no = 'INV-' + S.invNo++;
+  const sale = { no, date: today(), cust: S.cartCust || '', sp: $('#sp') ? $('#sp').value : 'S1', lines: T.lines.map(({ c, p }) => ({ code: c.code, name: c.it.name, karat: c.it.karat, metal: c.it.metal, net: p.w, mType: c.it.mType, mVal: c.it.mVal, cert: c.it.cert || '', price: p })), disc: T.disc, oldAdj: T.old, advUsed: T.useAdv, paid: T.due - credit, credit, method, profit: 0 };
+  sale.profit = T.lines.reduce((a, { c, p }) => a + p.total - (S.items.find(i => i.code === c.code).cost || 0), 0) - T.disc;
+  T.lines.forEach(({ c }) => { S.items.find(i => i.code === c.code).status = 'Sold'; S.custody.push({ date: today(), code: c.code, event: 'Sold on ' + no }); });
+  if (method === 'Gift card') opt.gift.bal -= T.due;
+  if (method === 'Store credit') cu.credit -= T.due;
+  if (method === 'Installment plan' && credit > 0) { const n = 6, id = 'IP-' + (22 + S.plans.length); S.plans.unshift({ id, type: 'Installment', cust: cu.id, inv: no, total: credit, paid: 0, n, monthly: Math.ceil(credit / n), next: dIn(30), payments: [] }); sale.plan = id; sale.planMonthly = Math.ceil(credit / n); }
+  else if (cu && credit) cu.khata += credit;
+  if (cu) { cu.advance -= T.useAdv; sale.points = Math.floor(T.due / 1000); cu.points = (cu.points || 0) + sale.points; }
+  if (sale.paid > 0 && !['Gift card', 'Store credit'].includes(method)) S.cash.push({ date: today(), desc: `Sale ${no} (${method})`, inn: sale.paid, out: 0 });
+  if (T.old && S.pendingOld) { S.oldgold.unshift({ ...S.pendingOld, mode: 'Exchanged', inv: no }); }
+  S.sales.push(sale); S.cart = []; S.disc = 0; S.oldAdj = 0; S.useAdv = false; S.pendingOld = null;
+  showInvoice(no); renderItems(); renderCart();
+}
+
+/* ================= Invoice ================= */
+function invoiceHTML(s) {
+  const c = S.customers.find(x => x.id === s.cust);
+  const sub = s.lines.reduce((a, l) => a + l.price.total, 0);
+  return `<div class="inv"><div class="ih"><div><h2>${esc(S.shop.name)}</h2><div style="color:var(--mute)">${esc(S.shop.tagline)}<br>${esc(S.shop.address)}<br>${esc(S.shop.phone)}, ${esc(S.shop.ntn)}</div></div><div style="text-align:right"><b style="font-size:15px">Sale invoice</b> <span class="urdu">رسید</span><br>${s.no}<br>${fdate(s.date)}<br>${esc(c ? c.name : 'Walk-in customer')}${c ? '<br>' + esc(c.phone) : ''}</div></div>
+  <table><thead><tr><th>Item</th><th>Karat</th><th class="r">Net weight</th><th class="r">Metal</th><th class="r">Making</th><th class="r">Stones</th><th class="r">Total</th></tr></thead><tbody>
+  ${s.lines.map(l => `<tr><td>${esc(l.name)}<br><small style="color:var(--mute)">${l.code}</small></td><td>${l.metal === 'silver' ? 'Silver' : l.karat}${l.cert ? `<br><small style="color:var(--mute)">${esc(l.cert)}</small>` : ''}</td><td class="r num">${g2(l.net)}<br><small style="color:var(--mute)">${tmrStr(l.net)}</small></td><td class="r num">${rs(l.price.metalV)}</td><td class="r num">${rs(l.price.making)}</td><td class="r num">${rs(l.price.stones)}</td><td class="r num"><b>${rs(l.price.total)}</b></td></tr>`).join('')}
+  </tbody></table>
+  <table style="margin-top:8px;max-width:340px;margin-left:auto"><tbody><tr><td>Subtotal</td><td class="r num">${rs(sub)}</td></tr>${s.disc ? `<tr><td>Discount</td><td class="r num">− ${rs(s.disc)}</td></tr>` : ''}${s.oldAdj ? `<tr><td>Old gold adjusted</td><td class="r num">− ${rs(s.oldAdj)}</td></tr>` : ''}${s.advUsed ? `<tr><td>Advance used</td><td class="r num">− ${rs(s.advUsed)}</td></tr>` : ''}<tr><td>Paid (${esc(s.method)})</td><td class="r num">${rs(s.paid)}</td></tr>${s.credit ? `<tr><td>${s.plan ? `Installment plan ${s.plan}` : 'Balance on khata'}</td><td class="r num" style="color:var(--bad)">${rs(s.credit)}</td></tr>` : ''}${s.plan ? `<tr><td>Monthly instalment</td><td class="r num">6 × ${rs(s.planMonthly)}</td></tr>` : ''}</tbody></table>
+  <div class="fb"><span>Gold rate used: 24K ${rs(S.rate['24K'])} per tola. Weights: 1 tola = 11.664 g.<br>FBR POS invoice number: <b>(appears here once FBR integration is connected)</b></span><span>Served by ${esc(staffName(s.sp))}${s.points ? `. Loyalty points earned: ${s.points}` : ''}.<br>Buyback: as per shop policy on deduction. Thank you for shopping with us.</span></div></div>`;
+}
+function showInvoice(no) {
+  const s = S.sales.find(x => x.no === no);
+  modal(`<h3>Sale complete</h3><p class="sub">${no} saved. Stock, khata and cash book are updated.</p>${invoiceHTML(s)}<div class="mact"><button class="btn" id="waInv">Send on WhatsApp</button><button class="btn" id="prInv">Print</button><button class="btn pri" data-x>Done</button></div>`, true);
+  $('#waInv').onclick = () => toast('Invoice PDF prepared for WhatsApp (demo)');
+  $('#prInv').onclick = () => printHTML(invoiceHTML(s));
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-inv]'); if (b) showInvoice(b.dataset.inv); });
+function printHTML(h) { const p = $('#printArea'); p.innerHTML = h; p.hidden = false; try { window.print(); } catch (e) { } setTimeout(() => { p.hidden = true; }, 500); }
+
+/* ================= Inventory ================= */
+let stQ = '', stCat = 'All', stStatus = 'In stock';
+function vStock() {
+  const cats = ['All', ...new Set(S.items.map(i => i.cat))];
+  const list = S.items.filter(i => inBranch(i) && (stCat === 'All' || i.cat === stCat) && (stStatus === 'All' || i.status === stStatus) && (!stQ || (i.code + ' ' + i.name).toLowerCase().includes(stQ.toLowerCase())));
+  const byK = {}; S.items.filter(i => i.status === 'In stock' && inBranch(i)).forEach(i => { const k = i.metal === 'silver' ? 'Silver' : i.metal === 'platinum' ? 'Platinum' : i.karat; byK[k] = (byK[k] || 0) + net(i); });
+  $('#page').innerHTML = `<div class="kpis">${Object.entries(byK).map(([k, w]) => `<div class="kpi"><small>${k} in stock</small><b class="num">${g2(w)}</b><span>${tmrStr(w)}</span></div>`).join('')}</div>
+  <div class="toolbar"><input class="inp" id="sq" placeholder="Search code or name" value="${esc(stQ)}" aria-label="Search stock"><select class="inp" id="scat" aria-label="Category">${cats.map(c => `<option ${c === stCat ? 'selected' : ''}>${c}</option>`).join('')}</select><select class="inp" id="sst" aria-label="Status">${['In stock', 'On memo', 'Sold', 'Returned', 'All'].map(c => `<option ${c === stStatus ? 'selected' : ''}>${c}</option>`).join('')}</select><span class="sp"></span>${S.role !== 'sales' ? '<button class="btn pri" id="addItem">Add item</button>' : ''}</div>
+  <div class="tw"><table><thead><tr><th>Code</th><th>Item</th><th>Metal</th><th class="r">Gross</th><th class="r">Stone</th><th class="r">Net</th><th>Making</th><th class="r">Price today</th>${showProfit() ? '<th class="r">Cost</th><th>Vendor</th>' : ''}<th class="r">Age</th><th>Status</th><th></th></tr></thead><tbody>
+  ${list.map(i => `<tr><td><b>${i.code}</b></td><td>${esc(i.name)}<br><small style="color:var(--mute)">${esc(i.cat)}${(i.stones || []).length ? ', ' + esc(i.stones.map(s => s.t).join('; ')) : ''}</small></td><td>${i.metal === 'silver' ? 'Silver 925' : i.metal === 'platinum' ? 'Platinum PT950' : i.karat + ' gold'}</td><td class="r num">${g2(i.gross)}</td><td class="r num">${g2(i.stone)}</td><td class="r num"><b>${g2(net(i))}</b></td><td>${i.mType === 'g' ? 'Rs ' + i.mVal + '/g' : i.mType === 'pct' ? i.mVal + '%' : rs(i.mVal)}</td><td class="r num">${rs(itemPrice(i).total)}</td>${showProfit() ? `<td class="r num">${rs(i.cost)}</td><td><small>${esc(i.vendor)}</small></td>` : ''}<td class="r num" style="color:${daysIn(i) > 180 ? 'var(--bad)' : 'inherit'}">${daysIn(i)} d</td><td><span class="chip ${i.status === 'In stock' ? 'c-ok' : i.status === 'On memo' ? 'c-warn' : 'c-bad'}">${i.status}</span>${i.memo === 'in' ? ' <span class="chip c-blue">Memo in</span>' : ''}</td><td style="white-space:nowrap"><button class="btn sm" data-tag="${i.code}">Tag</button> ${i.cert ? `<button class="btn sm" data-cert="${i.code}">Cert</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="13" class="empty">No items match.</td></tr>'}
+  </tbody></table></div>`;
+  $('#sq').oninput = e => { stQ = e.target.value; const pos = e.target.selectionStart; vStock(); const n = $('#sq'); n.focus(); n.setSelectionRange(pos, pos); };
+  $('#scat').onchange = e => { stCat = e.target.value; vStock(); };
+  $('#sst').onchange = e => { stStatus = e.target.value; vStock(); };
+  if ($('#addItem')) $('#addItem').onclick = addItem;
+}
+function bars(code) { let h = 0; return [...(code + '*')].flatMap((ch, i) => { const c = ch.charCodeAt(0); return [1 + c % 3, 1 + (c >> 2) % 2, 1 + (c >> 1) % 3, 1].map((w, j) => `<i style="width:${w}px;${j % 2 ? 'background:transparent' : ''}"></i>`); }).join(''); }
+function tagHTML(i) { return `<div class="tag"><b style="font-family:var(--display);font-size:14px">${esc(S.shop.name)}</b><div class="bars">${bars(i.code)}</div><div class="row" style="justify-content:space-between"><b>${i.code}</b><span>${i.metal === 'silver' ? 'Silver 925' : i.karat}</span></div><div>Gross ${g2(i.gross)}, net ${g2(net(i))}</div><div>${tmrStr(net(i))}</div></div>`; }
+document.addEventListener('click', e => { const b = e.target.closest('[data-tag]'); if (!b) return; const i = S.items.find(x => x.code === b.dataset.tag); modal(`<h3>Tag label</h3><p class="sub">Print and attach to the piece. The barcode scans straight into the POS (barcode shown is illustrative).</p>${tagHTML(i)}<div class="mact"><button class="btn" data-x>Close</button><button class="btn pri" id="prTag">Print tag</button></div>`); $('#prTag').onclick = () => printHTML(tagHTML(i)); });
+function addItem() {
+  modal(`<h3>Add item to stock</h3><p class="sub">A tag code is created automatically.</p>
+  <div class="field"><label for="ai-n">Item name</label><input class="inp" id="ai-n" placeholder="e.g. Ladies ring with zircon"></div>
+  <div class="grid3"><div class="field"><label for="ai-c">Category</label><select class="inp" id="ai-c">${['Rings', 'Earrings', 'Bangles', 'Bracelets', 'Chains', 'Pendants', 'Necklace sets', 'Diamond', 'Silver'].map(c => `<option>${c}</option>`).join('')}</select></div><div class="field"><label for="ai-k">Metal</label><select class="inp" id="ai-k"><option>22K</option><option>21K</option><option>18K</option><option>24K</option><option value="silver">Silver 925</option></select></div><div class="field"><label for="ai-g">Gross weight (g)</label><input class="inp num" id="ai-g" type="number" step="0.01" min="0"></div>
+  <div class="field"><label for="ai-s">Stone weight (g)</label><input class="inp num" id="ai-s" type="number" step="0.01" min="0" value="0"></div><div class="field"><label for="ai-m">Making Rs/g</label><input class="inp num" id="ai-m" type="number" min="0" value="${S.set.making22}"></div><div class="field"><label for="ai-sp">Stones price (Rs)</label><input class="inp num" id="ai-sp" type="number" min="0" value="0"></div></div>
+  <div class="field"><label for="ai-cost">Purchase cost (Rs)</label><input class="inp num" id="ai-cost" type="number" min="0"></div><span class="err" id="ai-e"></span>
+  <div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="ai-save">Add and print tag</button></div>`);
+  $('#ai-save').onclick = () => {
+    const n = $('#ai-n').value.trim(), g = +$('#ai-g').value || 0, k = $('#ai-k').value; if (!n || g <= 0) { $('#ai-e').textContent = 'Add a name and the gross weight.'; return; }
+    const code = 'MJ-' + (1001 + S.items.length), sp = +$('#ai-sp').value || 0;
+    const it = IT(code, n, $('#ai-c').value, k === 'silver' ? 'silver' : 'gold', k === 'silver' ? '925' : k, g, +$('#ai-s').value || 0, 'g', +$('#ai-m').value || 0, sp ? [{ t: 'Stones', price: sp }] : []);
+    it.cost = +$('#ai-cost').value || Math.round(itemPrice(it, true).total * .9); S.items.unshift(it); stStatus = 'In stock'; close(); vStock(); toast(`${code} added to stock`);
+    setTimeout(() => document.querySelector(`[data-tag="${code}"]`)?.click(), 300);
+  };
+}
+
+/* ================= Old gold ================= */
+function oldValue(wt, karat, tested, ded, metal) { const purity = metal === 'silver' ? 1 : (tested ? tested / 100 : PUR[karat]); const base = metal === 'silver' ? S.rate.silver / TOLA : S.rate['24K'] / TOLA; return wt * base * purity * (1 - ded / 100); }
+function oldGoldModal(forSale) {
+  modal(`<h3>${forSale ? 'Adjust old gold in this bill' : 'Buy old gold'}</h3><p class="sub">Weigh the piece, test purity, apply the shop's deduction.</p>
+  <div class="grid2"><div class="field"><label for="og-m">Metal</label><select class="inp" id="og-m"><option value="gold">Gold</option><option value="silver">Silver</option></select></div><div class="field"><label for="og-k">Karat (as claimed)</label><select class="inp" id="og-k"><option>22K</option><option>21K</option><option>18K</option><option>24K</option></select></div></div>
+  <div class="grid3"><div class="field"><label for="og-w">Weight (g)</label><input class="inp num" id="og-w" type="number" step="0.01" min="0" value="10"></div><div class="field"><label for="og-t">Tested purity %</label><input class="inp num" id="og-t" type="number" step="0.1" min="0" max="100" placeholder="e.g. 91.6"></div><div class="field"><label for="og-d">Deduction %</label><input class="inp num" id="og-d" type="number" step="0.5" min="0" value="${S.set.oldDed}"></div></div>
+  ${forSale ? '' : `<div class="grid2"><div class="field"><label for="og-c">Customer</label><select class="inp" id="og-c"><option value="">Walk-in</option>${S.customers.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div><div class="field"><label for="og-p">Pay as</label><select class="inp" id="og-p"><option>Cash</option><option>Store credit</option></select></div></div>`}
+  <div class="panel" style="background:var(--gold-soft);border-color:#ead7ab"><div class="break" id="og-b" style="font-size:13.5px"></div></div>
+  <div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="og-ok">${forSale ? 'Adjust in bill' : 'Pay customer and add to old gold stock'}</button></div>`);
+  const calc = () => { const m = $('#og-m').value, w = +$('#og-w').value || 0, t = +$('#og-t').value || 0, d = +$('#og-d').value || 0, k = $('#og-k').value; const v = oldValue(w, k, t, d, m); const pur = m === 'silver' ? 100 : (t || PUR[k] * 100); $('#og-b').innerHTML = `<span>Weight</span><span class="r num">${g2(w)} (${tmrStr(w)})</span><span>Purity used</span><span class="r num">${pur.toFixed(1)}%</span><span>Pure ${m} equivalent</span><span class="r num">${g2(w * pur / 100)}</span><span>Deduction</span><span class="r num">${d}%</span><span><b>Value to customer</b></span><span class="r num"><b>${rs(v)}</b></span>`; return { m, w, t, d, k, v }; };
+  ['og-m', 'og-k', 'og-w', 'og-t', 'og-d'].forEach(id => $('#' + id).oninput = calc); calc();
+  $('#og-ok').onclick = () => { const x = calc(); if (x.w <= 0) { toast('Enter the weight'); return; } const rec = { id: 'OG-' + (78 + S.oldgold.length), date: today(), cust: forSale ? (custName(S.cartCust)) : custName($('#og-c').value), wt: x.w, karat: x.m === 'silver' ? 'Silver' : x.k, tested: x.t || (x.m === 'silver' ? 100 : PUR[x.k] * 100), ded: x.d, value: Math.round(x.v) };
+    if (forSale) { S.oldAdj = (S.oldAdj || 0) + rec.value; S.pendingOld = rec; close(); renderCart(); toast(`${rs(rec.value)} old gold adjusted`); }
+    else if ($('#og-p').value === 'Store credit') { const cu = S.customers.find(c => c.id === $('#og-c').value); if (!cu) { toast('Choose a customer to give store credit'); return; } rec.mode = 'Store credit'; S.oldgold.unshift(rec); cu.credit = (cu.credit || 0) + rec.value; close(); vExchange(); toast(`${rs(rec.value)} added to ${cu.name}'s store credit`); } else { rec.mode = 'Bought for cash'; S.oldgold.unshift(rec); S.cash.push({ date: today(), desc: `Old gold bought ${rec.id}`, inn: 0, out: rec.value }); close(); vExchange(); toast(`Paid ${rs(rec.value)}. Added to old gold stock.`); } };
+}
+function vExchange() {
+  const tot = S.oldgold.reduce((a, o) => a + o.wt, 0);
+  $('#page').innerHTML = `<div class="kpis"><div class="kpi"><small>Old gold collected</small><b class="num">${g2(tot)}</b><span>${tmrStr(tot)}</span></div><div class="kpi"><small>Default deduction</small><b class="num">${S.set.oldDed}%</b><span>Change in settings</span></div><div class="kpi"><small>Transactions</small><b class="num">${S.oldgold.length}</b><span>Exchanged or bought</span></div><div class="kpi"><small>Send to refiner</small><b class="num">${g2(tot)}</b><span>Ready to melt</span></div></div>
+  <div class="toolbar"><span class="sub" style="color:var(--mute)">Old gold taken in exchange during a sale is added from the POS bill.</span><span class="sp"></span><button class="btn pri" id="buyOld">Buy old gold</button></div>
+  <div class="tw"><table><thead><tr><th>Ref</th><th>Date</th><th>From</th><th>Metal</th><th class="r">Weight</th><th class="r">Purity</th><th class="r">Deduction</th><th class="r">Value</th><th>Mode</th></tr></thead><tbody>
+  ${S.oldgold.map(o => `<tr><td><b>${o.id}</b></td><td>${fdate(o.date)}</td><td>${esc(o.cust)}</td><td>${o.karat}</td><td class="r num">${g2(o.wt)}</td><td class="r num">${(+o.tested).toFixed(1)}%</td><td class="r num">${o.ded}%</td><td class="r num">${rs(o.value || oldValue(o.wt, o.karat, o.tested, o.ded, 'gold'))}</td><td><span class="chip ${o.mode === 'Exchanged' ? 'c-gold' : 'c-blue'}">${o.mode}${o.inv ? ', ' + o.inv : ''}</span></td></tr>`).join('')}
+  </tbody></table></div>`;
+  $('#buyOld').onclick = () => oldGoldModal(false);
+}
+
+/* ================= Rates ================= */
+function vRates() {
+  $('#page').innerHTML = `<div class="two"><div class="panel"><h2>Update today's rates</h2><p class="sub">Enter the 24K tola rate from the sarafa market. 22K, 21K and 18K are worked out from purity, and every item price updates instantly.</p>
+   <div class="grid2"><div class="field"><label for="r24">24K gold, Rs per tola</label><input class="inp num" id="r24" type="number" value="${S.rate['24K']}"></div><div class="field"><label for="rs">Silver, Rs per tola</label><input class="inp num" id="rs" type="number" value="${S.rate.silver}"></div><div class="field"><label for="rp">Platinum PT950, Rs per tola</label><input class="inp num" id="rp" type="number" value="${S.rate.platinum}"></div></div>
+   <div class="tw" style="margin-bottom:12px"><table><thead><tr><th>Karat</th><th class="r">Purity</th><th class="r">Per tola</th><th class="r">Per gram</th></tr></thead><tbody id="rprev"></tbody></table></div>
+   <div class="row"><button class="btn pri" id="rSave">Save rates</button><button class="btn" id="rWa">Broadcast rates on WhatsApp</button></div></div>
+   <div class="panel"><h2>Rate history</h2><p class="sub">24K per tola, last 30 days (sample data).</p><div style="background:var(--velvet);border-radius:12px;padding:12px">${spark(S.rateHist.map(r => r.r24), '#d4ab55')}</div>
+   <div class="tw" style="margin-top:12px;max-height:240px;overflow-y:auto"><table><thead><tr><th>Date</th><th class="r">24K / tola</th><th class="r">Silver / tola</th></tr></thead><tbody>${S.rateHist.slice().reverse().map(r => `<tr><td>${fdate(r.date)}</td><td class="r num">${rs(r.r24)}</td><td class="r num">${rs(r.sil)}</td></tr>`).join('')}</tbody></table></div></div></div>`;
+  const prev = () => { const r = +$('#r24').value || 0; $('#rprev').innerHTML = ['24K', '22K', '21K', '18K'].map(k => `<tr><td>${k}</td><td class="r">${(PUR[k] * 100).toFixed(1)}%</td><td class="r num">${rs(r * PUR[k])}</td><td class="r num">${rs(r * PUR[k] / TOLA)}</td></tr>`).join(''); };
+  $('#r24').oninput = prev; prev();
+  $('#rSave').onclick = () => { const r = +$('#r24').value, s = +$('#rs').value; if (!r || !s) { toast('Enter both rates'); return; } S.rate['24K'] = r; S.rate.silver = s; S.rate.platinum = +$('#rp').value || S.rate.platinum; S.rate.date = today(); S.rateHist[S.rateHist.length - 1] = { date: today(), r24: r, sil: s }; rateBar(); vRates(); toast('Rates saved. All prices updated.'); };
+  $('#rWa').onclick = () => toast('Rate message prepared for your WhatsApp broadcast list (demo)');
+}
+
+/* ================= Orders ================= */
+const STAGES = ['Design (CAD)', 'Booked', 'With karigar', 'Ready', 'Delivered'];
+function vOrders() {
+  $('#page').innerHTML = `<div class="toolbar"><span class="sub" style="color:var(--mute)">Custom orders and repairs, from booking to delivery. Advances go on the customer's account.</span><span class="sp"></span><button class="btn" id="newRep">New repair</button><button class="btn pri" id="newOrd">New custom order</button></div>
+  <div class="kan">${STAGES.map(st => `<div class="col"><h3><span>${st}</span><span class="chip">${S.orders.filter(o => o.stage === st).length}</span></h3>${S.orders.filter(o => o.stage === st).map(o => { const late = o.stage !== 'Delivered' && new Date(o.due) < new Date(today()); return `<div class="oc"><div class="row" style="justify-content:space-between"><b>${o.id}</b><span class="chip ${o.type === 'Repair' ? 'c-blue' : 'c-gold'}">${o.type}</span></div><span>${esc(o.desc)}</span><small>${esc(custName(o.cust))}</small><small>${o.karat}, about ${g2(o.estWt)}, karigar ${esc((S.karigars.find(k => k.id === o.karigar) || {}).name || 'none')}</small><small style="color:${late ? 'var(--bad)' : 'var(--mute)'}">Due ${fdate(o.due)}${late ? ' (late)' : ''}</small>${o.quote ? `<small>Quote ${rs(o.quote)}${o.cad ? `, CAD ${rs(o.cad)}` : ''}${o.wax ? `, wax ${o.wax} g` : ''}</small>` : ''}${o.advCash ? `<small>Advance ${rs(o.advCash)}</small>` : ''}${st !== 'Delivered' ? `<div class="row" style="margin-top:6px"><button class="btn sm" data-adv="${o.id}">Move to ${STAGES[STAGES.indexOf(st) + 1]}</button><button class="btn sm" data-owa="${o.id}">WhatsApp</button></div>` : ''}</div>`; }).join('') || '<p class="sub" style="font-size:12.5px">Nothing here.</p>'}</div>`).join('')}</div>`;
+  $('#newOrd').onclick = () => orderModal('Custom'); $('#newRep').onclick = () => orderModal('Repair');
+  $$('[data-adv]').forEach(b => b.onclick = () => { const o = S.orders.find(x => x.id === b.dataset.adv); o.stage = STAGES[STAGES.indexOf(o.stage) + 1]; if (o.stage === 'Ready') toast(`${o.id} ready. Customer notified on WhatsApp (demo).`); else toast(`${o.id} moved to ${o.stage}`); vOrders(); });
+  $$('[data-owa]').forEach(b => b.onclick = () => { const o = S.orders.find(x => x.id === b.dataset.owa); toast(`Status update for ${o.id} sent to ${custName(o.cust)} (demo)`); });
+}
+function orderModal(type) {
+  modal(`<h3>New ${type === 'Repair' ? 'repair' : 'custom order'}</h3><p class="sub">The customer gets a receipt with the order number and due date.</p>
+  <div class="field"><label for="o-c">Customer</label><select class="inp" id="o-c">${S.customers.map(c => `<option value="${c.id}">${esc(c.name)}, ${c.phone}</option>`).join('')}</select></div>
+  <div class="field"><label for="o-d">${type === 'Repair' ? 'What needs repair' : 'Design and details'}</label><input class="inp" id="o-d" placeholder="${type === 'Repair' ? 'e.g. Earring hook broken, polish' : 'e.g. Bridal choker, 22K, design from photo'}"></div>
+  <div class="grid3"><div class="field"><label for="o-k">Karat</label><select class="inp" id="o-k"><option>22K</option><option>21K</option><option>18K</option></select></div><div class="field"><label for="o-w">${type === 'Repair' ? 'Weight received (g)' : 'Estimated weight (g)'}</label><input class="inp num" id="o-w" type="number" step="0.01" value="10"></div><div class="field"><label for="o-due">Due date</label><input class="inp" id="o-due" type="date" value="${dIn(type === 'Repair' ? 3 : 14)}"></div>
+  <div class="field"><label for="o-a">Advance (Rs)</label><input class="inp num" id="o-a" type="number" value="0"></div><div class="field"><label for="o-ch">${type === 'Repair' ? 'Repair charge (Rs)' : 'Gold given by customer (g)'}</label><input class="inp num" id="o-ch" type="number" value="0"></div><div class="field"><label for="o-kg">Karigar</label><select class="inp" id="o-kg">${S.karigars.map(k => `<option value="${k.id}">${esc(k.name)}</option>`).join('')}</select></div></div>
+  ${type === 'Repair' ? '' : `<div class="grid3"><div class="field"><label for="o-cad">CAD design fee (Rs)</label><input class="inp num" id="o-cad" type="number" value="5000"></div><div class="field"><label for="o-wax">Wax model weight (g)</label><input class="inp num" id="o-wax" type="number" step="0.1" value="1.2"></div><div class="field"><label for="o-st">Stones planned (Rs)</label><input class="inp num" id="o-st" type="number" value="0"></div></div><p class="num" id="o-q" style="font-weight:700"></p>`}
+  <div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="o-save">Book ${type === 'Repair' ? 'repair' : 'order'}</button></div>`);
+  const oq = () => { if (!$('#o-q')) return 0; const w = +$('#o-w').value || 0, k = $('#o-k').value, q = w * perGram('gold', k) + w * S.set.making22 + (+$('#o-st').value || 0) + (+$('#o-cad').value || 0); $('#o-q').textContent = `Estimate: ${rs(q)} (gold at today's rate + making + stones + CAD)`; return Math.round(q); };
+  ['o-w', 'o-k', 'o-st', 'o-cad'].forEach(id => $('#' + id) && ($('#' + id).oninput = oq)); oq();
+  $('#o-save').onclick = () => { const d = $('#o-d').value.trim(); if (!d) { toast('Add the details first'); return; } const id = (type === 'Repair' ? 'RP-' : 'OR-') + (120 + S.orders.length); const adv = +$('#o-a').value || 0; const o = { id, type, cust: $('#o-c').value, desc: d, karat: $('#o-k').value, estWt: +$('#o-w').value || 0, advCash: adv, advGold: type === 'Repair' ? 0 : +$('#o-ch').value || 0, charge: type === 'Repair' ? +$('#o-ch').value || 0 : 0, karigar: $('#o-kg').value, due: $('#o-due').value, stage: type === 'Repair' ? 'Booked' : 'Design (CAD)', quote: type === 'Repair' ? 0 : oq(), cad: type === 'Repair' ? 0 : +$('#o-cad').value || 0, wax: type === 'Repair' ? 0 : +$('#o-wax').value || 0 }; S.orders.unshift(o); if (adv) { S.cash.push({ date: today(), desc: `Advance ${id}`, inn: adv, out: 0 }); S.customers.find(c => c.id === o.cust).advance += adv; } close(); vOrders(); toast(`${id} booked. Receipt sent to customer (demo).`); };
+}
+
+/* ================= Karigar ================= */
+function vKarigar() {
+  $('#page').innerHTML = `<div class="kpis">${S.karigars.map(k => { const open = S.kissue.filter(i => i.karigar === k.id && i.status === 'Open'); const wt = open.reduce((a, i) => a + i.issued, 0); return `<div class="kpi"><small>${esc(k.name)}, ${esc(k.skill)}</small><b class="num">${g2(wt)}</b><span>Gold with karigar, ${open.length} open job${open.length === 1 ? '' : 's'}. Wastage allowed ${k.wastage}%</span></div>`; }).join('')}</div>
+  <div class="toolbar"><span class="sub" style="color:var(--mute)">Every gram issued and received is recorded, so wastage and labour are clear.</span><span class="sp"></span><button class="btn pri" id="issue">Issue gold to karigar</button></div>
+  <div class="tw"><table><thead><tr><th>Ref</th><th>Date</th><th>Karigar</th><th>For</th><th class="r">Issued</th><th class="r">Received</th><th class="r">Wastage</th><th>Status</th><th></th></tr></thead><tbody>
+  ${S.kissue.map(i => { const k = S.karigars.find(x => x.id === i.karigar), was = i.received ? i.issued - i.recvWt : 0, allowed = i.issued * k.wastage / 100; return `<tr><td><b>${i.id}</b></td><td>${fdate(i.date)}</td><td>${esc(k.name)}</td><td>${i.order || 'Stock making'}</td><td class="r num">${g2(i.issued)} ${i.karat}</td><td class="r num">${i.received ? g2(i.recvWt) : '-'}</td><td class="r num" style="color:${was > allowed ? 'var(--bad)' : 'inherit'}">${i.received ? g2(was) + (was > allowed ? ' (over limit)' : '') : '-'}</td><td><span class="chip ${i.status === 'Open' ? 'c-warn' : 'c-ok'}">${i.status}</span></td><td>${i.status === 'Open' ? `<button class="btn sm" data-recv="${i.id}">Receive</button>` : ''}</td></tr>`; }).join('')}
+  </tbody></table></div>`;
+  $('#issue').onclick = () => {
+    modal(`<h3>Issue gold to karigar</h3><p class="sub">Record the weight handed over. It shows on the karigar's balance until received back.</p><div class="grid2"><div class="field"><label for="ki-k">Karigar</label><select class="inp" id="ki-k">${S.karigars.map(k => `<option value="${k.id}">${esc(k.name)}</option>`).join('')}</select></div><div class="field"><label for="ki-o">For order</label><select class="inp" id="ki-o"><option value="">Stock making</option>${S.orders.filter(o => o.stage !== 'Delivered').map(o => `<option>${o.id}</option>`).join('')}</select></div><div class="field"><label for="ki-w">Weight (g)</label><input class="inp num" id="ki-w" type="number" step="0.01" value="20"></div><div class="field"><label for="ki-ka">Karat</label><select class="inp" id="ki-ka"><option>22K</option><option>21K</option><option>18K</option></select></div></div><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="ki-save">Issue</button></div>`);
+    $('#ki-save').onclick = () => { const w = +$('#ki-w').value || 0; if (w <= 0) return; S.kissue.unshift({ id: 'KI-' + (52 + S.kissue.length), karigar: $('#ki-k').value, date: today(), issued: w, karat: $('#ki-ka').value, order: $('#ki-o').value, received: 0, recvWt: 0, status: 'Open' }); close(); vKarigar(); toast(`${g2(w)} issued`); };
+  };
+  $$('[data-recv]').forEach(b => b.onclick = () => { const i = S.kissue.find(x => x.id === b.dataset.recv), k = S.karigars.find(x => x.id === i.karigar);
+    modal(`<h3>Receive from ${esc(k.name)}</h3><p class="sub">Issued ${g2(i.issued)} ${i.karat}. Allowed wastage ${k.wastage}% (${g2(i.issued * k.wastage / 100)}).</p><div class="grid2"><div class="field"><label for="kr-w">Finished weight received (g)</label><input class="inp num" id="kr-w" type="number" step="0.01" value="${(i.issued * (1 - k.wastage / 100)).toFixed(2)}"></div><div class="field"><label for="kr-l">Labour (Rs)</label><input class="inp num" id="kr-l" type="number" value="${Math.round(i.issued * k.labour)}"></div></div><p id="kr-p" class="num" style="font-weight:700"></p><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="kr-save">Receive and pay labour</button></div>`);
+    const p = () => { const r = +$('#kr-w').value || 0, w = i.issued - r, al = i.issued * k.wastage / 100; $('#kr-p').innerHTML = `Wastage ${g2(w)}: ${w > al ? `<span style="color:var(--bad)">${g2(w - al)} over the allowed limit, worth ${rs((w - al) * perGram('gold', i.karat))}</span>` : '<span style="color:var(--ok)">within limit</span>'}`; };
+    $('#kr-w').oninput = p; p();
+    $('#kr-save').onclick = () => { i.recvWt = +$('#kr-w').value || 0; i.received = 1; i.status = 'Closed'; const l = +$('#kr-l').value || 0; if (l) S.cash.push({ date: today(), desc: `Karigar labour, ${k.name} (${i.id})`, inn: 0, out: l }); const o = S.orders.find(x => x.id === i.order); if (o && o.stage === 'With karigar') o.stage = 'Ready'; close(); vKarigar(); toast('Received and recorded'); };
+  });
+}
+
+/* ================= Customers ================= */
+let cuQ = '';
+function vCustomers() {
+  const list = S.customers.filter(c => !cuQ || (c.name + c.phone).toLowerCase().includes(cuQ.toLowerCase()));
+  $('#page').innerHTML = `<div class="kpis"><div class="kpi"><small>Customers</small><b class="num">${S.customers.length}</b><span>With full purchase history</span></div><div class="kpi"><small>Khata receivable</small><b class="num">${rs(S.customers.reduce((a, c) => a + c.khata, 0))}</b><span>Money customers owe</span></div><div class="kpi"><small>Advances held</small><b class="num">${rs(S.customers.reduce((a, c) => a + c.advance, 0))}</b><span>For orders and bookings</span></div><div class="kpi"><small>Gold in safe keeping</small><b class="num">${g2(S.customers.reduce((a, c) => a + c.gold, 0))}</b><span>Customers' deposited gold</span></div></div>
+  <div class="toolbar"><input class="inp" id="cq" placeholder="Search name or phone" value="${esc(cuQ)}" aria-label="Search customers"><span class="sp"></span><button class="btn pri" id="addCu">Add customer</button></div>
+  <div class="tw"><table><thead><tr><th>Customer</th><th>Phone</th><th>City</th><th class="r">Points</th><th class="r">Khata due</th><th class="r">Advance</th><th class="r">Gold deposit</th><th>Notes</th><th></th></tr></thead><tbody>
+  ${list.map(c => `<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.phone)}</td><td>${esc(c.city)}</td><td class="r num">${c.points || 0}</td><td class="r num" style="color:${c.khata ? 'var(--bad)' : 'inherit'}">${rs(c.khata)}</td><td class="r num">${rs(c.advance)}</td><td class="r num">${c.gold ? g2(c.gold) : '-'}</td><td><small>${esc(c.notes)}</small></td><td><button class="btn sm" data-cu="${c.id}">Open</button></td></tr>`).join('')}
+  </tbody></table></div>`;
+  $('#cq').oninput = e => { cuQ = e.target.value; const pos = e.target.selectionStart; vCustomers(); $('#cq').focus(); $('#cq').setSelectionRange(pos, pos); };
+  $('#addCu').onclick = () => { modal(`<h3>Add customer</h3><p class="sub">Used for khata, orders, reminders and birthday wishes.</p><div class="grid2"><div class="field"><label for="n-n">Name</label><input class="inp" id="n-n"></div><div class="field"><label for="n-p">Mobile</label><input class="inp" id="n-p" placeholder="03xx xxxxxxx"></div><div class="field"><label for="n-c">City</label><input class="inp" id="n-c" value="Lahore"></div><div class="field"><label for="n-d">Birthday</label><input class="inp" id="n-d" type="date"></div></div><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="n-s">Save</button></div>`); $('#n-s').onclick = () => { const n = $('#n-n').value.trim(); if (!n) { toast('Add a name'); return; } S.customers.unshift({ id: 'C' + (S.customers.length + 1) + Date.now() % 1000, name: n, phone: $('#n-p').value, city: $('#n-c').value, khata: 0, advance: 0, gold: 0, dob: $('#n-d').value || '2000-01-01', notes: '' }); close(); vCustomers(); toast('Customer added'); }; };
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-cu]'); if (!b) return; const c = S.customers.find(x => x.id === b.dataset.cu); const sales = S.sales.filter(s => s.cust === c.id), ords = S.orders.filter(o => o.cust === c.id);
+  modal(`<h3>${esc(c.name)}</h3><p class="sub">${esc(c.phone)}, ${esc(c.city)}</p><div class="grid3"><div class="kpi"><small>Khata due</small><b class="num">${rs(c.khata)}</b></div><div class="kpi"><small>Advance</small><b class="num">${rs(c.advance)}</b></div><div class="kpi"><small>Total bought</small><b class="num">${rs(sales.reduce((a, s) => a + s.paid + (s.credit || 0), 0))}</b></div></div>
+  <div class="break" style="font-size:13.5px;margin-top:12px"><span>Ring size</span><span class="r">${esc(c.ring || '-')}</span><span>Preferred styles</span><span class="r">${esc(c.styles || '-')}</span><span>Anniversary</span><span class="r">${c.anniv ? fdate(c.anniv) : '-'}</span><span>Last free cleaning</span><span class="r">${c.cleaned ? fdate(c.cleaned) : '-'}</span><span>Loyalty points</span><span class="r num">${c.points || 0} (worth ${rs((c.points || 0) * 10)})</span><span>Store credit</span><span class="r num">${rs(c.credit || 0)}</span></div>
+  <h3 style="font-size:14px;margin:14px 0 6px">Wish list</h3>${(c.wish || []).map(code => { const it = S.items.find(i => i.code === code); return it ? `<div class="line"><div class="t"><b>${esc(it.name)}</b><span class="chip ${it.status === 'In stock' ? 'c-ok' : 'c-bad'}">${it.status}</span></div><small style="color:var(--mute)">${code}, ${rs(itemPrice(it).total)} today</small></div>` : ''; }).join('') || '<p class="sub">Nothing saved yet.</p>'}
+  <h3 style="font-size:14px;margin:14px 0 6px">Purchases</h3>${sales.map(s => `<div class="line"><div class="t"><b>${s.no}, ${fdate(s.date)}</b><button class="btn sm" data-inv="${s.no}">Invoice</button></div><small style="color:var(--mute)">${s.lines.map(l => esc(l.name)).join(', ')}: ${rs(s.paid + (s.credit || 0))}</small></div>`).join('') || '<p class="sub">No purchases yet.</p>'}
+  <h3 style="font-size:14px;margin:14px 0 6px">Orders</h3>${ords.map(o => `<div class="line"><div class="t"><b>${o.id}: ${esc(o.desc)}</b><span class="chip">${o.stage}</span></div></div>`).join('') || '<p class="sub">No orders.</p>'}
+  <div class="mact">${c.khata ? '<button class="btn ok" id="recvK">Receive khata payment</button>' : ''}<button class="btn" id="remK">Send WhatsApp reminder</button><button class="btn pri" data-x>Close</button></div>`, true);
+  $('#remK').onclick = () => toast(`Polite reminder prepared for ${c.name} (demo)`);
+  if ($('#recvK')) $('#recvK').onclick = () => { const amt = Math.min(c.khata, Math.round(c.khata / 2)); c.khata -= amt; S.cash.push({ date: today(), desc: `Khata received, ${c.name}`, inn: amt, out: 0 }); close(); if (view === 'customers') vCustomers(); toast(`${rs(amt)} received. Balance ${rs(c.khata)}.`); };
+});
+
+/* ================= Cash book ================= */
+function vCash() {
+  let bal = 0; const rows = S.cash.map(c => { bal += c.inn - c.out; return { ...c, bal }; });
+  const inn = S.cash.filter(c => c.date === today()).reduce((a, c) => a + c.inn, 0), out = S.cash.filter(c => c.date === today()).reduce((a, c) => a + c.out, 0);
+  $('#page').innerHTML = `<div class="kpis"><div class="kpi"><small>Cash in today</small><b class="num" style="color:var(--ok)">${rs(inn)}</b><span>Sales, advances, khata</span></div><div class="kpi"><small>Cash out today</small><b class="num" style="color:var(--bad)">${rs(out)}</b><span>Old gold, karigar, expenses</span></div><div class="kpi"><small>Cash in hand</small><b class="num">${rs(bal)}</b><span>Should match the drawer</span></div><div class="kpi"><small>Entries</small><b class="num">${S.cash.length}</b><span>Every movement recorded</span></div></div>
+  <div class="toolbar"><span class="sp"></span><button class="btn" id="exp">Add expense</button><button class="btn pri" id="close">Day closing</button></div>
+  <div class="tw"><table><thead><tr><th>Date</th><th>Description</th><th class="r">In</th><th class="r">Out</th><th class="r">Balance</th></tr></thead><tbody>${rows.slice().reverse().map(r => `<tr><td>${fdate(r.date)}</td><td>${esc(r.desc)}</td><td class="r num" style="color:var(--ok)">${r.inn ? rs(r.inn) : ''}</td><td class="r num" style="color:var(--bad)">${r.out ? rs(r.out) : ''}</td><td class="r num"><b>${rs(r.bal)}</b></td></tr>`).join('')}</tbody></table></div>`;
+  $('#exp').onclick = () => { modal(`<h3>Add expense</h3><div class="field"><label for="e-d">Description</label><input class="inp" id="e-d" placeholder="e.g. Shop electricity bill"></div><div class="field"><label for="e-a">Amount (Rs)</label><input class="inp num" id="e-a" type="number"></div><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="e-s">Save</button></div>`); $('#e-s').onclick = () => { const a = +$('#e-a').value || 0; if (!a) return; S.cash.push({ date: today(), desc: $('#e-d').value || 'Expense', inn: 0, out: a }); close(); vCash(); toast('Expense recorded'); }; };
+  $('#close').onclick = () => modal(`<h3>Day closing</h3><p class="sub">Count the drawer and compare.</p><div class="field"><label for="cnt">Cash counted (Rs)</label><input class="inp num" id="cnt" type="number" value="${bal}"></div><p id="diff" style="font-weight:700"></p><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="cl-s">Close the day</button></div>`) || (($('#cnt').oninput = () => { const d = (+$('#cnt').value || 0) - bal; $('#diff').innerHTML = d === 0 ? '<span style="color:var(--ok)">Drawer matches the cash book.</span>' : `<span style="color:var(--bad)">Difference of ${rs(Math.abs(d))} ${d > 0 ? 'extra' : 'short'}.</span>`; })(), $('#cl-s').onclick = () => { close(); toast('Day closed. Summary sent to owner on WhatsApp (demo).'); });
+}
+
+/* ================= Reports ================= */
+function vReports() {
+  const days = Array.from({ length: 7 }, (_, i) => dIn(i - 6)), vals = days.map(d => S.sales.filter(s => s.date === d).reduce((a, s) => a + s.paid + (s.credit || 0), 0));
+  const byCat = {}; S.sales.forEach(s => s.lines.forEach(l => { const it = S.items.find(i => i.code === l.code); const c = it ? it.cat : 'Other'; byCat[c] = (byCat[c] || 0) + l.price.total; }));
+  const tot = Object.values(byCat).reduce((a, b) => a + b, 0) || 1, gSold = S.sales.reduce((a, s) => a + s.lines.filter(l => l.metal === 'gold').reduce((b, l) => b + l.net, 0), 0);
+  const making = S.sales.reduce((a, s) => a + s.lines.reduce((b, l) => b + l.price.making, 0), 0), profit = S.sales.reduce((a, s) => a + s.profit, 0);
+  const mx = Math.max(...vals, 1);
+  $('#page').innerHTML = `<div class="kpis"><div class="kpi"><small>Sales, last 7 days</small><b class="num">${rs(vals.reduce((a, b) => a + b, 0))}</b><span>${S.sales.length} invoices</span></div><div class="kpi"><small>Gold sold</small><b class="num">${g2(gSold)}</b><span>${tmrStr(gSold)}</span></div><div class="kpi"><small>Making charges earned</small><b class="num">${rs(making)}</b><span>Labour income</span></div><div class="kpi"><small>Gross profit</small><b class="num" style="color:var(--ok)">${rs(profit)}</b><span>Sale price minus item cost</span></div></div>
+  <div class="two even"><div class="panel"><h2>Daily sales</h2><p class="sub">Last 7 days.</p><svg viewBox="0 0 420 200" role="img" aria-label="Sales per day" style="width:100%;height:220px">${vals.map((v, i) => { const h = v / mx * 150, x = 16 + i * 58; return `<rect x="${x}" y="${170 - h}" width="40" height="${Math.max(h, 1)}" rx="5" fill="#732535"><title>${fdate(days[i])}: ${rs(v)}</title></rect><text x="${x + 20}" y="188" text-anchor="middle" font-size="11" fill="#77737d">${new Date(days[i]).toLocaleDateString('en-GB', { weekday: 'short' })}</text>${v ? `<text x="${x + 20}" y="${164 - h}" text-anchor="middle" font-size="10" fill="#46434b">${Math.round(v / 1000)}k</text>` : ''}`; }).join('')}</svg></div>
+  <div class="panel"><h2>Sales by category</h2><p class="sub">Share of sales value.</p>${Object.entries(byCat).sort((a, b) => b[1] - a[1]).map(([c, v]) => `<div style="margin-bottom:10px"><div class="row" style="justify-content:space-between;font-size:13px"><b>${esc(c)}</b><span class="num">${rs(v)}</span></div><div style="height:8px;background:var(--wash);border-radius:5px;overflow:hidden"><i style="display:block;height:100%;width:${(v / tot * 100).toFixed(1)}%;background:var(--gold)"></i></div></div>`).join('')}</div></div>
+  <div class="panel"><h2>Ready-made reports</h2><p class="sub">Each opens as a printable or Excel-ready report in the full version.</p><div class="row">${['Daily sales register', 'Stock by weight and karat', 'Old gold register', 'Karigar balance sheet', 'Khata ageing', 'Making charges report', 'Profit by item', 'Sales tax summary'].map(r => `<button class="btn" data-rep="${r}">${r}</button>`).join('')}</div></div>`;
+  const comm = S.staff.filter(x => x.comm).map(x => { const ss = S.sales.filter(sa => sa.sp === x.id), v = ss.reduce((a, sa) => a + sa.paid + (sa.credit || 0), 0); return { x, n: ss.length, v, c: v * x.comm / 100 }; });
+  const vend = {}; S.sales.forEach(sa => sa.lines.forEach(l => { const it = S.items.find(i => i.code === l.code); if (!it) return; const k = it.vendor; vend[k] = vend[k] || { rev: 0, cost: 0, n: 0 }; vend[k].rev += l.price.total; vend[k].cost += it.cost; vend[k].n++; }));
+  const stock = S.items.filter(i => i.status === 'In stock'), buckets = [['0 to 30 days', 0, 30], ['31 to 90 days', 31, 90], ['91 to 180 days', 91, 180], ['Over 180 days', 181, 1e9]].map(([l, a, b]) => { const its = stock.filter(i => daysIn(i) >= a && daysIn(i) <= b); return { l, n: its.length, w: its.reduce((s2, i) => s2 + net(i), 0), v: its.reduce((s2, i) => s2 + itemPrice(i, true).total, 0) }; });
+  $('#page').insertAdjacentHTML('beforeend', `<div class="two even" style="margin-top:14px"><div class="panel"><h2>Salesperson commission</h2><p class="sub">From invoices tagged with who made the sale.</p><div class="tw"><table><thead><tr><th>Salesperson</th><th class="r">Invoices</th><th class="r">Sales</th><th class="r">Rate</th><th class="r">Commission</th></tr></thead><tbody>${comm.map(r => `<tr><td><b>${esc(r.x.name)}</b></td><td class="r num">${r.n}</td><td class="r num">${rs(r.v)}</td><td class="r num">${r.x.comm}%</td><td class="r num"><b>${rs(r.c)}</b></td></tr>`).join('')}</tbody></table></div></div>
+  <div class="panel"><h2>Vendor profitability</h2><p class="sub">Margin on pieces sold, by supplier.</p><div class="tw"><table><thead><tr><th>Vendor</th><th class="r">Pieces sold</th><th class="r">Sales</th><th class="r">Margin</th></tr></thead><tbody>${Object.entries(vend).map(([k, v]) => `<tr><td><b>${esc(k)}</b></td><td class="r num">${v.n}</td><td class="r num">${rs(v.rev)}</td><td class="r num" style="color:var(--ok)">${rs(v.rev - v.cost)} (${((v.rev - v.cost) / v.rev * 100).toFixed(1)}%)</td></tr>`).join('')}</tbody></table></div></div></div>
+  <div class="panel" style="margin-top:14px"><h2>Aging stock</h2><p class="sub">How long pieces have sat in the showroom. Old stock ties up gold and cash.</p><div class="tw"><table><thead><tr><th>Age</th><th class="r">Pieces</th><th class="r">Net weight</th><th class="r">Value at today's rate</th></tr></thead><tbody>${buckets.map(b => `<tr><td><b>${b.l}</b></td><td class="r num">${b.n}</td><td class="r num">${g2(b.w)}</td><td class="r num" style="color:${b.l.startsWith('Over') ? 'var(--bad)' : 'inherit'}">${rs(b.v)}</td></tr>`).join('')}</tbody></table></div></div>`);
+  $$('[data-rep]').forEach(b => b.onclick = () => toast(`${b.dataset.rep} exported (demo)`));
+}
+
+/* ================= Weight calculator ================= */
+function vZakat() {
+  $('#page').innerHTML = `<div class="panel" style="max-width:640px"><h2>Weight converter</h2><p class="sub">Tola, masha, ratti and grams. 1 tola = 11.664 g = 12 masha, 1 masha = 8 ratti.</p>
+   <div class="weigh"><div><label for="ct">Tola</label><input class="inp num" id="ct" type="number" min="0" value="1"></div><div><label for="cm">Masha</label><input class="inp num" id="cm" type="number" min="0" value="0"></div><div><label for="cr">Ratti</label><input class="inp num" id="cr" type="number" min="0" value="0"></div><div><label for="cg">Grams</label><input class="inp num" id="cg" type="number" min="0" step="0.001"></div></div>
+   <div class="field" style="margin-top:12px"><label for="ck">Value at today's rate for</label><select class="inp" id="ck"><option>24K</option><option selected>22K</option><option>21K</option><option>18K</option><option value="silver">Silver</option></select></div><p id="cv" class="num" style="font-size:20px;font-weight:800"></p></div>
+`;
+  const conv = from => { if (from === 'g') { const x = tmr(+$('#cg').value || 0); $('#ct').value = x.t; $('#cm').value = x.m; $('#cr').value = x.r; } else $('#cg').value = ((+$('#ct').value || 0) * TOLA + (+$('#cm').value || 0) * MASHA + (+$('#cr').value || 0) * RATTI).toFixed(3); const k = $('#ck').value, g = +$('#cg').value || 0; $('#cv').textContent = `${g2(g)} is worth ${rs(g * perGram(k === 'silver' ? 'silver' : 'gold', k))}`; };
+  ['ct', 'cm', 'cr'].forEach(id => $('#' + id).oninput = () => conv('t')); $('#cg').oninput = () => conv('g'); $('#ck').onchange = () => conv('t'); conv('t');
+}
+
+/* ================= Settings ================= */
+function vSettings() {
+  $('#page').innerHTML = `<div class="two even"><div class="panel"><h2>Shop details</h2><p class="sub">Printed on invoices and tags.</p>
+   ${[['sn', 'Shop name', 'name'], ['st', 'Tagline', 'tagline'], ['sa', 'Address', 'address'], ['sp', 'Phone', 'phone'], ['sx', 'NTN / STRN', 'ntn']].map(([id, l, k]) => `<div class="field"><label for="${id}">${l}</label><input class="inp" id="${id}" data-k="${k}" value="${esc(S.shop[k])}"></div>`).join('')}<button class="btn pri" id="saveShop">Save</button></div>
+  <div class="panel"><h2>Pricing rules</h2><p class="sub">Defaults for new items. Each item can still have its own making charges.</p>
+   <div class="grid2"><div class="field"><label for="p1">Making 22K/21K (Rs per gram)</label><input class="inp num" id="p1" type="number" value="${S.set.making22}"></div><div class="field"><label for="p2">Making 18K (Rs per gram)</label><input class="inp num" id="p2" type="number" value="${S.set.making18}"></div><div class="field"><label for="p3">Old gold deduction %</label><input class="inp num" id="p3" type="number" step="0.5" value="${S.set.oldDed}"></div><div class="field"><label for="p4">Sales tax on invoice %</label><input class="inp num" id="p4" type="number" step="0.1" value="${S.set.taxPct}"></div></div>
+   <p class="sub">Set the tax rate and FBR POS details as advised by your tax consultant. FBR POS integration (invoice number and QR on each bill) is available in the full version.</p>
+   <h2 style="margin-top:12px">Users and roles</h2><p class="sub">Owner sees everything. Salesman can sell, but cost and profit are hidden and rates are locked. Accountant sees money, not the POS. Try the switcher at the top right.</p>
+   <button class="btn pri" id="saveSet">Save rules</button></div></div>
+  <div class="panel" style="margin-top:14px"><h2>Permissions by role</h2><p class="sub">Tick what each role may do. Applied instantly in the full version (shown here for review).</p><div class="tw"><table><thead><tr><th>Permission</th><th>Owner</th><th>Salesman</th><th>Accountant</th></tr></thead><tbody>${[['Make sales', 1, 1, 0], ['Give discount above 2%', 1, 0, 0], ['Edit making charges', 1, 1, 0], ['See cost and profit', 1, 0, 1], ['Update daily rates', 1, 0, 0], ['Buy old gold', 1, 1, 0], ['Issue gold to karigar', 1, 0, 0], ['Cash book and day closing', 1, 0, 1], ['Reports and exports', 1, 0, 1], ['Delete or void invoices', 1, 0, 0], ['Shop settings', 1, 0, 0]].map(([p, ...r]) => `<tr><td>${p}</td>${r.map(v => `<td><input type="checkbox" ${v ? 'checked' : ''} aria-label="${p}"></td>`).join('')}</tr>`).join('')}</tbody></table></div></div>
+  <div class="panel" style="margin-top:14px"><h2>Staff and commission</h2><div class="tw"><table><thead><tr><th>Staff</th><th class="r">Commission %</th></tr></thead><tbody>${S.staff.map(x => `<tr><td>${esc(x.name)}</td><td class="r"><input class="inp num" type="number" step="0.1" value="${x.comm}" data-comm="${x.id}" style="width:90px;text-align:right"></td></tr>`).join('')}</tbody></table></div></div>`;
+  $$('[data-comm]').forEach(i => i.onchange = () => { S.staff.find(x => x.id === i.dataset.comm).comm = +i.value || 0; toast('Commission updated'); });
+  $('#saveShop').onclick = () => { $$('[data-k]').forEach(i => S.shop[i.dataset.k] = i.value); $('.brand b').textContent = S.shop.name; toast('Shop details saved'); };
+  $('#saveSet').onclick = () => { S.set.making22 = +$('#p1').value || 0; S.set.making18 = +$('#p2').value || 0; S.set.oldDed = +$('#p3').value || 0; S.set.taxPct = +$('#p4').value || 0; toast('Pricing rules saved'); render(); };
+}
+
+
+/* ================= Extended data ================= */
+const VENDORS = ['Al-Noor Karigar House', 'Shahi Bullion Traders', 'Diamond Hub Karachi', 'Silver Craft Peshawar'];
+
+S.staff = [{ id: 'S1', name: 'Owner', comm: 0 }, { id: 'S2', name: 'Kashif', comm: 1 }, { id: 'S3', name: 'Nadia', comm: 1.2 }];
+S.items.forEach((it, i) => {
+  it.vendor = it.vendor || (it.cat === 'Diamond' ? VENDORS[2] : it.metal === 'silver' ? VENDORS[3] : VENDORS[i % 2]);
+  const d = new Date(); d.setDate(d.getDate() - [5, 40, 95, 200, 15, 320, 60, 130][i % 8]); it.added = d.toISOString().slice(0, 10);
+});
+const DSPEC = { 'MJ-1009': { cut: 'Excellent', color: 'G', clarity: 'VS1', lab: 'IGI', cert: 'IGI 5xxxxxx01 (sample)' }, 'MJ-1010': { cut: 'Very good', color: 'H', clarity: 'SI1', lab: 'GIA', cert: 'GIA 2xxxxxx02 (sample)' }, 'MJ-1011': { cut: 'Excellent', color: 'F', clarity: 'VS2', lab: 'IGI', cert: 'IGI 5xxxxxx03 (sample)' }, 'MJ-1022': { cut: 'Oval', color: 'Vivid green', clarity: 'Minor oil', lab: 'GRS', cert: 'GRS 2026-xxx (sample)' } };
+Object.entries(DSPEC).forEach(([c, sp]) => { const it = S.items.find(i => i.code === c); if (it && it.stones[0]) { Object.assign(it.stones[0], sp); it.cert = sp.lab + ' ' + sp.cert; } });
+S.memos = [
+  { id: 'MM-11', dir: 'in', party: VENDORS[2], codes: ['MJ-1022'], date: dIn(-9), due: dIn(21), status: 'Open', note: 'On approval from vendor, pay only if sold' },
+  { id: 'MM-12', dir: 'out', party: 'Mrs Ayesha Khan', codes: ['MJ-1014'], date: dIn(-1), due: dIn(2), status: 'Open', note: 'Taken home to show family' }
+];
+S.custody = [
+  { date: dIn(-9), code: 'MJ-1022', event: 'Received on memo MM-11 from ' + VENDORS[2] },
+  { date: dIn(-1), code: 'MJ-1014', event: 'Sent on memo MM-12 to Mrs Ayesha Khan' }
+];
+S.customers.forEach((c, i) => Object.assign(c, { ring: ['14', '18', '12', '20', '15'][i], styles: ['Bridal, kundan', 'Plain gold, gents', 'Light daily wear', 'Diamond, modern', 'Bangles'][i], wish: [['MJ-1012'], ['MJ-1006'], ['MJ-1011'], ['MJ-1010'], []][i], anniv: ['2010-11-05', '2005-10-29', '2018-12-20', '2019-11-01', '2008-04-11'][i], cleaned: dIn(-[40, 210, 190, 20, 400][i]), points: [320, 140, 85, 60, 210][i], credit: [0, 0, 12000, 0, 0][i] }));
+S.plans = [
+  { id: 'IP-21', type: 'Installment', cust: 'C5', inv: 'INV-2040', total: 84000, paid: 42000, n: 6, monthly: 14000, next: dIn(5), payments: [{ date: dIn(-55), amt: 14000 }, { date: dIn(-25), amt: 14000 }, { date: dIn(-2), amt: 14000 }] },
+  { id: 'GS-07', type: 'Gold savings', cust: 'C3', monthly: 20000, months: 11, paidMonths: 4, start: dIn(-120), next: dIn(8) },
+  { id: 'GS-08', type: 'Gold savings', cust: 'C1', monthly: 50000, months: 11, paidMonths: 9, start: dIn(-270), next: dIn(3) }
+];
+S.gifts = [{ code: 'GC-5821', value: 25000, bal: 25000, to: 'Mrs Sana Tariq', exp: dIn(180) }, { code: 'GC-5822', value: 10000, bal: 4000, to: 'Mr Hamza Raza', exp: dIn(60) }];
+S.sales.forEach((s, i) => { s.sp = ['S2', 'S3'][i % 2]; s.lines.forEach(l => { const it = S.items.find(x => x.code === l.code); S.custody.push({ date: s.date, code: l.code, event: 'Sold on ' + s.no }); }); });
+S.audit = null;
+const daysIn = it => Math.max(0, Math.round((new Date(today()) - new Date(it.added)) / 864e5));
+const inBranch = () => true;
+const staffName = id => (S.staff.find(s => s.id === id) || {}).name || '-';
+
+/* ================= Payments: QR & gift card ================= */
+function qrSvg(seedStr) { let h = 0; for (const c of seedStr) h = (h * 31 + c.charCodeAt(0)) >>> 0; const n = 25, cells = []; for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) { h = (h * 1103515245 + 12345) >>> 0; const corner = (x < 7 && y < 7) || (x > n - 8 && y < 7) || (x < 7 && y > n - 8); const ring = corner && (x % (n - 7) === 0 || y % (n - 7) === 0 || x === 6 || y === 6 || x === n - 1 || y === n - 1 || ((x % 18 >= 2 && x % 18 <= 4) && (y % 18 >= 2 && y % 18 <= 4))); if (corner ? ring : (h >> 16) % 2) cells.push(`<rect x="${x}" y="${y}" width="1" height="1"/>`); } return `<svg viewBox="-2 -2 ${n + 4} ${n + 4}" width="190" height="190" style="background:#fff;border-radius:8px"><g fill="#111">${cells.join('')}</g></svg>`; }
+function qrModal(method, amt, done) {
+  modal(`<h3>${method} payment</h3><p class="sub">Customer scans with any banking app. The amount and invoice are encoded (illustrative QR, demo).</p><div style="display:grid;place-items:center;gap:8px">${qrSvg(method + amt)}<b class="num" style="font-size:20px">${rs(amt)}</b><span class="chip c-warn" id="qrSt">Waiting for payment…</span></div><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn ok" id="qrOk">Payment received</button></div>`);
+  $('#qrOk').onclick = () => { close(); done(); };
+}
+function giftRedeem(due, done) {
+  modal(`<h3>Redeem gift card</h3><p class="sub">Try GC-5821 (balance Rs 25,000) or GC-5822 (Rs 4,000).</p><div class="field"><label for="gc">Gift card code</label><input class="inp" id="gc" placeholder="GC-xxxx"></div><span class="err" id="gcE"></span><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="gcOk">Redeem ${rs(due)}</button></div>`);
+  $('#gcOk').onclick = () => { const g = S.gifts.find(x => x.code.toLowerCase() === $('#gc').value.trim().toLowerCase()); if (!g) { $('#gcE').textContent = 'No gift card with that code.'; return; } if (new Date(g.exp) < new Date(today())) { $('#gcE').textContent = 'This gift card has expired.'; return; } if (g.bal < due) { $('#gcE').textContent = `Balance is ${rs(g.bal)}. Use split payment for the rest.`; return; } close(); done(g); };
+}
+
+/* ================= Memo / consignment ================= */
+function vMemo() {
+  const open = S.memos.filter(m => m.status === 'Open');
+  $('#page').innerHTML = `<div class="kpis"><div class="kpi"><small>Memo in (from vendors)</small><b class="num">${open.filter(m => m.dir === 'in').reduce((a, m) => a + m.codes.length, 0)} piece(s)</b><span>Pay only when sold</span></div><div class="kpi"><small>Memo out (to clients)</small><b class="num">${open.filter(m => m.dir === 'out').reduce((a, m) => a + m.codes.length, 0)} piece(s)</b><span>Taken on approval</span></div><div class="kpi"><small>Overdue memos</small><b class="num" style="color:var(--bad)">${open.filter(m => new Date(m.due) < new Date(today())).length}</b><span>Past return date</span></div><div class="kpi"><small>Custody events</small><b class="num">${S.custody.length}</b><span>Full chain of custody</span></div></div>
+  <div class="toolbar"><span class="sub" style="color:var(--mute)">Items received on approval from vendors, or sent home with clients, are tracked until they are returned or sold.</span><span class="sp"></span><button class="btn" id="memoIn">Receive on memo</button><button class="btn pri" id="memoOut">Send on memo</button></div>
+  <div class="tw"><table><thead><tr><th>Memo</th><th>Direction</th><th>Party</th><th>Items</th><th>Date</th><th>Return by</th><th>Status</th><th></th></tr></thead><tbody>
+  ${S.memos.map(m => { const late = m.status === 'Open' && new Date(m.due) < new Date(today()); return `<tr><td><b>${m.id}</b><br><small style="color:var(--mute)">${esc(m.note || '')}</small></td><td><span class="chip ${m.dir === 'in' ? 'c-blue' : 'c-gold'}">${m.dir === 'in' ? 'In, from vendor' : 'Out, to client'}</span></td><td>${esc(m.party)}</td><td>${m.codes.map(c => esc(c + ' ' + ((S.items.find(i => i.code === c) || {}).name || ''))).join('<br>')}</td><td>${fdate(m.date)}</td><td style="color:${late ? 'var(--bad)' : 'inherit'}">${fdate(m.due)}${late ? ' (late)' : ''}</td><td><span class="chip ${m.status === 'Open' ? 'c-warn' : 'c-ok'}">${m.status}</span></td><td>${m.status === 'Open' ? `<button class="btn sm" data-mret="${m.id}">${m.dir === 'in' ? 'Return to vendor' : 'Returned'}</button> ${m.dir === 'out' ? `<button class="btn sm" data-msell="${m.id}">Client keeps it</button>` : ''}` : ''}</td></tr>`; }).join('')}
+  </tbody></table></div>
+  <div class="panel" style="margin-top:14px"><h2>Chain of custody</h2><p class="sub">Every movement of every piece, newest first.</p><div class="tw" style="max-height:280px;overflow-y:auto"><table><thead><tr><th>Date</th><th>Item</th><th>Event</th></tr></thead><tbody>${S.custody.slice().sort((a, b) => b.date.localeCompare(a.date)).map(c => `<tr><td>${fdate(c.date)}</td><td><b>${c.code}</b></td><td>${esc(c.event)}</td></tr>`).join('')}</tbody></table></div></div>`;
+  $('#memoOut').onclick = () => {
+    const avail = S.items.filter(i => i.status === 'In stock');
+    modal(`<h3>Send on memo</h3><p class="sub">The client takes the piece on approval. It leaves sale stock until returned or bought.</p><div class="field"><label for="mo-c">Client</label><select class="inp" id="mo-c">${S.customers.map(c => `<option>${esc(c.name)}</option>`).join('')}</select></div><div class="field"><label for="mo-i">Item</label><select class="inp" id="mo-i">${avail.map(i => `<option value="${i.code}">${i.code} ${esc(i.name)}</option>`).join('')}</select></div><div class="field"><label for="mo-d">Return by</label><input class="inp" type="date" id="mo-d" value="${dIn(3)}"></div><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="mo-s">Send on memo</button></div>`);
+    $('#mo-s').onclick = () => { const code = $('#mo-i').value, it = S.items.find(i => i.code === code); it.status = 'On memo'; const id = 'MM-' + (13 + S.memos.length); S.memos.unshift({ id, dir: 'out', party: $('#mo-c').value, codes: [code], date: today(), due: $('#mo-d').value, status: 'Open', note: 'Approval' }); S.custody.push({ date: today(), code, event: `Sent on memo ${id} to ${$('#mo-c').value}` }); close(); vMemo(); toast(`${id} created. Memo slip ready to sign (demo).`); };
+  };
+  $('#memoIn').onclick = () => {
+    modal(`<h3>Receive on memo</h3><p class="sub">A vendor leaves a piece for you to sell. You pay them only once it sells.</p><div class="field"><label for="mi-v">Vendor</label><select class="inp" id="mi-v">${VENDORS.map(v => `<option>${v}</option>`).join('')}</select></div><div class="field"><label for="mi-n">Item</label><input class="inp" id="mi-n" value="Ruby pendant set"></div><div class="grid2"><div class="field"><label for="mi-k">Metal</label><select class="inp" id="mi-k"><option>22K</option><option>18K</option></select></div><div class="field"><label for="mi-g">Gross weight (g)</label><input class="inp num" id="mi-g" type="number" value="14"></div></div><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="mi-s">Receive</button></div>`);
+    $('#mi-s').onclick = () => { const code = 'MJ-' + (1001 + S.items.length), it = IT(code, $('#mi-n').value || 'Memo item', 'Necklace sets', 'gold', $('#mi-k').value, +$('#mi-g').value || 1, 0, 'g', 850, []); it.vendor = $('#mi-v').value; it.memo = 'in'; it.cost = Math.round(itemPrice(it, true).total * .92); S.items.push(it); const id = 'MM-' + (13 + S.memos.length); S.memos.unshift({ id, dir: 'in', party: it.vendor, codes: [code], date: today(), due: dIn(30), status: 'Open', note: 'On approval from vendor' }); S.custody.push({ date: today(), code, event: `Received on memo ${id} from ${it.vendor}` }); close(); vMemo(); toast(`${code} received on ${id} and added to stock`); };
+  };
+  $$('[data-mret]').forEach(b => b.onclick = () => { const m = S.memos.find(x => x.id === b.dataset.mret); m.status = 'Closed'; m.codes.forEach(c => { const it = S.items.find(i => i.code === c); if (m.dir === 'in') it.status = 'Returned'; else it.status = 'In stock'; S.custody.push({ date: today(), code: c, event: m.dir === 'in' ? `Returned to ${m.party} (${m.id})` : `Returned by ${m.party} (${m.id})` }); }); vMemo(); toast(`${m.id} closed`); });
+  $$('[data-msell]').forEach(b => b.onclick = () => { const m = S.memos.find(x => x.id === b.dataset.msell); m.status = 'Closed'; m.codes.forEach(c => { const it = S.items.find(i => i.code === c); it.status = 'In stock'; S.custody.push({ date: today(), code: c, event: `Client kept it, billed from memo ${m.id}` }); }); const cu = S.customers.find(c => c.name === m.party); S.cart = []; m.codes.forEach(c => addToCart(c)); S.cartCust = cu ? cu.id : null; go('pos'); toast('Memo items moved to a bill'); });
+}
+
+/* ================= Stock audit (RFID / barcode) ================= */
+function vAudit() {
+  const scope = S.items.filter(i => i.status === 'In stock' && inBranch(i));
+  const a = S.audit;
+  $('#page').innerHTML = `<div class="two"><div class="panel"><h2>Stock audit</h2><p class="sub">Wave the RFID reader over trays, or scan barcodes one by one. Every tag found is ticked off against the system.</p>
+    <div class="row"><button class="btn pri" id="aStart">${a && a.running ? 'Scanning…' : 'Start RFID sweep'}</button><input class="inp" id="aScan" placeholder="Or type / scan a tag code and press Enter" style="max-width:300px" aria-label="Scan tag"></div>
+    ${a ? `<div style="margin-top:14px"><div class="row" style="justify-content:space-between"><b>${a.found.length} of ${scope.length} found</b><span class="num">${Math.round(a.found.length / Math.max(1, scope.length) * 100)}%</span></div><div style="height:10px;background:var(--wash);border-radius:6px;overflow:hidden;margin-top:6px"><i style="display:block;height:100%;width:${a.found.length / Math.max(1, scope.length) * 100}%;background:var(--ok)"></i></div></div>` : ''}
+    <div class="tw" style="margin-top:12px;max-height:420px;overflow-y:auto"><table><thead><tr><th>Code</th><th>Item</th><th class="r">Net</th><th>Result</th></tr></thead><tbody>${scope.map(i => { const f = a && a.found.includes(i.code); return `<tr><td><b>${i.code}</b></td><td>${esc(i.name)}</td><td class="r num">${g2(net(i))}</td><td>${a ? (f ? '<span class="chip c-ok">Found</span>' : a.running ? '<span class="chip">Waiting</span>' : '<span class="chip c-bad">Missing</span>') : '<span class="chip">Not scanned</span>'}</td></tr>`; }).join('')}</tbody></table></div></div>
+    <div class="panel"><h2>Audit result</h2><p class="sub">What a full audit tells the owner.</p>${a && !a.running ? `<div class="break" style="font-size:14px"><span>Expected pieces</span><span class="r num">${scope.length}</span><span>Found</span><span class="r num" style="color:var(--ok)">${a.found.length}</span><span>Missing</span><span class="r num" style="color:var(--bad)">${scope.length - a.found.length}</span><span>Missing gold weight</span><span class="r num">${g2(scope.filter(i => !a.found.includes(i.code)).reduce((s, i) => s + net(i), 0))}</span><span>Missing value at today's rate</span><span class="r num">${rs(scope.filter(i => !a.found.includes(i.code)).reduce((s, i) => s + itemPrice(i, true).total, 0))}</span><span>Time taken</span><span class="r num">${a.secs} seconds</span></div><p class="sub" style="margin-top:12px">Missing pieces in this demo are random. In a real shop, a missing piece is usually on a tray in another counter, on memo, or with the karigar.</p><button class="btn" id="aRep">Export audit report</button>` : '<p class="sub">Start a sweep to see the result.</p>'}</div></div>`;
+  $('#aStart').onclick = () => { if (S.audit && S.audit.running) return; S.audit = { running: true, found: [], secs: 0 }; const order = scope.map(i => i.code).sort(() => Math.random() - .5), miss = order.slice(0, Math.max(1, Math.round(order.length * .08))); const t0 = Date.now(); let k = 0; const tick = setInterval(() => { if (view !== 'audit') { clearInterval(tick); S.audit.running = false; return; } const c = order[k++]; if (c && !miss.includes(c)) S.audit.found.push(c); if (k >= order.length) { clearInterval(tick); S.audit.running = false; S.audit.secs = Math.max(1, Math.round((Date.now() - t0) / 1000)); toast(`Audit done: ${S.audit.found.length} of ${scope.length} found`); } vAudit(); }, 160); };
+  $('#aScan').onkeydown = e => { if (e.key !== 'Enter') return; const c = e.target.value.trim().toUpperCase(); if (!S.audit) S.audit = { running: false, found: [], secs: 0 }; if (scope.some(i => i.code === c)) { if (!S.audit.found.includes(c)) S.audit.found.push(c); toast(`${c} found`); } else toast(`${c} is not in this stock list`); vAudit(); $('#aScan').focus(); };
+  if ($('#aRep')) $('#aRep').onclick = () => toast('Audit report exported (demo)');
+}
+
+/* ================= Plans, schemes, loyalty, gifts ================= */
+let planTab = 'Installments';
+function vPlans() {
+  const tabs = ['Installments', 'Gold savings', 'Loyalty', 'Gift cards & credit'];
+  let body = '';
+  if (planTab === 'Installments') {
+    const ip = S.plans.filter(p => p.type === 'Installment');
+    body = `<div class="toolbar"><span class="sub" style="color:var(--mute)">Layaway and installment sales. Choose "Installment plan" as the payment method in the POS to create one.</span></div><div class="tw"><table><thead><tr><th>Plan</th><th>Customer</th><th>Invoice</th><th class="r">Financed</th><th class="r">Paid</th><th class="r">Monthly</th><th>Next due</th><th>Progress</th><th></th></tr></thead><tbody>${ip.map(p => `<tr><td><b>${p.id}</b></td><td>${esc(custName(p.cust))}</td><td>${p.inv}</td><td class="r num">${rs(p.total)}</td><td class="r num">${rs(p.paid)}</td><td class="r num">${rs(p.monthly)}</td><td>${p.paid >= p.total ? '-' : fdate(p.next)}</td><td style="min-width:120px"><div style="height:8px;background:var(--wash);border-radius:5px;overflow:hidden"><i style="display:block;height:100%;width:${Math.min(100, p.paid / p.total * 100)}%;background:var(--ok)"></i></div></td><td>${p.paid < p.total ? `<button class="btn sm" data-pay="${p.id}">Receive ${rs(Math.min(p.monthly, p.total - p.paid))}</button>` : '<span class="chip c-ok">Completed</span>'}</td></tr>`).join('') || '<tr><td colspan="9" class="empty">No installment plans yet.</td></tr>'}</tbody></table></div>`;
+  } else if (planTab === 'Gold savings') {
+    const gs = S.plans.filter(p => p.type === 'Gold savings');
+    body = `<div class="toolbar"><span class="sub" style="color:var(--mute)">Customers save a fixed amount every month and redeem it for jewellery at the end. Shop bonus and rules are set by the owner (sample rule: shop adds one month's instalment).</span><span class="sp"></span><button class="btn pri" id="newGs">Enrol customer</button></div><div class="tw"><table><thead><tr><th>Scheme</th><th>Customer</th><th class="r">Monthly</th><th>Paid</th><th class="r">Saved</th><th class="r">Redeemable with bonus</th><th>Next due</th><th></th></tr></thead><tbody>${gs.map(p => `<tr><td><b>${p.id}</b></td><td>${esc(custName(p.cust))}</td><td class="r num">${rs(p.monthly)}</td><td>${p.paidMonths} of ${p.months} months</td><td class="r num">${rs(p.paidMonths * p.monthly)}</td><td class="r num"><b>${rs((p.paidMonths + (p.paidMonths >= p.months ? 1 : 0)) * p.monthly)}</b>${p.paidMonths >= p.months ? '' : `<br><small style="color:var(--mute)">${rs((p.months + 1) * p.monthly)} at maturity</small>`}</td><td>${p.paidMonths >= p.months ? 'Matured' : fdate(p.next)}</td><td>${p.paidMonths < p.months ? `<button class="btn sm" data-gsp="${p.id}">Receive instalment</button>` : '<span class="chip c-ok">Ready to redeem</span>'}</td></tr>`).join('')}</tbody></table></div>`;
+  } else if (planTab === 'Loyalty') {
+    body = `<div class="toolbar"><span class="sub" style="color:var(--mute)">Customers earn 1 point per Rs 1,000 spent. 1 point is worth Rs 10 off a future purchase (sample rule).</span></div><div class="tw"><table><thead><tr><th>Customer</th><th class="r">Points</th><th class="r">Worth</th><th>Tier</th><th></th></tr></thead><tbody>${S.customers.slice().sort((a, b) => b.points - a.points).map(c => `<tr><td><b>${esc(c.name)}</b></td><td class="r num">${c.points}</td><td class="r num">${rs(c.points * 10)}</td><td><span class="chip ${c.points >= 300 ? 'c-gold' : c.points >= 150 ? 'c-blue' : ''}">${c.points >= 300 ? 'Gold' : c.points >= 150 ? 'Silver' : 'Classic'}</span></td><td><button class="btn sm" data-redeem="${c.id}" ${c.points < 50 ? 'disabled' : ''}>Convert to store credit</button></td></tr>`).join('')}</tbody></table></div>`;
+  } else {
+    body = `<div class="toolbar"><span class="sub" style="color:var(--mute)">Gift cards can be redeemed in the POS. Store credit comes from returns, old gold or loyalty points.</span><span class="sp"></span><button class="btn pri" id="newGc">Sell a gift card</button></div><div class="two even"><div class="tw"><table><thead><tr><th>Gift card</th><th>For</th><th class="r">Value</th><th class="r">Balance</th><th>Expires</th></tr></thead><tbody>${S.gifts.map(g => `<tr><td><b>${g.code}</b></td><td>${esc(g.to)}</td><td class="r num">${rs(g.value)}</td><td class="r num">${rs(g.bal)}</td><td>${fdate(g.exp)}</td></tr>`).join('')}</tbody></table></div><div class="tw"><table><thead><tr><th>Customer</th><th class="r">Store credit</th></tr></thead><tbody>${S.customers.map(c => `<tr><td>${esc(c.name)}</td><td class="r num">${rs(c.credit || 0)}</td></tr>`).join('')}</tbody></table></div></div>`;
+  }
+  $('#page').innerHTML = `<div class="row" style="margin-bottom:12px">${tabs.map(t => `<button class="btn ${t === planTab ? 'pri' : ''}" data-ptab="${t}">${t}</button>`).join('')}</div>${body}`;
+  $$('[data-ptab]').forEach(b => b.onclick = () => { planTab = b.dataset.ptab; vPlans(); });
+  $$('[data-pay]').forEach(b => b.onclick = () => { const p = S.plans.find(x => x.id === b.dataset.pay), amt = Math.min(p.monthly, p.total - p.paid); p.paid += amt; p.payments.push({ date: today(), amt }); const n = new Date(p.next); n.setMonth(n.getMonth() + 1); p.next = n.toISOString().slice(0, 10); S.cash.push({ date: today(), desc: `Installment ${p.id}, ${custName(p.cust)}`, inn: amt, out: 0 }); vPlans(); toast(`${rs(amt)} received. Receipt sent on WhatsApp (demo).`); });
+  $$('[data-gsp]').forEach(b => b.onclick = () => { const p = S.plans.find(x => x.id === b.dataset.gsp); p.paidMonths++; const n = new Date(p.next); n.setMonth(n.getMonth() + 1); p.next = n.toISOString().slice(0, 10); S.cash.push({ date: today(), desc: `Gold savings ${p.id}, ${custName(p.cust)}`, inn: p.monthly, out: 0 }); vPlans(); toast(`Instalment ${p.paidMonths} of ${p.months} received`); });
+  $$('[data-redeem]').forEach(b => b.onclick = () => { const c = S.customers.find(x => x.id === b.dataset.redeem), v = c.points * 10; c.credit = (c.credit || 0) + v; c.points = 0; vPlans(); toast(`${rs(v)} added to ${c.name}'s store credit`); });
+  if ($('#newGs')) $('#newGs').onclick = () => { modal(`<h3>Enrol in gold savings</h3><p class="sub">Fixed monthly amount for 11 months.</p><div class="field"><label for="gs-c">Customer</label><select class="inp" id="gs-c">${S.customers.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div><div class="field"><label for="gs-m">Monthly amount (Rs)</label><input class="inp num" id="gs-m" type="number" value="25000"></div><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="gs-s">Enrol and take first instalment</button></div>`); $('#gs-s').onclick = () => { const m = +$('#gs-m').value || 0; if (!m) return; const id = 'GS-' + (9 + S.plans.length); S.plans.push({ id, type: 'Gold savings', cust: $('#gs-c').value, monthly: m, months: 11, paidMonths: 1, start: today(), next: dIn(30) }); S.cash.push({ date: today(), desc: `Gold savings ${id} first instalment`, inn: m, out: 0 }); close(); vPlans(); toast(`${id} started`); }; };
+  if ($('#newGc')) $('#newGc').onclick = () => { modal(`<h3>Sell a gift card</h3><div class="grid2"><div class="field"><label for="g-v">Value (Rs)</label><input class="inp num" id="g-v" type="number" value="20000"></div><div class="field"><label for="g-t">For</label><input class="inp" id="g-t" placeholder="Recipient name"></div></div><div class="mact"><button class="btn" data-x>Cancel</button><button class="btn pri" id="g-s">Issue gift card</button></div>`); $('#g-s').onclick = () => { const v = +$('#g-v').value || 0; if (!v) return; const code = 'GC-' + (5823 + S.gifts.length); S.gifts.unshift({ code, value: v, bal: v, to: $('#g-t').value || 'Gift', exp: dIn(365) }); S.cash.push({ date: today(), desc: `Gift card ${code} sold`, inn: v, out: 0 }); close(); vPlans(); toast(`${code} issued. Card printed and sent on WhatsApp (demo).`); }; };
+}
+
+document.addEventListener('click', e => { const b = e.target.closest('[data-cert]'); if (!b) return; const it = S.items.find(i => i.code === b.dataset.cert), s = it.stones[0] || {};
+  modal(`<h3>Certificate, ${it.code}</h3><p class="sub">${esc(it.name)}</p><div class="break" style="font-size:14px"><span>Lab</span><span class="r">${esc(s.lab || '-')}</span><span>Certificate no.</span><span class="r">${esc(s.cert || '-')}</span>${s.ct ? `<span>Carat weight</span><span class="r num">${s.ct} ct</span>` : ''}<span>Cut / shape</span><span class="r">${esc(s.cut || '-')}</span><span>Colour</span><span class="r">${esc(s.color || '-')}</span><span>Clarity</span><span class="r">${esc(s.clarity || '-')}</span>${s.perCt ? `<span>Price per carat</span><span class="r num">${rs(s.perCt)}</span>` : ''}</div><p class="sub" style="margin-top:12px">A scan of the lab certificate is attached to the item in the full version, and printed with the invoice.</p><div class="mact"><button class="btn pri" data-x>Close</button></div>`); });
+
+go('dash');
+</script>
+</body>
+</html>
