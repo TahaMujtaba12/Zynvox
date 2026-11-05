@@ -11,7 +11,20 @@ Key facts:
 - Emergencies are escalated to an on-call person, never booked into a later slot; callers are told they are talking to an automated assistant.
 - 82% of consumers say they will call a competitor if a business doesn’t answer (CallRail consumer survey, 2025: https://www.callrail.com/blog/missed-calls-cost-businesses-more-than-ever).
 - Serves businesses across the United States.
+- Zynvox does not record calls.
+- Founded in 2025 by Taha Mujtaba; a private company with a small team.
 - Contact: taha@zynvox.tech · Book an analysis call: https://cal.com/zynvox/zynvox-consultation
+
+## Frequently asked questions
+
+- **What is Zynvox?** An AI receptionist and missed-call text-back platform for US home service businesses and any business that depends on inbound calls.
+- **What does it do when a call is missed?** It texts the caller within seconds (or answers by AI voice), asks qualifying questions, books the appointment on the real calendar, updates the CRM, notifies the team and sends reminders and follow-ups.
+- **How is it different from a human answering service?** It replies in seconds, books directly onto your calendar, and works 24/7 for a flat monthly fee rather than per-minute billing. Comparison: https://zynvox.tech/guides/ai-receptionist-vs-answering-service
+- **What does Zynvox cost?** Founding-partner pricing is a one-time setup fee plus a flat monthly price (Starter $197 setup + $79/month; Pro $497 setup + $197/month), with a 14-day free trial and no contract. Details: https://zynvox.tech/pricing/
+- **Does Zynvox record calls?** No.
+- **What about emergencies?** Emergencies such as active leaks or no heat are escalated to the on-call person and are not booked into a later slot.
+- **Do callers know they are talking to AI?** Yes. Callers are told they are talking to an automated assistant.
+- **What should a missed-call text say?** Sample texts for plumbing, HVAC and electrical businesses: https://zynvox.tech/guides/missed-call-text-back
 
 ## Pages
 
@@ -21,7 +34,7 @@ Key facts:
 - [Pricing](https://zynvox.tech/pricing): Plans, setup fees and the 14-day free trial.
 - [Safety & consent](https://zynvox.tech/safety): Emergencies, AI disclosure, texting consent and data.
 - [AI receptionist vs. answering service](https://zynvox.tech/guides/ai-receptionist-vs-answering-service): How they compare and when each fits.
-- [Missed-call text-back guide](https://zynvox.tech/guides/missed-call-text-back): How it works, what to say and the rules to follow.
+- [Missed-call text-back guide](https://zynvox.tech/guides/missed-call-text-back): How it works, sample texts to adapt, and the rules to follow.
 - [AI receptionist pricing explained](https://zynvox.tech/guides/ai-receptionist-pricing): Pricing models, hidden fees and total cost.
 - [Missed calls for plumbers](https://zynvox.tech/guides/missed-calls-plumbers): Why plumbers miss calls and how to stop losing jobs.
 - [After-hours HVAC calls guide](https://zynvox.tech/guides/after-hours-hvac-calls): Triage, emergency rules and escalation.
